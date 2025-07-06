@@ -39,7 +39,7 @@ export default function Collaboration() {
           </div>
 
           {/* Robot SVG - Positioned outside the box */}
-          <div className="absolute top-2/5 right-1/17  transform -translate-y-1/2 translate-x-8 lg:translate-x-12">
+          <div className="hidden absolute top-2/5 right-1/17  transform -translate-y-1/2 translate-x-8 lg:translate-x-12">
             <div className="relative w-64 h-64 lg:w-80 lg:h-85">
               <Image src="/robo.svg" alt="Collaboration Robot Illustration" fill className="object-contain" priority />
             </div>
