@@ -1,14 +1,13 @@
+import AboutUs from "@/components/HomePage/AboutUs";
+import Banner from "@/components/HomePage/Banner";
+import Campus from "@/components/HomePage/Campus";
+import ColabLogo from "@/components/HomePage/ColabLogo";
+import Collaboration from "@/components/HomePage/Colaboration";
+import Events from "@/components/HomePage/Events";
+import Hero from "@/components/HomePage/Hero";
+import ResearchSection from "@/components/HomePage/Research";
+import TestimonialSection from "@/components/HomePage/TestimonialSection";
 
-import Research from "@/components/Research";
-import AboutUs from "@/components/AboutUs";
-import Events from "@/components/events";
-import Campus from "@/components/Campus";
-import Hero from "@/components/Hero";
-import Footer from "@/components/Footer";
-import TestimonialSection from "@/components/TestimonialSection";
-import Collaboration from "@/components/Colaboration";
-import ColabLogo from "@/components/ColabLogo";
-import Banner from "@/components/Banner";
 
 export default function HomePage() {
   return (
@@ -17,13 +16,12 @@ export default function HomePage() {
       <Hero/>
       <ColabLogo />
       <Banner />
-      <Research />
+      <ResearchSection />
       <AboutUs />
       <Campus />
       <Events/>
       <TestimonialSection />
       <Collaboration />
-      <Footer />
     </main>
   );
 }

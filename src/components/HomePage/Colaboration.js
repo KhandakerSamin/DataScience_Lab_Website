@@ -1,11 +1,11 @@
 "use client"
 
 import Image from "next/image"
-import {  ChevronRight } from "lucide-react"
+import { ArrowRight, ChevronRight } from "lucide-react"
 
-export default function Collaboration() {
+export default function CollaborationCTASection() {
   return (
-    <section className="w-full bg-gray-50 font-outfit py-16 md:py-20 lg:py-36">
+    <section className="w-full bg-gray-50 font-poppins py-16">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Container with relative positioning for robot */}
         <div className="relative">
@@ -21,7 +21,6 @@ export default function Collaboration() {
                 </p>
 
                 <div className="pt-2">
-                  
                   <button className="inline-flex items-center gap-2 ml-0.5 text-white bg-[#09509E] hover:text-[#09509E] hover:bg-white border-2 border-blue-800 px-5 py-2 rounded-full text-lg font-normal transition-colors duration-200 group">
                 More About Us
                 <ChevronRight
@@ -39,8 +38,8 @@ export default function Collaboration() {
           </div>
 
           {/* Robot SVG - Positioned outside the box */}
-          <div className="hidden absolute top-2/5 right-1/17  transform -translate-y-1/2 translate-x-8 lg:translate-x-12">
-            <div className="relative w-64 h-64 lg:w-80 lg:h-85">
+          <div className="hidden lg:inline-block absolute top-2/5 right-1/17 transform -translate-y-1/2 translate-x-8 lg:translate-x-12">
+            <div className="relative w-64 h-64 lg:w-80 lg:h-80">
               <Image src="/robo.svg" alt="Collaboration Robot Illustration" fill className="object-contain" priority />
             </div>
           </div>

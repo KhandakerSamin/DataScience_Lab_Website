@@ -7,7 +7,7 @@ export default function Banner() {
   return (
     <section className="relative bg-gray-50 -mt-16 py-20 font-outfit overflow-hidden">
       {/* Background Triangular Shapes */}
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0 hidden md:hidden lg:hidden overflow-hidden">
         {/* Top Right Triangle */}
         <div className="absolute top-0 -right-45 w-1/2 h-2/3 bg-green-100 opacity-60 transform rotate-12 origin-top-right rounded-bl-full"></div>
 
