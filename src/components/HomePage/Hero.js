@@ -58,11 +58,11 @@ export default function Hero() {
           <div className="space-y-8">
             <div className="space-y-6">
               {/* Static Headline + Animated Text */}
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
+              <h1 className="text-3xl md:text-4xl lg:text-[50px] font-bold leading-tight">
                 {/* Static part - no animation */}
-                <div className="text-green-600 mb-2">
-                  Upgrade Your Business
-                  With
+                <div className="text-green-600 ">
+                  Upgrade Your  Business
+                  <span className="text-[#09509E]"> With</span>
                 </div>
 
                 {/* Typewriter animated part */}

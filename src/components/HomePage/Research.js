@@ -6,7 +6,7 @@ export default function ResearchSection() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold font-700 text-green-600 mb-6 ">Research</h2>
+          <h2 className="text-4xl md:text-4xl font-bold font-700 text-green-600 mb-6 ">Research</h2>
           <p className="text-gray-700 text-lg font-normal md:text-xl max-w-4xl mx-auto leading-relaxed">
             We Are A Team Of Out-Of-The-Box Thinkers, With Deep Expertise In Analytics.We Love To Expand The Boundaries
             On Research With Our Own Data.

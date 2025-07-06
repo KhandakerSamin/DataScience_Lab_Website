@@ -21,7 +21,7 @@ export default function Banner() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left Content */}
             <div className="space-y-6">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#39B24A] leading-tight">
+              <h2 className="text-3xl md:text-4xl lg:text-4xl font-bold text-[#39B24A] leading-tight">
                 We Analyze & Visualize
                 <br />
                 The Real Life Data For Increasing
@@ -48,7 +48,7 @@ export default function Banner() {
 
             {/* Right SVG Illustration */}
             <div className="relative flex justify-center">
-              <div className="relative w-full max-w-lg">
+              <div className="relative w-full max-w-sm">
                 <Image
                   src="/svg1.svg"
                   alt="Data Analysis Illustration"
@@ -67,7 +67,7 @@ export default function Banner() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left SVG Illustration */}
             <div className="relative flex justify-center order-2 lg:order-1">
-              <div className="relative w-full max-w-lg">
+              <div className="relative w-full max-w-sm">
                 <Image
                   src="/svg2.svg"
                   alt="Data Driven Approach Illustration"
@@ -80,7 +80,7 @@ export default function Banner() {
 
             {/* Right Content */}
             <div className="space-y-6 order-1 lg:order-2">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#39B24A] leading-tight">
+              <h2 className="text-3xl md:text-4xl lg:text-4xl font-bold text-[#39B24A] leading-tight">
                 To Data Driven Approach
                 <br />
                 Data Mining, Visualization &<br />

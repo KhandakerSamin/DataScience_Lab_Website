@@ -115,7 +115,7 @@ export default function Events() {
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold text-[#39B24A] mb-6">Our Latest Events</h2>
+            <h2 className="text-4xl md:text-4xl font-bold text-[#39B24A] mb-6">Our Latest Events</h2>
             <p className="text-gray-700 text-lg md:text-xl font-normal max-w-4xl mx-auto leading-relaxed">
               The Editors At Solutions Review Have Compiled This List Of The Best Data Science Events And Conferences To
               Attend This Year, So Mark Your Calendar!

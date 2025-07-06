@@ -63,9 +63,9 @@ function LogoRow({ logos, title, direction = "left" }) {
 export default function ColabLogo() {
   return (
     <section className="relative z-20 -mt-10 mb-16 bg-gray-50">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-white shadow-2xl rounded-2xl py-4 px-6 backdrop-blur-sm border border-gray-200">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-5xl mx-auto pb-4">
             <LogoRow logos={academiaLogos} title="Collaboration With Academia" direction="left" />
             <div className="mt-2 mb-1 border-t border-gray-300 border-dashed"></div>
 

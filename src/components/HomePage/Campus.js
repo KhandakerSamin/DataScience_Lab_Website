@@ -23,7 +23,7 @@ export default function Campus() {
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-green-600 leading-tight">
+            <h2 className="text-3xl md:text-4xl lg:text-4xl font-bold text-green-600 leading-tight">
               Our Modern Green Campus
               <br />
               With Advanced Technology Lab

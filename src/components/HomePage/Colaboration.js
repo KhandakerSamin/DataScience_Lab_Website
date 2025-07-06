@@ -5,8 +5,8 @@ import { ArrowRight, ChevronRight } from "lucide-react"
 
 export default function CollaborationCTASection() {
   return (
-    <section className="w-full bg-gray-50 font-poppins py-16">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="w-full bg-gray-50 font-poppins py-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Container with relative positioning for robot */}
         <div className="relative">
           {/* Main Green Card */}
