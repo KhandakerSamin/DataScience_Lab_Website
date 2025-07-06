@@ -12,7 +12,6 @@ import TestimonialSection from "@/components/HomePage/TestimonialSection";
 export default function HomePage() {
   return (
     <main className=" font-outfit">
-
       <Hero/>
       <ColabLogo />
       <Banner />
