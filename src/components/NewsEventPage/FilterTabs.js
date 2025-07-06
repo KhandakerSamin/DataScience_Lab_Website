@@ -4,55 +4,33 @@ import { useState } from "react"
 import { Filter, Calendar, Newspaper, Grid3X3 } from "lucide-react"
 
 export default function FilterTabs({ activeFilter, onFilterChange, resultCount }) {
-  const [selected, setSelected] = useState(activeFilter)
-
-  const handleClick = (value) => {
-    setSelected(value)
-    onFilterChange(value)
-  }
+  const filters = [
+    { value: "all", label: "All", icon: Grid3X3 },
+    { value: "event", label: "Events", icon: Calendar },
+    { value: "news", label: "News", icon: Newspaper },
+  ]
 
   return (
-    <div className="bg-white border-b border-gray-200 top-0 z-10 shadow-sm font-outfit">
+    <div className="bg-white border-b border-gray-200 ">
       <div className="max-w-6xl mx-auto px-4 py-6">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          {/* Tab Buttons */}
-          <div className="grid w-full md:w-auto grid-cols-3 bg-gray-100 rounded-xl p-1 h-12">
-            <button
-              onClick={() => handleClick("all")}
-              className={`flex items-center justify-center gap-2 font-medium px-4 rounded-lg transition-all ${
-                selected === "all"
-                  ? "bg-[#09509E] text-white"
-                  : "text-[#09509E] hover:bg-gray-200"
-              }`}
-            >
-              <Grid3X3 className="h-4 w-4" />
-              All
-            </button>
-            <button
-              onClick={() => handleClick("event")}
-              className={`flex items-center justify-center gap-2 font-medium px-4 rounded-lg transition-all ${
-                selected === "event"
-                  ? "bg-[#09509E] text-white"
-                  : "text-[#09509E] hover:bg-gray-200"
-              }`}
-            >
-              <Calendar className="h-4 w-4" />
-              Events
-            </button>
-            <button
-              onClick={() => handleClick("news")}
-              className={`flex items-center justify-center gap-2 font-medium px-4 rounded-lg transition-all ${
-                selected === "news"
-                  ? "bg-[#09509E] text-white"
-                  : "text-[#09509E] hover:bg-gray-200"
-              }`}
-            >
-              <Newspaper className="h-4 w-4" />
-              News
-            </button>
+          {/* Custom tab-like buttons */}
+          <div className="grid grid-cols-3 w-full md:w-auto bg-gray-100 p-1 rounded-md">
+            {filters.map(({ value, label, icon: Icon }) => (
+              <button
+                key={value}
+                onClick={() => onFilterChange(value)}
+                className={`flex items-center justify-center gap-2 px-6 py-2 font-medium rounded-md transition-colors duration-200
+                  ${activeFilter === value
+                    ? "bg-[#09509E] text-white"
+                    : "text-[#09509E] hover:bg-[#09509E]/10"}`}
+              >
+                <Icon className="h-4 w-4" />
+                {label}
+              </button>
+            ))}
           </div>
 
-          {/* Filter Info */}
           <div className="flex items-center justify-between md:justify-end gap-4">
             <p className="text-[#39B24A] font-bold">
               {resultCount} {resultCount === 1 ? "result" : "results"} found
