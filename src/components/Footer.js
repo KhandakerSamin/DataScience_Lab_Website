@@ -33,22 +33,22 @@ export default function Footer() {
             <h4 className="text-lg font-semibold text-gray-900 mb-6">Services</h4>
             <ul className="space-y-3">
               <li>
-                <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors duration-200">
+                <a href="#" className="text-gray-700 hover:text-[#09509E] transition-colors duration-200">
                   Data Science
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors duration-200">
+                <a href="#" className="text-gray-700 hover:text-[#09509E] transition-colors duration-200">
                   Machine Learning
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors duration-200">
+                <a href="#" className="text-gray-700 hover:text-[#09509E] transition-colors duration-200">
                   Deep Learning
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors duration-200">
+                <a href="#" className="text-gray-700 hover:text-[#09509E] transition-colors duration-200">
                   Big Data
                 </a>
               </li>
@@ -60,17 +60,17 @@ export default function Footer() {
             <h4 className="text-lg font-semibold text-gray-900 mb-6">Community</h4>
             <ul className="space-y-3">
               <li>
-                <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors duration-200">
+                <a href="#" className="text-gray-700 hover:text-[#09509E] transition-colors duration-200">
                   Our Services
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors duration-200">
+                <a href="#" className="text-gray-700 hover:text-[#09509E] transition-colors duration-200">
                   Documentation
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors duration-200">
+                <a href="#" className="text-gray-700 hover:text-[#09509E] transition-colors duration-200">
                   What We Do?
                 </a>
               </li>
@@ -87,7 +87,7 @@ export default function Footer() {
               <div>
                 <p className="text-gray-700 text-sm">
                   Email:{" "}
-                  <a href="mailto:arman.swe@diu.edu.bd" className="text-blue-600 hover:underline">
+                  <a href="mailto:arman.swe@diu.edu.bd" className="text-[#09509E] hover:underline">
                     arman.swe@diu.edu.bd
                   </a>
                 </p>
@@ -95,7 +95,7 @@ export default function Footer() {
               <div>
                 <p className="text-gray-700 text-sm">
                   Phone:{" "}
-                  <a href="tel:+8801673383289" className="text-blue-600 hover:underline">
+                  <a href="tel:+8801673383289" className="text-[#09509E] hover:underline">
                     +880-1673383289
                   </a>
                 </p>
@@ -105,35 +105,35 @@ export default function Footer() {
               <div className="flex gap-3 pt-4">
                 <a
                   href="#"
-                  className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white hover:bg-blue-700 transition-colors duration-200"
+                  className="w-8 h-8 bg-[#09509E] rounded-full flex items-center justify-center text-white hover:bg-blue-700 transition-colors duration-200"
                   aria-label="Facebook"
                 >
                   <Facebook className="w-4 h-4" />
                 </a>
                 <a
                   href="#"
-                  className="w-8 h-8 bg-pink-600 rounded-full flex items-center justify-center text-white hover:bg-pink-700 transition-colors duration-200"
+                  className="w-8 h-8 bg-[#09509E] rounded-full flex items-center justify-center text-white hover:bg-pink-700 transition-colors duration-200"
                   aria-label="Instagram"
                 >
                   <Instagram className="w-4 h-4" />
                 </a>
                 <a
                   href="#"
-                  className="w-8 h-8 bg-blue-700 rounded-full flex items-center justify-center text-white hover:bg-blue-800 transition-colors duration-200"
+                  className="w-8 h-8 bg-[#09509E] rounded-full flex items-center justify-center text-white hover:bg-blue-800 transition-colors duration-200"
                   aria-label="LinkedIn"
                 >
                   <Linkedin className="w-4 h-4" />
                 </a>
                 <a
                   href="#"
-                  className="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center text-white hover:bg-red-700 transition-colors duration-200"
+                  className="w-8 h-8 bg-[#09509E] rounded-full flex items-center justify-center text-white hover:bg-red-700 transition-colors duration-200"
                   aria-label="YouTube"
                 >
                   <Youtube className="w-4 h-4" />
                 </a>
                 <a
                   href="#"
-                  className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center text-white hover:bg-gray-900 transition-colors duration-200"
+                  className="w-8 h-8 bg-[#09509E] rounded-full flex items-center justify-center text-white hover:bg-gray-900 transition-colors duration-200"
                   aria-label="Twitter"
                 >
                   <Twitter className="w-4 h-4" />
@@ -149,7 +149,7 @@ export default function Footer() {
             © 2024 All Rights Reserved By{" "}
             <a
               href="https://daffodilvarsity.edu.bd"
-              className="text-blue-600 hover:underline font-medium"
+              className="text-[#09509E] hover:underline font-medium"
               target="_blank"
               rel="noopener noreferrer"
             >

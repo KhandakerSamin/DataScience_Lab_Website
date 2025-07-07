@@ -19,7 +19,7 @@ export default function Campus() {
 
   return (
     <section className="w-full bg-blue-50 font-outfit">
-      <div className="py-16 px-4 sm:px-6 lg:px-8">
+      <div className="py-[200px] px-4 sm:px-6 lg:px-8">
         <div className="max-w-[1220px] mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
@@ -94,33 +94,7 @@ export default function Campus() {
             </div>
 
             {/* Campus Features */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-              <div className="text-center p-6 bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300">
-                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <div className="w-6 h-6 bg-green-600 rounded-full"></div>
-                </div>
-                <h4 className="text-lg font-semibold text-gray-900 mb-2">Green Environment</h4>
-                <p className="text-gray-600 text-sm">Eco-friendly campus with sustainable practices and green spaces</p>
-              </div>
-
-              <div className="text-center p-6 bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300">
-                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <div className="w-6 h-6 bg-blue-600 rounded-full"></div>
-                </div>
-                <h4 className="text-lg font-semibold text-gray-900 mb-2">Advanced Technology</h4>
-                <p className="text-gray-600 text-sm">State-of-the-art labs and modern technological infrastructure</p>
-              </div>
-
-              <div className="text-center p-6 bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300">
-                <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <div className="w-6 h-6 bg-purple-600 rounded-full"></div>
-                </div>
-                <h4 className="text-lg font-semibold text-gray-900 mb-2">Modern Facilities</h4>
-                <p className="text-gray-600 text-sm">
-                  Contemporary buildings and facilities for enhanced learning experience
-                </p>
-              </div>
-            </div>
+            
           </div>
         </div>
       </div>

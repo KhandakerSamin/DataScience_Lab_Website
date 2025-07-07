@@ -5,7 +5,7 @@ import { ChevronRight } from "lucide-react"
 
 export default function Banner() {
   return (
-    <section className="relative bg-gray-50 -mt-16 py-20 font-outfit overflow-hidden">
+    <section className="relative bg-gray-50 -mt-16 py-[200px] font-outfit overflow-hidden">
       {/* Background Triangular Shapes */}
       <div className="absolute inset-0 hidden md:hidden lg:hidden overflow-hidden">
         {/* Top Right Triangle */}

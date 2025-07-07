@@ -5,7 +5,7 @@ import { ArrowRight, ChevronRight } from "lucide-react"
 
 export default function CollaborationCTASection() {
   return (
-    <section className="w-full bg-gray-50 font-poppins py-24">
+    <section className="w-full bg-gray-50 font-poppins py-[200px]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Container with relative positioning for robot */}
         <div className="relative">
@@ -13,8 +13,8 @@ export default function CollaborationCTASection() {
           <div className="bg-green-100 rounded-3xl p-8 md:p-12 shadow-sm relative overflow-visible">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
               {/* Left Content */}
-              <div className="space-y-6 lg:pr-8">
-                <h2 className="text-3xl md:text-4xl font-bold text-blue-600 leading-tight">To Collaborate With Us</h2>
+              <div className="space-y-8 lg:pr-8">
+                <h2 className="text-3xl md:text-4xl font-bold text-[#09509E] leading-tight">To Collaborate With Us</h2>
 
                 <p className="text-gray-700 text-lg leading-relaxed font-medium">
                   Our Expert Teachers, Lab Students Are Always Active For You.

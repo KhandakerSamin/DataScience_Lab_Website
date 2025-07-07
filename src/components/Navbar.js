@@ -39,6 +39,7 @@ export default function Navbar() {
     { name: "Our Team", href: "/members", icon: Users },
     { name: "Contest & Dataset", href: "/course", icon: GraduationCap },
     { name: "Events & News", href: "/news-events", icon: Calendar },
+    { name: "DS Club", href: "/news-events", icon: Calendar },
   ]
 
   const closeMobileMenu = () => {
@@ -60,7 +61,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Navigation - NO ICONS */}
-          <nav className="hidden lg:flex space-x-8 items-center">
+          <nav className="hidden lg:flex space-x-4 items-center">
             {navItems.map((item) => (
               <Link
                 key={item.name}

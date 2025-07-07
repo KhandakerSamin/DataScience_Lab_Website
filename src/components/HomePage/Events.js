@@ -40,7 +40,7 @@ export default function Events() {
 
     return (
       <section className="w-full bg-gray-50 font-outfit">
-        <div className="py-16 px-4 sm:px-6 lg:px-8">
+        <div className="py-[200px] px-4 sm:px-6 lg:px-8">
           <div className="max-w-[1220px] mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-4xl md:text-5xl font-bold text-[#39B24A] mb-6">Our Recent Events</h2>
@@ -111,7 +111,7 @@ export default function Events() {
 
   return (
     <section className="w-full bg-gray-50 font-outfit">
-      <div className="py-16 px-4 sm:px-6 lg:px-8">
+      <div className="py-[200px] px-4 sm:px-6 lg:px-8">
         <div className="max-w-[1220px] mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
@@ -127,7 +127,7 @@ export default function Events() {
             {upcomingEvents.map((event) => (
               <div
                 key={event.id}
-                className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 group flex flex-col h-full"
+                className="bg-white rounded-3xl overflow-hidden border hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 group flex flex-col h-full"
               >
                 {/* Image Container */}
                 <div className="relative overflow-hidden h-48 bg-gray-200 group">

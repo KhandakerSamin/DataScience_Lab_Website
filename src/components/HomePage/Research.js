@@ -2,7 +2,7 @@ import { Users, FileSearch, ChevronRight, FileBadge2 } from "lucide-react"
 
 export default function ResearchSection() {
   return (
-    <section className="bg-green-50 w-full py-16 px-4 sm:px-6 lg:px-8 ">
+    <section className="bg-green-50 w-full py-[200px] px-4 sm:px-6 lg:px-8 ">
       <div className="max-w-[1220px] mx-auto">
         {/* Header */}
         <div className="text-center mb-12">

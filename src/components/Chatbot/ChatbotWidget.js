@@ -408,7 +408,7 @@ export default function ChatbotWidget() {
                 <Image src="/robo.svg" alt="ROBO" width={14} height={14} className="filter brightness-110" />
               </div>
               <div>
-                <p className="font-semibold text-[#39B24A] text-xs">Hi! I'm ROBO 🤖</p>
+                <p className="font-semibold text-[#39B24A] text-xs">Hi! I am ROBO 🤖</p>
                 <p className="text-xs text-gray-600">Ask me anything!</p>
               </div>
             </div>

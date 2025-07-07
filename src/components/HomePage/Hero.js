@@ -53,7 +53,7 @@ export default function Hero() {
   return (
     <section className="w-full bg-gray-50 font-outfit overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center min-h-[600px] py-12 lg:py-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center min-h-[600px] py-12 lg:py-[180px]">
           {/* Left Content */}
           <div className="space-y-8">
             <div className="space-y-6">
@@ -61,8 +61,8 @@ export default function Hero() {
               <h1 className="text-3xl md:text-4xl lg:text-[50px] font-bold leading-tight">
                 {/* Static part - no animation */}
                 <div className="text-green-600 ">
-                  Upgrade Your  Business
-                  <span className="text-[#09509E]"> With</span>
+                  <span className="text-[#09509E]"> Upgrade</span> <br />
+                   Your  Business with
                 </div>
 
                 {/* Typewriter animated part */}
@@ -102,7 +102,7 @@ export default function Hero() {
             </div>
 
             {/* SVG Illustration */}
-            <div className="relative z-10 w-full max-w-lg">
+            <div className="relative z-10 w-full max-w-[450px]">
               <div className="relative animate-float">
                 <Image
                   src="/hero.svg"
@@ -115,23 +115,23 @@ export default function Hero() {
               </div>
 
               {/* Floating Elements */}
-              <div className="absolute -top-4 -left-4 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center animate-bounce">
+              {/* <div className="absolute -top-4 -left-4 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center animate-bounce">
                 <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-green-500 rounded-full"></div>
-              </div>
+              </div> */}
 
-              <div
+              {/* <div
                 className="absolute -bottom-6 -right-6 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center animate-bounce"
                 style={{ animationDelay: "0.5s" }}
               >
                 <div className="w-5 h-5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full"></div>
-              </div>
+              </div> */}
 
-              <div
+              {/* <div
                 className="absolute top-8 -right-8 w-8 h-8 bg-white rounded-full shadow-lg flex items-center justify-center animate-bounce"
                 style={{ animationDelay: "1s" }}
               >
                 <div className="w-4 h-4 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full"></div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

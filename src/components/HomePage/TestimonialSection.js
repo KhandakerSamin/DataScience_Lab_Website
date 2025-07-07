@@ -47,7 +47,7 @@ export default function TestimonialSection() {
   }
 
   return (
-    <section className="relative bg-blue-50 py-20 font-outfit">
+    <section className="relative bg-blue-50 py-[200px] font-outfit">
       {/* Background Accent Shape */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute left-0 top-0 w-1/2 h-full bg-green-100 rotate-6 origin-top-left rounded-br-full opacity-30 -z-10"></div>
@@ -56,7 +56,6 @@ export default function TestimonialSection() {
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
         <div className="text-center mb-16">
-          <h5 className="text-sm uppercase tracking-widest text-blue-600 font-semibold mb-2">Testimonials</h5>
           <h2 className="text-3xl md:text-4xl font-bold text-green-600 mb-4">
             Some Important
             <br />
@@ -88,7 +87,7 @@ export default function TestimonialSection() {
             <div className="space-y-4">
               {/* Large Quote Icon */}
               <div className="flex items-start">
-                <Quote size={64} className="text-blue-400 flex-shrink-0 mr-2" strokeWidth={1.5} />
+                <Quote size={64} className="text-[#09509E] flex-shrink-0 mr-2" strokeWidth={1.5} />
               </div>
 
               {/* Quote Text */}
@@ -113,7 +112,7 @@ export default function TestimonialSection() {
                   onClick={() => handleTestimonialChange(index)}
                   className={`w-4 h-4 rounded-full border-2 transition-all duration-300 hover:scale-110 ${
                     index === currentTestimonial
-                      ? "bg-blue-600 border-blue-600 shadow-md"
+                      ? "bg-[#09509E] border-[#09509E] shadow-md"
                       : "bg-transparent border-gray-300 hover:border-blue-400"
                   }`}
                   aria-label={`Go to testimonial ${index + 1}`}
