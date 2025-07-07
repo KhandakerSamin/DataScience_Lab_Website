@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { useState, useEffect } from "react"
-import { X, ChevronRight, Home, FolderOpen, BookOpen, Users, GraduationCap, Calendar } from "lucide-react"
+import { X, ChevronRight, Home, FolderOpen, BookOpen, Users, GraduationCap, Calendar, School } from "lucide-react"
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -35,11 +35,11 @@ export default function Navbar() {
 
   const navItems = [
     { name: "Home", href: "/", icon: Home },
-    { name: "Project & Publications", href: "/members", icon: FolderOpen },
-    { name: "Our Team", href: "/members", icon: Users },
-    { name: "Contest & Dataset", href: "/course", icon: GraduationCap },
+    { name: "Projects & Publications", href: "/project&publication", icon: FolderOpen },
+    { name: "Contest & Datasets", href: "/contest&dataset", icon: GraduationCap },
     { name: "Events & News", href: "/news-events", icon: Calendar },
-    { name: "DS Club", href: "/news-events", icon: Calendar },
+    { name: "Our Team", href: "/team", icon: Users },
+    { name: "DS Club", href: "/ds-club", icon: School },
   ]
 
   const closeMobileMenu = () => {

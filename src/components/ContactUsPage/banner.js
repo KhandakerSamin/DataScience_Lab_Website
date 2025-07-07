@@ -2,7 +2,7 @@
 
 export default function Banner() {
   return (
-    <div className="relative overflow-hidden bg-white py-12 px-4 font-outfit">
+    <div className="relative overflow-hidden bg-white py-20 px-4 font-outfit">
       {/* Animated Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Floating geometric shapes */}

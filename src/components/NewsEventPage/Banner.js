@@ -4,7 +4,7 @@ import { Search } from "lucide-react"
 
 export default function Banner({ searchTerm, onSearchChange }) {
   return (
-    <div className="relative overflow-hidden bg-white py-12 px-4">
+    <div className="relative overflow-hidden bg-white py-20 px-4">
       {/* Minimal animated background elements */}
       <div className="absolute inset-0">
         <div className="absolute top-10 left-10 w-32 h-32 bg-[#39B24A]/5 rounded-full animate-pulse" />

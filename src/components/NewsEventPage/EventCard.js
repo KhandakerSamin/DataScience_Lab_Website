@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Calendar, Clock, MapPin, Users } from "lucide-react"
+import { Calendar, ChevronRight, Clock, MapPin, Users } from "lucide-react"
 
 export default function EventCard({ item }) {
   const [isExpanded, setIsExpanded] = useState(false)
@@ -231,12 +231,17 @@ export default function EventCard({ item }) {
 
               {item.type === "event" && (
                 <div className="flex flex-wrap gap-3 mb-4 md:mb-6">
-                  <button className="bg-[#09509E] hover:bg-[#0a4a8a] text-white font-medium px-4 md:px-6 py-2 rounded text-sm md:text-base w-full md:w-auto">
-                    <div className="flex items-center justify-center gap-2">
-                      <Calendar className="h-4 w-4" />
-                      Register Now
-                    </div>
+                  <button className="inline-flex items-center gap-2 ml-0.5 text-white bg-[#09509E] hover:text-[#09509E] hover:bg-white border-2 border-blue-800 px-5 py-2 rounded-full text-lg font-normal transition-colors duration-200 group">
+                    <Calendar className="h-4 w-4" />
+
+                    Register Now
+                    <ChevronRight
+                      className="text-[#09509E] bg-white group-hover:bg-[#09509E] group-hover:text-white rounded-full p-1 transition-colors duration-200"
+                      size={24}
+                      strokeWidth={2}
+                    />
                   </button>
+
                 </div>
               )}
 

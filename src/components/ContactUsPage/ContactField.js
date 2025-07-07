@@ -70,7 +70,7 @@ export default function ContactField() {
   ]
 
   return (
-    <div className="bg-gray-50 py-16 px-4 font-outfit">
+    <div className="bg-gray-50 py-[200px] px-4 font-outfit">
       <div className="max-w-[1220px] mx-auto">
         {/* Contact Form and Info Row */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
@@ -329,8 +329,8 @@ export default function ContactField() {
         </div>
 
         {/* Map Section - Second Row */}
-        <div className="bg-white rounded-2xl border-2 border-gray-200 shadow-lg overflow-hidden">
-          <div className="bg-[#09509E] text-white p-6">
+        <div className="bg-white rounded-2xl border-2 mt-[150px] border-gray-200 shadow-lg overflow-hidden">
+          <div className="bg-green-50 text-[#09509E] p-6">
             <h3 className="text-2xl font-bold flex items-center gap-3">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
@@ -348,7 +348,7 @@ export default function ContactField() {
               </svg>
               Our Location
             </h3>
-            <p className="text-blue-100 text-lg mt-2">Visit us at Daffodil International University</p>
+            <p className="text-[#09509E] text-lg mt-2">Visit us at Daffodil International University</p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-0">

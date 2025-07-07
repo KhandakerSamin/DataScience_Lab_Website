@@ -5,7 +5,7 @@ import EventCard from "./EventCard"
 export default function ContentGrid({ filteredData }) {
   if (filteredData.length === 0) {
     return (
-      <div className="text-center py-20">
+      <div className="text-center py-[200px]">
         <div className="max-w-md mx-auto">
           <div className="w-24 h-24 mx-auto mb-6 bg-[#09509E]/10 rounded-full flex items-center justify-center">
             <div className="text-[#09509E] text-2xl">🔍</div>
@@ -18,7 +18,7 @@ export default function ContentGrid({ filteredData }) {
   }
 
   return (
-    <div className="grid grid-cols-1 gap-6">
+    <div className="grid grid-cols-1 gap-6 py-[100px]">
       {filteredData.map((item) => (
         <EventCard key={item.id} item={item} />
       ))}

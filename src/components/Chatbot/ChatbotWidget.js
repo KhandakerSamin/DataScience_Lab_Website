@@ -195,7 +195,7 @@ export default function ChatbotWidget() {
                   <h3 className="font-bold text-lg">ROBO</h3>
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 bg-green-300 rounded-full animate-pulse"></div>
-                    <p className="text-sm text-green-100">AI Assistant</p>
+                    <p className="text-sm text-green-100">DS Lab Assistant</p>
                   </div>
                 </div>
               </div>
