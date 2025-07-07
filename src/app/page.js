@@ -1,3 +1,4 @@
+import ChatbotWidget from "@/components/Chatbot/ChatbotWidget";
 import AboutUs from "@/components/HomePage/AboutUs";
 import Banner from "@/components/HomePage/Banner";
 import Campus from "@/components/HomePage/Campus";
@@ -12,6 +13,7 @@ import TestimonialSection from "@/components/HomePage/TestimonialSection";
 export default function HomePage() {
   return (
     <main className=" font-outfit">
+      <ChatbotWidget />
       <Hero/>
       <ColabLogo />
       <Banner />

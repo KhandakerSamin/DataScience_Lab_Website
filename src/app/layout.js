@@ -30,7 +30,6 @@ export default function RootLayout({ children }) {
       <body className={`${poppins.variable} ${outfit.variable} font-poppins antialiased`}>
         <Navbar />
         <main>{children}</main>
-        <ChatbotWidget />
         <Footer />
       </body>
     </html>
