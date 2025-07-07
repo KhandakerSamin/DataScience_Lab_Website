@@ -27,11 +27,19 @@ export default function EventCard({ item }) {
               alt={item.title}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
             />
+
             <div className="absolute top-4 left-4">
-              <span className="bg-[#09509E] text-white text-xs font-medium px-3 py-1 rounded shadow-sm">
+              <span
+                className={
+                  item.type === "event"
+                    ? "bg-[#09509E] text-white text-xs font-medium px-3 py-1 rounded shadow-sm"
+                    : "bg-[#2E8B3C] text-white text-xs font-medium px-3 py-1 rounded shadow-sm"
+                }
+              >
                 {item.type === "event" ? "Event" : "News"}
               </span>
             </div>
+
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
           </div>
 
@@ -235,7 +243,7 @@ export default function EventCard({ item }) {
               <div className="pt-3 md:pt-4 border-t border-gray-200">
                 <button
                   onClick={toggleExpanded}
-                  className="text-[#39B24A] hover:text-[#2E8B3C] font-bold text-sm transition-colors duration-200"
+                  className="text-red-400 hover:text-red-600 font-bold text-sm transition-colors duration-200"
                 >
                   Show less
                 </button>

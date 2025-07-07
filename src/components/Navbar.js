@@ -35,11 +35,10 @@ export default function Navbar() {
 
   const navItems = [
     { name: "Home", href: "/", icon: Home },
-    { name: "Project", href: "/members", icon: FolderOpen },
-    { name: "Publications", href: "/course", icon: BookOpen },
+    { name: "Project & Publications", href: "/members", icon: FolderOpen },
     { name: "Our Team", href: "/members", icon: Users },
-    { name: "Our Course", href: "/course", icon: GraduationCap },
-    { name: "Events", href: "/news-events", icon: Calendar },
+    { name: "Contest & Dataset", href: "/course", icon: GraduationCap },
+    { name: "Events & News", href: "/news-events", icon: Calendar },
   ]
 
   const closeMobileMenu = () => {
@@ -49,11 +48,10 @@ export default function Navbar() {
   return (
     <>
       <header
-        className={`fixed top-0 w-full z-50 border-b transition-all duration-300 ${
-          scrolled
+        className={`fixed top-0 w-full z-50 border-b transition-all duration-300 ${scrolled
             ? "bg-white/80 backdrop-blur-md border-gray-200 shadow-lg"
             : "bg-white/95 backdrop-blur-sm border-transparent"
-        }`}
+          }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4.5  flex items-center justify-between font-outfit">
           {/* Logo */}
@@ -76,14 +74,17 @@ export default function Navbar() {
           </nav>
 
           {/* Desktop Contact Us Button - Your Design */}
-          <button className="hidden lg:inline-flex items-center gap-2 ml-0.5 text-white bg-[#09509E] hover:text-[#09509E] hover:bg-white border-2 border-[#09509E] px-5 py-2 rounded-full text-lg font-normal transition-colors duration-200 group">
-            Contact Us
-            <ChevronRight
-              className="text-[#09509E] bg-white group-hover:bg-[#09509E] group-hover:text-white rounded-full p-1 transition-colors duration-200"
-              size={24}
-              strokeWidth={2}
-            />
-          </button>
+          <Link href="/contact">
+            <button className="hidden lg:inline-flex items-center gap-2 ml-0.5 text-white bg-[#09509E] hover:text-[#09509E] hover:bg-white border-2 border-[#09509E] px-5 py-2 rounded-full text-lg font-normal transition-colors duration-200 group">
+              Contact Us
+              <ChevronRight
+                className="text-[#09509E] bg-white group-hover:bg-[#09509E] group-hover:text-white rounded-full p-1 transition-colors duration-200"
+                size={24}
+                strokeWidth={2}
+              />
+            </button>
+          </Link>
+
 
           {/* Mobile Hamburger */}
           <button
@@ -94,19 +95,16 @@ export default function Navbar() {
           >
             <div className="w-6 h-6 relative">
               <span
-                className={`absolute top-0 left-0 w-full h-0.5 bg-gray-700 transform transition-all duration-300 ${
-                  mobileMenuOpen ? "rotate-45 top-2.5" : ""
-                }`}
+                className={`absolute top-0 left-0 w-full h-0.5 bg-gray-700 transform transition-all duration-300 ${mobileMenuOpen ? "rotate-45 top-2.5" : ""
+                  }`}
               ></span>
               <span
-                className={`absolute top-2.5 left-0 w-full h-0.5 bg-gray-700 transition-all duration-300 ${
-                  mobileMenuOpen ? "opacity-0" : ""
-                }`}
+                className={`absolute top-2.5 left-0 w-full h-0.5 bg-gray-700 transition-all duration-300 ${mobileMenuOpen ? "opacity-0" : ""
+                  }`}
               ></span>
               <span
-                className={`absolute top-5 left-0 w-full h-0.5 bg-gray-700 transform transition-all duration-300 ${
-                  mobileMenuOpen ? "-rotate-45 top-2.5" : ""
-                }`}
+                className={`absolute top-5 left-0 w-full h-0.5 bg-gray-700 transform transition-all duration-300 ${mobileMenuOpen ? "-rotate-45 top-2.5" : ""
+                  }`}
               ></span>
             </div>
           </button>
@@ -115,17 +113,15 @@ export default function Navbar() {
 
       {/* Mobile Menu Overlay */}
       <div
-        className={`fixed inset-0 bg-black/50 backdrop-blur-sm z-40 transition-opacity duration-300 lg:hidden ${
-          mobileMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
+        className={`fixed inset-0 bg-black/50 backdrop-blur-sm z-40 transition-opacity duration-300 lg:hidden ${mobileMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
         onClick={closeMobileMenu}
       ></div>
 
       {/* Mobile Slide-out Menu - WITH ICONS */}
       <div
-        className={`fixed top-0 right-0 h-full w-80 bg-white shadow-2xl transform transition-transform duration-300 ease-out z-50 lg:hidden ${
-          mobileMenuOpen ? "translate-x-0" : "translate-x-full"
-        }`}
+        className={`fixed top-0 right-0 h-full w-80 bg-white shadow-2xl transform transition-transform duration-300 ease-out z-50 lg:hidden ${mobileMenuOpen ? "translate-x-0" : "translate-x-full"
+          }`}
       >
         {/* Menu Header - No Logo */}
         <div className="p-6 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-green-50">
@@ -174,14 +170,16 @@ export default function Navbar() {
 
           {/* Menu Footer */}
           <div className="p-6 border-t border-gray-100 bg-gray-50">
-            <button className="w-full inline-flex items-center justify-center gap-2 text-white bg-[#09509E] hover:text-[#09509E] hover:bg-white border-2 border-blue-800 px-5 py-3 rounded-full text-lg font-normal transition-colors duration-200 group mb-4">
-              Contact Us
-              <ChevronRight
-                className="text-[#09509E] bg-white group-hover:bg-[#09509E] group-hover:text-white rounded-full p-1 transition-colors duration-200"
-                size={24}
-                strokeWidth={2}
-              />
-            </button>
+            <Link href="/contact">
+              <button className="hidden lg:inline-flex items-center gap-2 ml-0.5 text-white bg-[#09509E] hover:text-[#09509E] hover:bg-white border-2 border-[#09509E] px-5 py-2 rounded-full text-lg font-normal transition-colors duration-200 group">
+                Contact Us
+                <ChevronRight
+                  className="text-[#09509E] bg-white group-hover:bg-[#09509E] group-hover:text-white rounded-full p-1 transition-colors duration-200"
+                  size={24}
+                  strokeWidth={2}
+                />
+              </button>
+            </Link>
 
             {/* Additional Info */}
             <div className="text-center space-y-2">

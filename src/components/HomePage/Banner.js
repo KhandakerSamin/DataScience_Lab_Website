@@ -47,7 +47,7 @@ export default function Banner() {
             </div>
 
             {/* Right SVG Illustration */}
-            <div className="relative flex justify-center">
+            <div className="relative flex justify-end">
               <div className="relative w-full max-w-sm">
                 <Image
                   src="/svg1.svg"
@@ -66,7 +66,7 @@ export default function Banner() {
         <div className="py-16">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left SVG Illustration */}
-            <div className="relative flex justify-center order-2 lg:order-1">
+            <div className="relative flex justify-start order-2 lg:order-1">
               <div className="relative w-full max-w-sm">
                 <Image
                   src="/svg2.svg"

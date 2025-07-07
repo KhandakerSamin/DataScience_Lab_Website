@@ -41,7 +41,7 @@ export default function Events() {
     return (
       <section className="w-full bg-gray-50 font-outfit">
         <div className="py-16 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto">
+          <div className="max-w-[1220px] mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-4xl md:text-5xl font-bold text-[#39B24A] mb-6">Our Recent Events</h2>
               <p className="text-gray-700 text-lg md:text-xl font-normal max-w-4xl mx-auto leading-relaxed">
@@ -112,7 +112,7 @@ export default function Events() {
   return (
     <section className="w-full bg-gray-50 font-outfit">
       <div className="py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1220px] mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-4xl font-bold text-[#39B24A] mb-6">Our Latest Events</h2>
