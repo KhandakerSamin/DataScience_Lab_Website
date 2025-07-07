@@ -42,6 +42,13 @@ export default function Navbar() {
     { name: "DS Club", href: "/ds-club", icon: School },
   ]
 
+  // Add Contact Us as a navigation item with a custom icon
+  const contactItem = {
+    name: "Contact Us",
+    href: "/contact",
+    icon: ChevronRight, // Using ChevronRight as a placeholder icon
+  }
+
   const closeMobileMenu = () => {
     setMobileMenuOpen(false)
   }
@@ -85,7 +92,6 @@ export default function Navbar() {
               />
             </button>
           </Link>
-
 
           {/* Mobile Hamburger */}
           <button
@@ -166,22 +172,27 @@ export default function Navbar() {
                   </Link>
                 )
               })}
+              {/* Contact Us Item */}
+              <Link
+                href={contactItem.href}
+                className="flex items-center gap-4 p-4 text-gray-700 hover:text-[#09509E] hover:bg-gradient-to-r hover:from-blue-50 hover:to-blue-100 rounded-xl font-medium transition-all duration-200 group transform hover:scale-105"
+                onClick={closeMobileMenu}
+                style={{
+                  animationDelay: `${navItems.length * 50}ms`,
+                  animation: mobileMenuOpen ? "slideInRight 0.3s ease-out forwards" : "none",
+                }}
+              >
+                <div className="flex items-center justify-center w-10 h-10 bg-blue-100 group-hover:bg-blue-200 rounded-lg transition-colors duration-200">
+                  <contactItem.icon className="w-5 h-5 text-[#09509E]" />
+                </div>
+                <span className="flex-1">{contactItem.name}</span>
+                <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition-all duration-200 text-[#09509E]" />
+              </Link>
             </div>
           </nav>
 
-          {/* Menu Footer */}
+          {/* Menu Footer - Removed Contact Us Button */}
           <div className="p-6 border-t border-gray-100 bg-gray-50">
-            <Link href="/contact">
-              <button className="hidden lg:inline-flex items-center gap-2 ml-0.5 text-white bg-[#09509E] hover:text-[#09509E] hover:bg-white border-2 border-[#09509E] px-5 py-2 rounded-full text-lg font-normal transition-colors duration-200 group">
-                Contact Us
-                <ChevronRight
-                  className="text-[#09509E] bg-white group-hover:bg-[#09509E] group-hover:text-white rounded-full p-1 transition-colors duration-200"
-                  size={24}
-                  strokeWidth={2}
-                />
-              </button>
-            </Link>
-
             {/* Additional Info */}
             <div className="text-center space-y-2">
               <div className="flex items-center justify-center gap-2 text-sm text-gray-600">
