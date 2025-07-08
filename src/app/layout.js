@@ -2,7 +2,6 @@ import Footer from "@/components/Footer";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { Poppins, Outfit } from "next/font/google";
-import ChatbotWidget from "@/components/Chatbot/ChatbotWidget";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -19,14 +18,16 @@ const outfit = Outfit({
 });
 
 export const metadata = {
-  title: "DIU Data Science Lab",
+  title: "DIU | Data Science Lab",
   description: "Official site for the Data Science Lab of DIU",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <head />
+      <head>
+        <link rel="icon" href="/favicon.png" />
+      </head>
       <body className={`${poppins.variable} ${outfit.variable} font-poppins antialiased`}>
         <Navbar />
         <main>{children}</main>

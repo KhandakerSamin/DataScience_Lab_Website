@@ -1,7 +1,8 @@
 "use client"
-
-import { SendHorizontal } from "lucide-react"
+import { SendHorizontal, Loader2 } from "lucide-react"
 import { useState } from "react"
+import emailjs from "@emailjs/browser"
+import Notification from "../notification"
 
 export default function ContactField() {
   const [formData, setFormData] = useState({
@@ -12,6 +13,28 @@ export default function ContactField() {
     message: "",
   })
 
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [notification, setNotification] = useState({
+    isVisible: false,
+    type: "success", // "success" | "error"
+    message: "",
+  })
+
+  const showNotification = (type, message) => {
+    setNotification({
+      isVisible: true,
+      type,
+      message,
+    })
+  }
+
+  const hideNotification = () => {
+    setNotification((prev) => ({
+      ...prev,
+      isVisible: false,
+    }))
+  }
+
   const handleInputChange = (e) => {
     const { name, value } = e.target
     setFormData((prev) => ({
@@ -20,10 +43,66 @@ export default function ContactField() {
     }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log("Form submitted:", formData)
-    // Handle form submission here
+    setIsSubmitting(true)
+
+    try {
+      /* 1️⃣ ─ SEND THE MESSAGE TO YOU */
+      const contactRes = await emailjs.send(
+        "service_7zzd3uf", // ✔ service ID
+        "template_nr7w33v", // ✔ contact template
+        {
+          from_name: `${formData.firstName} ${formData.lastName}`,
+          from_email: formData.email,
+          subject: `New Contact: ${formData.topic}`,
+          message: formData.message,
+          topic: formData.topic,
+          to_email: "ksyeasar1833@gmail.com", // 🔑 MUST MATCH {{to_email}} in the template
+        },
+        "PGdz_9bvjcdgFmVc9", // ✔ public key
+      )
+
+      console.log("Contact e-mail sent:", contactRes)
+
+      /* 2️⃣ ─ SEND THANK-YOU TO VISITOR (do not block if it fails) */
+      try {
+        await emailjs.send(
+          "service_7zzd3uf",
+          "template_hu4bcfn",
+          {
+            to_name: `${formData.firstName} ${formData.lastName}`,
+            to_email: formData.email, // 🔑 MUST MATCH {{to_email}} in thank-you template
+            topic: formData.topic,
+            message: formData.message,
+          },
+          "PGdz_9bvjcdgFmVc9",
+        )
+      } catch (thankErr) {
+        console.warn("Thank-you e-mail failed (ignored):", thankErr)
+      }
+
+      /* 3️⃣ ─ SUCCESS NOTIFICATION + RESET */
+      showNotification(
+        "success",
+        "Thank you! Your message has been sent successfully. Check your e-mail for confirmation.",
+      )
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        topic: "",
+        message: "",
+      })
+    } catch (err) {
+      console.error("Error sending emails:", err)
+      // EmailJS returns an object → surface its .text if available
+      const msg = err?.text && typeof err.text === "string" ? err.text : "Failed to send message. Please try again."
+
+      showNotification("error", msg)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const socialLinks = [
@@ -70,332 +149,26 @@ export default function ContactField() {
   ]
 
   return (
-    <div className="bg-gray-50 py-[200px] px-4 font-outfit">
-      <div className="max-w-[1220px] mx-auto">
-        {/* Contact Form and Info Row */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
-          {/* Contact Information Section */}
-          <div className="space-y-8">
-            {/* Contact Info Header */}
-            <div className="space-y-6">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-[#09509E] rounded-lg flex items-center justify-center">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                    />
-                  </svg>
-                </div>
-                <div>
-                  <h2 className="text-2xl md:text-3xl font-bold text-[#39B24A]">Contact</h2>
-                  <p className="text-gray-600">Get in touch with our team</p>
-                </div>
-              </div>
+    <>
+      {/* Popup Notification */}
+      <Notification
+        type={notification.type}
+        message={notification.message}
+        isVisible={notification.isVisible}
+        onClose={hideNotification}
+      />
 
-              <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-gray-800">For collaborations and project inquiries,</h3>
-                <p className="text-gray-600">please email:</p>
-                <a
-                  href="mailto:datasciencelab@daffodilvarsity.edu.bd"
-                  className="text-[#09509E] hover:text-[#39B24A] font-semibold text-lg transition-colors duration-200 underline decoration-2 underline-offset-4"
-                >
-                  datasciencelab@daffodilvarsity.edu.bd
-                </a>
-                <p className="text-gray-600">or send a message via this form</p>
-              </div>
-
-              {/* Contact Details */}
-              <div className="space-y-4 pt-6 border-t border-gray-200">
-                <div className="flex items-center gap-3 text-gray-600">
-                  <svg className="w-5 h-5 text-[#09509E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                    />
-                  </svg>
-                  <span>+880-2-9138234-5</span>
-                </div>
-                <div className="flex items-start gap-3 text-gray-600">
-                  <svg className="w-5 h-5 text-[#09509E] mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                  </svg>
-                  <div>
-                    <p className="font-semibold">Data Science Lab</p>
-                    <p>Daffodil International University</p>
-                    <p>Daffodil Smart City, Birulia, Savar-1341</p>
-                    <p>Bangladesh</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Social Media Links */}
-              <div className="space-y-4">
-                <h4 className="font-semibold text-gray-800">Connect with us</h4>
-                <div className="flex gap-3">
-                  {socialLinks.map((social, index) => (
-                    <a
-                      key={index}
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`w-12 h-12 bg-[#09509E] ${social.color} text-white rounded-lg flex items-center justify-center transition-all duration-200 hover:scale-110 hover:shadow-lg`}
-                      aria-label={social.name}
-                    >
-                      {social.icon}
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Contact Form Section */}
-          <div className="bg-white rounded-2xl border-2 border-gray-200 shadow-lg p-6">
-            <form onSubmit={handleSubmit} className="space-y-3">
-              {/* Name Fields */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <label htmlFor="firstName" className="text-sm font-medium text-gray-700">
-                    First Name *
-                  </label>
-                  <div className="relative">
-                    <svg
-                      className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                      />
-                    </svg>
-                    <input
-                      id="firstName"
-                      name="firstName"
-                      type="text"
-                      required
-                      value={formData.firstName}
-                      onChange={handleInputChange}
-                      className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#09509E] focus:border-[#09509E] outline-none transition-colors"
-                      placeholder="John"
-                    />
-                  </div>
-                </div>
-                <div className="space-y-1">
-                  <label htmlFor="lastName" className="text-sm font-medium text-gray-700">
-                    Last Name *
-                  </label>
-                  <div className="relative">
-                    <svg
-                      className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                      />
-                    </svg>
-                    <input
-                      id="lastName"
-                      name="lastName"
-                      type="text"
-                      required
-                      value={formData.lastName}
-                      onChange={handleInputChange}
-                      className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#09509E] focus:border-[#09509E] outline-none transition-colors"
-                      placeholder="Doe"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Email Field */}
-              <div className="space-y-1">
-                <label htmlFor="email" className="text-sm font-medium text-gray-700">
-                  Email *
-                </label>
-                <div className="relative">
-                  <svg
-                    className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                    />
-                  </svg>
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    required
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#09509E] focus:border-[#09509E] outline-none transition-colors"
-                    placeholder="john.doe@example.com"
-                  />
-                </div>
-              </div>
-
-              {/* Topic Field */}
-              <div className="space-y-1">
-                <label htmlFor="topic" className="text-sm font-medium text-gray-700">
-                  Topic *
-                </label>
-                <div className="relative">
-                  <svg
-                    className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-                    />
-                  </svg>
-                  <input
-                    id="topic"
-                    name="topic"
-                    type="text"
-                    required
-                    value={formData.topic}
-                    onChange={handleInputChange}
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#09509E] focus:border-[#09509E] outline-none transition-colors"
-                    placeholder="Data Analysis Project, Machine Learning Consultation, etc."
-                  />
-                </div>
-              </div>
-
-              {/* Message Field */}
-              <div className="space-y-1">
-                <label htmlFor="message" className="text-sm font-medium text-gray-700">
-                  Write a message *
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  required
-                  rows={6}
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#09509E] focus:border-[#09509E] outline-none transition-colors resize-none"
-                  placeholder="Tell us about your project, goals, and how we can help you achieve them..."
-                />
-              </div>
-
-              {/* Submit Button */}
-            
-              <button  type="submit" className="inline-flex items-center gap-2 ml-0.5 text-white bg-[#09509E] hover:text-[#09509E] hover:bg-white border-2 border-blue-800 px-5 py-2 rounded-full text-lg font-normal transition-colors duration-200 group">
-                Send Message
-                <SendHorizontal
-                  className="text-[#09509E] bg-white group-hover:bg-[#09509E] group-hover:text-white rounded-full p-1 transition-colors duration-200"
-                  size={24}
-                  strokeWidth={2}
-                />
-                
-              </button>
-            </form>
-          </div>
-        </div>
-
-        {/* Map Section - Second Row */}
-        <div className="bg-white rounded-2xl border-2 mt-[150px] border-gray-200 shadow-lg overflow-hidden">
-          <div className="bg-green-50 text-[#09509E] p-6">
-            <h3 className="text-2xl font-bold flex items-center gap-3">
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                />
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                />
-              </svg>
-              Our Location
-            </h3>
-            <p className="text-[#09509E] text-lg mt-2">Visit us at Daffodil International University</p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-0">
-            {/* Map */}
-            <div className="lg:col-span-2 relative h-109 bg-gray-100">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3648.2123456789!2d90.2584567!3d23.8456789!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755eb35c5c5c5c5%3A0x1234567890abcdef!2sDaffodil%20International%20University%2C%20Daffodil%20Smart%20City%2C%20Birulia%2C%20Savar!5e0!3m2!1sen!2sbd!4v1234567890123!5m2!1sen!2sbd"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen=""
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                className="absolute inset-0"
-                title="Daffodil International University Location"
-              ></iframe>
-            </div>
-
-            
-
-            {/* Location Details */}
-            <div className="p-6 bg-gray-50 flex flex-col justify-center">
+      <div className="bg-gray-50 py-[200px] px-4 font-outfit">
+        <div className="max-w-[1220px] mx-auto">
+          {/* Contact Form and Info Row */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+            {/* Contact Information Section */}
+            <div className="space-y-8">
+              {/* Contact Info Header */}
               <div className="space-y-6">
-                <div>
-                  <h4 className="text-xl font-bold text-gray-800 mb-4">Data Science Lab</h4>
-                  <div className="text-gray-600 space-y-2">
-                    <p className="font-semibold">Daffodil International University</p>
-                    <p>Daffodil Smart City</p>
-                    <p>Birulia, Savar-1341</p>
-                    <p>Bangladesh</p>
-                  </div>
-                </div>
-
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3">
-                    <svg className="w-4 h-4 text-[#09509E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                      />
-                    </svg>
-                    <span className="text-sm">+880-2-9138234-5</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <svg className="w-4 h-4 text-[#09509E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 bg-[#09509E] rounded-lg flex items-center justify-center">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -403,25 +176,352 @@ export default function ContactField() {
                         d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                       />
                     </svg>
-                    <span className="text-sm">datasciencelab@daffodilvarsity.edu.bd</span>
+                  </div>
+                  <div>
+                    <h2 className="text-2xl md:text-3xl font-bold text-[#39B24A]">Contact</h2>
+                    <p className="text-gray-600">Get in touch with our team</p>
+                  </div>
+                </div>
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold text-gray-800">For collaborations and project inquiries,</h3>
+                  <p className="text-gray-600">please email:</p>
+                  <a
+                    href="mailto:datasciencelab@daffodilvarsity.edu.bd"
+                    className="text-[#09509E] hover:text-[#39B24A] font-semibold text-lg transition-colors duration-200 underline decoration-2 underline-offset-4"
+                  >
+                    datasciencelab@daffodilvarsity.edu.bd
+                  </a>
+                  <p className="text-gray-600">or send a message via this form</p>
+                </div>
+                {/* Contact Details */}
+                <div className="space-y-4 pt-6 border-t border-gray-200">
+                  <div className="flex items-center gap-3 text-gray-600">
+                    <svg className="w-5 h-5 text-[#09509E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                      />
+                    </svg>
+                    <span>+880-2-9138234-5</span>
+                  </div>
+                  <div className="flex items-start gap-3 text-gray-600">
+                    <svg
+                      className="w-5 h-5 text-[#09509E] mt-0.5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                    </svg>
+                    <div>
+                      <p className="font-semibold">Data Science Lab</p>
+                      <p>Daffodil International University</p>
+                      <p>Daffodil Smart City, Birulia, Savar-1341</p>
+                      <p>Bangladesh</p>
+                    </div>
+                  </div>
+                </div>
+                {/* Social Media Links */}
+                <div className="space-y-4">
+                  <h4 className="font-semibold text-gray-800">Connect with us</h4>
+                  <div className="flex gap-3">
+                    {socialLinks.map((social, index) => (
+                      <a
+                        key={index}
+                        href={social.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`w-12 h-12 bg-[#09509E] ${social.color} text-white rounded-lg flex items-center justify-center transition-all duration-200 hover:scale-110 hover:shadow-lg`}
+                        aria-label={social.name}
+                      >
+                        {social.icon}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Contact Form Section */}
+            <div className="bg-white rounded-2xl border-2 border-gray-200 shadow-lg p-6">
+              <form onSubmit={handleSubmit} className="space-y-4">
+                {/* Name Fields */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <label htmlFor="firstName" className="text-sm font-medium text-gray-700">
+                      First Name *
+                    </label>
+                    <div className="relative">
+                      <svg
+                        className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                        />
+                      </svg>
+                      <input
+                        id="firstName"
+                        name="firstName"
+                        type="text"
+                        required
+                        disabled={isSubmitting}
+                        value={formData.firstName}
+                        onChange={handleInputChange}
+                        className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#09509E] focus:border-[#09509E] outline-none transition-colors disabled:bg-gray-100 disabled:cursor-not-allowed"
+                        placeholder="John"
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <label htmlFor="lastName" className="text-sm font-medium text-gray-700">
+                      Last Name *
+                    </label>
+                    <div className="relative">
+                      <svg
+                        className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                        />
+                      </svg>
+                      <input
+                        id="lastName"
+                        name="lastName"
+                        type="text"
+                        required
+                        disabled={isSubmitting}
+                        value={formData.lastName}
+                        onChange={handleInputChange}
+                        className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#09509E] focus:border-[#09509E] outline-none transition-colors disabled:bg-gray-100 disabled:cursor-not-allowed"
+                        placeholder="Doe"
+                      />
+                    </div>
                   </div>
                 </div>
 
-                {/* Office Hours */}
-                <div className="pt-4 border-t border-gray-200">
-                  <h5 className="font-semibold text-gray-800 mb-3">Office Hours</h5>
-                  <div className="text-sm text-gray-600 space-y-1">
-                    <div className="flex justify-between">
-                      <span>Sunday - Thursday</span>
-                      <span>9:00 AM - 5:00 PM</span>
+                {/* Email Field */}
+                <div className="space-y-2">
+                  <label htmlFor="email" className="text-sm font-medium text-gray-700">
+                    Email *
+                  </label>
+                  <div className="relative">
+                    <svg
+                      className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                      />
+                    </svg>
+                    <input
+                      id="email"
+                      name="email"
+                      type="email"
+                      required
+                      disabled={isSubmitting}
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#09509E] focus:border-[#09509E] outline-none transition-colors disabled:bg-gray-100 disabled:cursor-not-allowed"
+                      placeholder="john.doe@example.com"
+                    />
+                  </div>
+                </div>
+
+                {/* Topic Field */}
+                <div className="space-y-2">
+                  <label htmlFor="topic" className="text-sm font-medium text-gray-700">
+                    Topic *
+                  </label>
+                  <div className="relative">
+                    <svg
+                      className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                      />
+                    </svg>
+                    <input
+                      id="topic"
+                      name="topic"
+                      type="text"
+                      required
+                      disabled={isSubmitting}
+                      value={formData.topic}
+                      onChange={handleInputChange}
+                      className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#09509E] focus:border-[#09509E] outline-none transition-colors disabled:bg-gray-100 disabled:cursor-not-allowed"
+                      placeholder="Data Analysis Project, Machine Learning Consultation, etc."
+                    />
+                  </div>
+                </div>
+
+                {/* Message Field */}
+                <div className="space-y-2">
+                  <label htmlFor="message" className="text-sm font-medium text-gray-700">
+                    Write a message *
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    required
+                    rows={6}
+                    disabled={isSubmitting}
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#09509E] focus:border-[#09509E] outline-none transition-colors resize-none disabled:bg-gray-100 disabled:cursor-not-allowed"
+                    placeholder="Tell us about your project, goals, and how we can help you achieve them..."
+                  />
+                </div>
+
+                {/* Submit Button */}
+                <div className="pt-2">
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full inline-flex items-center justify-center gap-2 text-white bg-[#09509E] hover:text-[#09509E] hover:bg-white border-2 border-[#09509E] hover:border-[#0a4a8a] px-6 py-3 rounded-2xl text-lg font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#09509E] disabled:hover:border-[#09509E] shadow-lg hover:shadow-xl"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-5 h-5 animate-spin" />
+                        Sending Message...
+                      </>
+                    ) : (
+                      <>
+                        <SendHorizontal className="w-5 h-5" />
+                        Send Message
+                      </>
+                    )}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          {/* Map Section - Second Row */}
+          <div className="bg-white rounded-2xl border-2 mt-[150px] border-gray-200 shadow-lg overflow-hidden">
+            <div className="bg-green-50 text-[#09509E] p-6">
+              <h3 className="text-2xl font-bold flex items-center gap-3">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                </svg>
+                Our Location
+              </h3>
+              <p className="text-[#09509E] text-lg mt-2">Visit us at Daffodil International University</p>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-0">
+              {/* Map */}
+              <div className="lg:col-span-2 relative h-109 bg-gray-100">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3648.2123456789!2d90.2584567!3d23.8456789!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755eb35c5c5c5c5%3A0x1234567890abcdef!2sDaffodil%20International%20University%2C%20Daffodil%20Smart%20City%2C%20Birulia%2C%20Savar!5e0!3m2!1sen!2sbd!4v1234567890123!5m2!1sen!2sbd"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="absolute inset-0"
+                  title="Daffodil International University Location"
+                ></iframe>
+              </div>
+
+              {/* Location Details */}
+              <div className="p-6 bg-gray-50 flex flex-col justify-center">
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="text-xl font-bold text-gray-800 mb-4">Data Science Lab</h4>
+                    <div className="text-gray-600 space-y-2">
+                      <p className="font-semibold">Daffodil International University</p>
+                      <p>Daffodil Smart City</p>
+                      <p>Birulia, Savar-1341</p>
+                      <p>Bangladesh</p>
                     </div>
-                    <div className="flex justify-between">
-                      <span>Saturday</span>
-                      <span>10:00 AM - 2:00 PM</span>
+                  </div>
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-3">
+                      <svg className="w-4 h-4 text-[#09509E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                        />
+                      </svg>
+                      <span className="text-sm">+880-2-9138234-5</span>
                     </div>
-                    <div className="flex justify-between">
-                      <span>Friday</span>
-                      <span>Closed</span>
+                    <div className="flex items-center gap-3">
+                      <svg className="w-4 h-4 text-[#09509E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                        />
+                      </svg>
+                      <span className="text-sm">datasciencelab@daffodilvarsity.edu.bd</span>
+                    </div>
+                  </div>
+                  {/* Office Hours */}
+                  <div className="pt-4 border-t border-gray-200">
+                    <h5 className="font-semibold text-gray-800 mb-3">Office Hours</h5>
+                    <div className="text-sm text-gray-600 space-y-1">
+                      <div className="flex justify-between">
+                        <span>Sunday - Thursday</span>
+                        <span>9:00 AM - 5:00 PM</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Saturday</span>
+                        <span>10:00 AM - 2:00 PM</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Friday</span>
+                        <span>Closed</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -430,6 +530,6 @@ export default function ContactField() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }

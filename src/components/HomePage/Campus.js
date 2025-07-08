@@ -88,10 +88,6 @@ export default function Campus() {
               )}
             </div>
 
-            {/* Debug Info - Remove this after testing */}
-            <div className="mt-4 text-center">
-              <p className="text-sm text-gray-600">Video State: {showVideo ? "Video Playing" : "Thumbnail Showing"}</p>
-            </div>
 
             {/* Campus Features */}
             
