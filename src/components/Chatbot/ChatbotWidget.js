@@ -83,19 +83,11 @@ export default function ChatbotWidget() {
   }
 
   // Function to clean and format text responses
-  const cleanAndFormatText = (text) => {
+  const cleanAndFormatText = (text, isFirstMessage) => {
     if (!text) return text
 
-    const cleanedText = text
-      // Remove the repetitive intro greeting
-      .replace(
-        /^Hey there! 👋\s*I'm ROBO, your friendly AI assistant from the Data Science Lab at Daffodil International University!\s*/i,
-        "",
-      )
-      .replace(/^Hello! I'm ROBO[^!]*!\s*/i, "")
-      .replace(/^Hi! I'm ROBO[^!]*!\s*/i, "")
-
-      // Convert markdown bold to simple emphasis
+    let cleanedText = text
+      // Remove markdown bold to simple emphasis
       .replace(/\*\*(.*?)\*\*/g, "$1") // Remove ** bold
       .replace(/__(.*?)__/g, "$1") // Remove __ bold
 
@@ -118,11 +110,27 @@ export default function ChatbotWidget() {
       .replace(/~~(.*?)~~/g, "$1")
 
       // Clean up links - keep just the text
-      .replace(/\[([^\]]+)\]$$[^)]+$$/g, "$1")
+      .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
 
       // Clean up extra whitespace
       .replace(/\n{3,}/g, "\n\n")
       .trim()
+
+    // Remove repetitive greetings for non-initial messages
+    if (!isFirstMessage) {
+      cleanedText = cleanedText
+        .replace(
+          /^😊\s*As ROBO, the AI assistant for the Data Science Lab at Daffodil International University, I'm ready to help you with any questions you have about DIU, the Data Science Lab, or anything else\.\s*What can I assist you with today\?\s*/i,
+          ""
+        )
+        .replace(
+          /^Hey there! 👋\s*I'm ROBO, your friendly AI assistant from the Data Science Lab at Daffodil International University!\s*/i,
+          ""
+        )
+        .replace(/^Hello! I'm ROBO[^!]*!\s*/i, "")
+        .replace(/^Hi! I'm ROBO[^!]*!\s*/i, "")
+        .trim()
+    }
 
     return cleanedText
   }
@@ -154,31 +162,33 @@ export default function ChatbotWidget() {
       const data = await response.json()
 
       // Simulate typing delay for better UX
-      setTimeout(
-        () => {
-          setIsTyping(false)
+      setTimeout(() => {
+        setIsTyping(false)
 
-          if (response.ok && data.response) {
-            const botMessage = {
-              id: Date.now() + 1,
-              text: cleanAndFormatText(data.response), // Clean and format the response
-              sender: "bot",
-              timestamp: new Date(),
-            }
-            setMessages((prev) => [...prev, botMessage])
-            playNotificationSound()
-          } else {
-            const errorMessage = {
-              id: Date.now() + 1,
-              text: "I apologize, but I'm having some technical difficulties. Please try asking your question again, or feel free to contact us directly at datasciencelab@daffodilvarsity.edu.bd 📧",
-              sender: "bot",
-              timestamp: new Date(),
-            }
-            setMessages((prev) => [...prev, errorMessage])
+        if (response.ok && data.response) {
+          const botMessage = {
+            id: Date.now() + 1,
+            text: cleanAndFormatText(data.response, messages.length === 1),
+            sender: "bot",
+            timestamp: new Date(),
           }
-        },
-        800 + Math.random() * 700,
-      ) // Random delay between 0.8-1.5 seconds
+          setMessages((prev) => [...prev, botMessage])
+          playNotificationSound()
+        } else {
+          const errorMessage = {
+            id: Date.now() + 1,
+            text: "I apologize, but I'm having some technical difficulties. Please try asking your question again, or feel free to contact us directly at datasciencelab@daffodilvarsity.edu.bd 📧",
+            sender: "bot",
+            timestamp: new Date(),
+          }
+          setMessages((prev) => [...prev, errorMessage])
+        }
+
+        // Refocus the input field after message is processed
+        if (isOpen && !isMinimized && inputRef.current) {
+          inputRef.current.focus()
+        }
+      }, 800 + Math.random() * 700)
     } catch (error) {
       console.error("Error:", error)
       setIsTyping(false)
@@ -189,6 +199,11 @@ export default function ChatbotWidget() {
         timestamp: new Date(),
       }
       setMessages((prev) => [...prev, errorMessage])
+
+      // Refocus the input field after error
+      if (isOpen && !isMinimized && inputRef.current) {
+        inputRef.current.focus()
+      }
     } finally {
       setIsLoading(false)
     }
@@ -271,7 +286,7 @@ export default function ChatbotWidget() {
             <>
               {/* Mobile Quick Questions */}
               {messages.length === 1 && (
-                <div className="p-5 bg-gradient-to-b from-gray-50/80 to-white/80 backdrop-blur-sm border-b border-gray-100/50">
+                <div className="p-5 bg-gradient-to-b from-gray-50/80 to-white/80 backdrop-blur-sm border-b border-gray-100=s/50">
                   <p className="text-sm text-gray-600 mb-4 font-medium">Quick questions:</p>
                   <div className="grid grid-cols-1 gap-3">
                     {quickQuestions.slice(0, 4).map((question, index) => (
@@ -288,7 +303,7 @@ export default function ChatbotWidget() {
               )}
 
               {/* Mobile Messages Area */}
-              <div className="flex-1 overflow-y-auto p-5 space-y-5 bg-gradient-to-b from-gray-50/50 to-white/80 backdrop-blur-sm overflow-x-hidden">
+              <div className="flex-1 min-h-[400px] overflow-y-auto p-5 space-y-5 bg-gradient-to-b from-gray-50/50 to-white/80 backdrop-blur-sm overflow-x-hidden">
                 {messages.map((message) => (
                   <div
                     key={message.id}
@@ -390,7 +405,7 @@ export default function ChatbotWidget() {
                   <button
                     onClick={sendMessage}
                     disabled={!inputMessage.trim() || isLoading}
-                    className="w-14 h-14 bg-gradient-to-r from-[#09509E] to-[#07407A] hover:from-[#07407A] hover:to-[#09509E] disabled:from-gray-300 disabled:to-gray-300 disabled:cursor-not-allowed text-white rounded-xl flex items-center justify-center transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 disabled:transform-none"
+                    className="w-14 h-14 mb-2.5 bg-gradient-to-r from-[#09509E] to-[#07407A] hover:from-[#07407A] hover:to-[#09509E] disabled:from-gray-300 disabled:to-gray-300 disabled:cursor-not-allowed text-white rounded-xl flex items-center justify-center transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 disabled:transform-none"
                     aria-label="Send message"
                   >
                     <Send className="w-5 h-5" />
@@ -423,7 +438,7 @@ export default function ChatbotWidget() {
             </div>
             <div className="relative flex items-center justify-between">
               <div className="flex items-center gap-4">
-                <div className="w-14 h-14 bg-white/30 backdrop-blur-lg rounded-xl flex items-center justify-center border-2 border-white/40">
+                <div className="w-12 h-12 bg-white/30 backdrop-blur-lg rounded-xl flex items-center justify-center border-2 border-white/40">
                   <Image
                     src="/robo.svg"
                     alt="ROBO Assistant"
@@ -467,7 +482,7 @@ export default function ChatbotWidget() {
                 <div className="p-4 bg-gradient-to-b from-gray-50/80 to-white/80 backdrop-blur-sm border-b border-gray-100/50">
                   <p className="text-sm text-gray-600 mb-1 font-medium">Quick questions:</p>
                   <div className="grid grid-cols-1 gap-2">
-                    {quickQuestions.slice(0, 3).map((question, index) => (
+                    {quickQuestions.slice(0, 2).map((question, index) => (
                       <button
                         key={index}
                         onClick={() => setInputMessage(question)}
@@ -481,7 +496,7 @@ export default function ChatbotWidget() {
               )}
 
               {/* Desktop Messages Area */}
-              <div className="h-65 overflow-y-auto p-4 space-y-4 bg-gradient-to-b from-gray-50/50 to-white/80 backdrop-blur-sm overflow-x-hidden">
+              <div className="h-80 overflow-y-auto p-4 space-y-4 bg-gradient-to-b from-gray-50/50 to-white/80 backdrop-blur-sm overflow-x-hidden">
                 {messages.map((message) => (
                   <div
                     key={message.id}
@@ -622,8 +637,8 @@ export default function ChatbotWidget() {
 
           {/* Notification Badge - Hides on scroll */}
           {showNotification && (
-            <div className="absolute -top-1 -right-1 w-4 h-4 bg-red-600 rounded-full flex items-center justify-center border-2 border-white shadow-md transition-opacity duration-300">
-              <span className="text-[0.6rem] text-white font-semibold">!</span>
+            <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-600 rounded-full flex items-center justify-center border-2 border-white shadow-md transition-opacity duration-300">
+              <span className="text-[0.6rem] text-white font-semibold"></span>
             </div>
           )}
         </button>
