@@ -112,7 +112,7 @@ const teamMembers = [
     github: 'https://github.com',
   },
   {
-    name: 'Grace Taylor',
+    name: 'Shihab Howlader',
     position: 'Lab Associates',
     bio:'Lab Associates',
     photo: '/soborkhan.jpg',
