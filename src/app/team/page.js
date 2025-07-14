@@ -87,7 +87,7 @@ const teamMembers = [
     photo: '/soborkhan.jpg',
     github: 'https://github.com',
   },
-    {
+  {
     name: 'Eve Davis',
     position: 'Lab Members',
     photo: '/soborkhan.jpg',
@@ -99,7 +99,7 @@ const teamMembers = [
     photo: '/soborkhan.jpg',
     github: 'https://github.com',
   },
-    {
+  {
     name: 'Eve Davis',
     position: 'Lab Members',
     photo: '/soborkhan.jpg',
@@ -125,7 +125,7 @@ const teamMembers = [
     photo: '/soborkhan.jpg',
     email: 'henry.adams@example.com',
   },
-    {
+  {
     name: 'Khandaker Samin Yeasar',
     position: 'Lab Associates',
     bio: "Lab Associates and Developer of this website",
@@ -158,7 +158,7 @@ export default function TeamPage() {
   return (
     <div className="bg-background min-h-screen bg-gray-50">
       <TeamBanner />
-      <div className="container mx-auto px-4 py-12 ">
+      <div className="container mx-auto px-4 py-12">
         {Object.entries(hierarchy).map(([role, members], index) => {
           const layout = getGridLayout(members);
           let startIdx = 0;
@@ -166,26 +166,39 @@ export default function TeamPage() {
           return (
             <div key={role} className="mb-12">
               <h2
-                className="text-3xl font-bold text-textDark mb-6 border-l-4 border-primary pl-4"
-                style={{ marginLeft: `${index * 20}px` }}
+                className="text-3xl font-bold text-textDark mb-6 border-l-4 border-primary pl-4 ml-9"
+               
               >
                 {role}
               </h2>
-              {layout.rows.map((rowCount, rowIndex) => {
-                const endIdx = startIdx + rowCount;
-                const rowMembers = members.slice(startIdx, endIdx);
-                startIdx = endIdx;
 
-                return (
-                  <div key={rowIndex} className="flex justify-center mb-6">
-                    <div className={`grid grid-cols-${Math.min(rowCount, 4)} gap-6`}>
-                      {rowMembers.map((member, idx) => (
-                        <TeamMemberCard key={idx} member={member} />
-                      ))}
-                    </div>
+              {/* Mobile View */}
+              <div className="block lg:hidden space-y-6">
+                {members.map((member, idx) => (
+                  <div key={idx} className="flex justify-center">
+                    <TeamMemberCard member={member} />
                   </div>
-                );
-              })}
+                ))}
+              </div>
+
+              {/* Desktop View */}
+              <div className="hidden lg:block">
+                {layout.rows.map((rowCount, rowIndex) => {
+                  const endIdx = startIdx + rowCount;
+                  const rowMembers = members.slice(startIdx, endIdx);
+                  startIdx = endIdx;
+
+                  return (
+                    <div key={rowIndex} className="flex justify-center mb-6">
+                      <div className={`grid grid-cols-${Math.min(rowCount, 4)} gap-6`}>
+                        {rowMembers.map((member, idx) => (
+                          <TeamMemberCard key={idx} member={member} />
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           );
         })}
