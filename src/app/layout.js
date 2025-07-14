@@ -1,3 +1,4 @@
+// app/(main)/layout.js
 import Footer from "@/components/Footer";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
@@ -22,7 +23,7 @@ export const metadata = {
   description: "Official site for the Data Science Lab of DIU",
 };
 
-export default function RootLayout({ children }) {
+export default function MainLayout({ children }) {
   return (
     <html lang="en">
       <head>
@@ -30,7 +31,7 @@ export default function RootLayout({ children }) {
       </head>
       <body className={`${poppins.variable} ${outfit.variable} font-poppins antialiased`}>
         <Navbar />
-        <main>{children}</main>
+        <main className="min-h-screen">{children}</main>
         <Footer />
       </body>
     </html>
