@@ -231,11 +231,16 @@ export default function ChatbotWidget() {
 
   return (
     <>
+      {/* Ensure viewport meta tag is in your HTML head */}
+      {/* Add this to your <head> in the main layout file if not already present:
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+      */}
+
       {/* Mobile Full Screen Chat (md:hidden) */}
       {isOpen && (
-        <div className="md:hidden fixed inset-0 bg-white z-50 flex flex-col">
+        <div className="md:hidden fixed inset-0 bg-white z-50 flex flex-col h-screen max-h-[100vh] overflow-hidden">
           {/* Mobile Header */}
-          <div className="bg-gradient-to-r from-[#09509E]/70 via-[#07407A]/50 to-[#09509E]/70 backdrop-blur-md text-white p-5 relative overflow-hidden">
+          <div className="bg-gradient-to-r from-[#09509E]/70 via-[#07407A]/50 to-[#09509E]/70 backdrop-blur-md text-white p-4 relative overflow-hidden">
             <div className="absolute inset-0 opacity-10">
               <div className="absolute top-0 left-0 w-20 h-20 bg-white rounded-full -translate-x-10 -translate-y-10 animate-pulse"></div>
               <div
@@ -244,35 +249,35 @@ export default function ChatbotWidget() {
               ></div>
             </div>
             <div className="relative flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className="w-16 h-16 bg-white/30 backdrop-blur-lg rounded-xl flex items-center justify-center border-2 border-white/40">
+              <div className="flex items-center gap-3">
+                <div className="w-14 h-14 bg-white/30 backdrop-blur-lg rounded-xl flex items-center justify-center border-2 border-white/40">
                   <Image
                     src="/robo.svg"
                     alt="ROBO Assistant"
-                    width={36}
-                    height={36}
+                    width={32}
+                    height={32}
                     className="filter brightness-100 contrast-200"
                   />
                 </div>
                 <div>
-                  <h3 className="font-bold text-xl">ROBO</h3>
+                  <h3 className="font-bold text-lg">ROBO</h3>
                   <div className="flex items-center gap-2">
-                    <div className="w-2.5 h-2.5 bg-green-300 rounded-full animate-pulse"></div>
-                    <p className="text-base text-green-100">DS Lab Assistant</p>
+                    <div className="w-2 h-2 bg-green-300 rounded-full animate-pulse"></div>
+                    <p className="text-sm text-green-100">DS Lab Assistant</p>
                   </div>
                 </div>
               </div>
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setIsMinimized(!isMinimized)}
-                  className="p-3 hover:bg-white/20 rounded-lg transition-all duration-200"
+                  className="p-2 hover:bg-white/20 rounded-lg transition-all duration-200"
                   aria-label="Minimize chat"
                 >
                   {isMinimized ? <Maximize2 className="w-5 h-5" /> : <Minimize2 className="w-5 h-5" />}
                 </button>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="p-3 hover:bg-white/20 rounded-lg transition-all duration-200"
+                  className="p-2 hover:bg-white/20 rounded-lg transition-all duration-200"
                   aria-label="Close chat"
                 >
                   <X className="w-5 h-5" />
@@ -286,14 +291,14 @@ export default function ChatbotWidget() {
             <>
               {/* Mobile Quick Questions */}
               {messages.length === 1 && (
-                <div className="p-5 bg-gradient-to-b from-gray-50/80 to-white/80 backdrop-blur-sm border-b border-gray-100=s/50">
-                  <p className="text-sm text-gray-600 mb-4 font-medium">Quick questions:</p>
-                  <div className="grid grid-cols-1 gap-3">
+                <div className="p-4 bg-gradient-to-b from-gray-50/80 to-white/80 backdrop-blur-sm border-b border-gray-100/50">
+                  <p className="text-sm text-gray-600 mb-3 font-medium">Quick questions:</p>
+                  <div className="grid grid-cols-1 gap-2">
                     {quickQuestions.slice(0, 4).map((question, index) => (
                       <button
                         key={index}
                         onClick={() => setInputMessage(question)}
-                        className="text-left text-sm bg-white/80 backdrop-blur-sm border border-gray-200/50 rounded-lg px-4 py-3 hover:border-[#39B24A] hover:bg-green-50/80 transition-all duration-200 text-gray-700"
+                        className="text-left text-sm bg-white/80 backdrop-blur-sm border border-gray-200/50 rounded-lg px-3 py-2 hover:border-[#39B24A] hover:bg-green-50/80 transition-all duration-200 text-gray-700"
                       >
                         {question}
                       </button>
@@ -303,48 +308,48 @@ export default function ChatbotWidget() {
               )}
 
               {/* Mobile Messages Area */}
-              <div className="flex-1 min-h-[400px] overflow-y-auto p-5 space-y-5 bg-gradient-to-b from-gray-50/50 to-white/80 backdrop-blur-sm overflow-x-hidden">
+              <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gradient-to-b from-gray-50/50 to-white/80 backdrop-blur-sm overflow-x-hidden" style={{ WebkitOverflowScrolling: 'touch' }}>
                 {messages.map((message) => (
                   <div
                     key={message.id}
                     className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"}`}
                   >
                     <div
-                      className={`max-w-[85%] px-5 py-4 rounded-xl relative break-words ${
+                      className={`max-w-[85%] px-4 py-3 rounded-xl relative break-words ${
                         message.sender === "user"
                           ? "bg-gradient-to-r from-[#09509E] to-[#0a4a8a] text-white rounded-br-md shadow-lg"
                           : "bg-white/90 backdrop-blur-sm text-gray-800 rounded-bl-md shadow-md border border-gray-100/50"
                       }`}
                     >
                       {message.sender === "bot" && (
-                        <div className="flex items-start gap-4">
-                          <div className="w-9 h-9 bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5 border border-white/30">
+                        <div className="flex items-start gap-3">
+                          <div className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5 border border-white/30">
                             <Image
                               src="/robo.svg"
                               alt="ROBO"
-                              width={20}
-                              height={20}
+                              width={18}
+                              height={18}
                               className="filter brightness-110"
                             />
                           </div>
                           <div className="flex-1 min-w-0">
-                            <p className="text-base leading-relaxed break-words whitespace-pre-wrap overflow-wrap-anywhere">
+                            <p className="text-sm leading-relaxed break-words whitespace-pre-wrap overflow-wrap-anywhere">
                               {message.text}
                             </p>
-                            <p className="text-xs text-gray-500 mt-3">{formatTime(message.timestamp)}</p>
+                            <p className="text-xs text-gray-500 mt-2">{formatTime(message.timestamp)}</p>
                           </div>
                         </div>
                       )}
 
                       {message.sender === "user" && (
-                        <div className="flex items-start gap-4">
+                        <div className="flex items-start gap-3">
                           <div className="flex-1 min-w-0">
-                            <p className="text-base leading-relaxed break-words whitespace-pre-wrap overflow-wrap-anywhere">
+                            <p className="text-sm leading-relaxed break-words whitespace-pre-wrap overflow-wrap-anywhere">
                               {message.text}
                             </p>
-                            <p className="text-xs text-blue-100 mt-3">{formatTime(message.timestamp)}</p>
+                            <p className="text-xs text-blue-100 mt-2">{formatTime(message.timestamp)}</p>
                           </div>
-                          <div className="w-9 h-9 bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                          <div className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
                             <CircleUserRound className="text-white w-5 h-5" />
                           </div>
                         </div>
@@ -356,29 +361,29 @@ export default function ChatbotWidget() {
                 {/* Mobile Typing Indicator */}
                 {isTyping && (
                   <div className="flex justify-start">
-                    <div className="bg-white/90 backdrop-blur-sm text-gray-800 rounded-xl rounded-bl-md shadow-md border border-gray-100/50 px-5 py-4">
-                      <div className="flex items-center gap-4">
-                        <div className="w-9 h-9 bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center border border-white/30">
+                    <div className="bg-white/90 backdrop-blur-sm text-gray-800 rounded-xl rounded-bl-md shadow-md border border-gray-100/50 px-4 py-3">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center border border-white/30">
                           <Image
                             src="/robo.svg"
                             alt="ROBO"
-                            width={20}
-                            height={20}
+                            width={18}
+                            height={18}
                             className="filter brightness-110 animate-pulse"
                           />
                         </div>
                         <div className="flex space-x-1">
-                          <div className="w-2 h-2 bg-[#39B24A] rounded-full animate-bounce"></div>
+                          <div className="w-1.5 h-1.5  bg-[#39B24A] rounded-full animate-bounce"></div>
                           <div
-                            className="w-2 h-2 bg-[#39B24A] rounded-full animate-bounce"
+                            className="w-1.5 h-1.5 bg-[#39B24A] rounded-full animate-bounce"
                             style={{ animationDelay: "0.1s" }}
                           ></div>
                           <div
-                            className="w-2 h-2 bg-[#39B24A] rounded-full animate-bounce"
+                            className="w-1.5 h-1.5 bg-[#39B24A] rounded-full animate-bounce"
                             style={{ animationDelay: "0.2s" }}
                           ></div>
                         </div>
-                        <span className="text-sm text-gray-500">thinking...</span>
+                        <span className="text-xs text-gray-500">thinking...</span>
                       </div>
                     </div>
                   </div>
@@ -387,8 +392,8 @@ export default function ChatbotWidget() {
               </div>
 
               {/* Mobile Input Area */}
-              <div className="p-5 bg-white/90 backdrop-blur-sm border-t border-gray-100/50">
-                <div className="flex items-end gap-4">
+              <div className="p-4 bg-white/90 backdrop-blur-sm border-t border-gray-100/50">
+                <div className="flex items-end gap-3">
                   <div className="flex-1 relative">
                     <textarea
                       ref={inputRef}
@@ -396,25 +401,25 @@ export default function ChatbotWidget() {
                       onChange={(e) => setInputMessage(e.target.value)}
                       onKeyPress={handleKeyPress}
                       placeholder="Ask me anything..."
-                      className="w-full px-5 py-4 pr-12 border-2 border-gray-200/50 rounded-xl focus:ring-1 focus:ring-[#09509E] focus:border-[#09509E] outline-none resize-none text-base transition-all duration-200 bg-gray-50/80 focus:bg-white backdrop-blur-sm"
+                      className="w-full px-4 py-3 pr-10 border-2 border-gray-200/50 rounded-xl focus:ring-0.5 focus:ring-[#09509E] focus:border-[#09509E] outline-none resize-none text-sm transition-all duration-200 bg-gray-50/80 focus:bg-white backdrop-blur-sm touch-manipulation"
                       rows={1}
-                      style={{ minHeight: "52px", maxHeight: "120px" }}
+                      style={{ minHeight: "48px", maxHeight: "100px" }}
                       disabled={isLoading}
                     />
                   </div>
                   <button
                     onClick={sendMessage}
                     disabled={!inputMessage.trim() || isLoading}
-                    className="w-14 h-14 mb-2.5 bg-gradient-to-r from-[#09509E] to-[#07407A] hover:from-[#07407A] hover:to-[#09509E] disabled:from-gray-300 disabled:to-gray-300 disabled:cursor-not-allowed text-white rounded-xl flex items-center justify-center transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 disabled:transform-none"
+                    className="w-12 h-12 mb-2 bg-gradient-to-r from-[#09509E] to-[#07407A] hover:from-[#07407A] hover:to-[#09509E] disabled:from-gray-300 disabled:to-gray-300 disabled:cursor-not-allowed text-white rounded-xl flex items-center justify-center transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 disabled:transform-none"
                     aria-label="Send message"
                   >
                     <Send className="w-5 h-5" />
                   </button>
                 </div>
-                <div className="flex items-center justify-between mt-4">
-                  <p className="text-sm text-gray-500">Powered by AI • Samin • Press Enter to send</p>
-                  <div className="flex items-center gap-2 text-sm text-gray-400">
-                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                <div className="flex items-center justify-between mt-3">
+                  <p className="text-xs text-gray-500">Powered by AI • Samin • Press Enter to send</p>
+                  <div className="flex items-center gap-1 text-xs text-gray-400">
+                    <div className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></div>
                     <span>Online</span>
                   </div>
                 </div>
@@ -589,7 +594,7 @@ export default function ChatbotWidget() {
                       onChange={(e) => setInputMessage(e.target.value)}
                       onKeyPress={handleKeyPress}
                       placeholder="Ask me anything..."
-                      className="w-full px-4 py-3 pr-10 border-2 border-gray-200/50 rounded-xl focus:ring-0.5 focus:ring-[#09509E] focus:border-[#09509E] outline-none resize-none text-sm transition-all duration-200 bg-gray-50/80 focus:bg-white backdrop-blur-sm"
+                      className="w-full px-4 py-3 pr-10 border-2 border-gray-200/50 rounded-xl focus:ring-0.5 focus:ring-[#09509E] focus:border-[#09509E] outline-none resize-none text-sm transition-all duration-200 bg-gray-50/80 focus:bg-white backdrop-blur-sm touch-manipulation"
                       rows={1}
                       style={{ minHeight: "44px", maxHeight: "100px" }}
                       disabled={isLoading}

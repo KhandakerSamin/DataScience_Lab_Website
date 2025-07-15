@@ -1,8 +1,8 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import DatasetCard from "./DatasetCard"
 import SlidingTabs from "./SlidingTabs"
+import DatasetCard from "./DataSetCard"
 
 export default function DatasetPage() {
   const [datasets, setDatasets] = useState([])
