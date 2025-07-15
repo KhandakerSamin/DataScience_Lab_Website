@@ -51,7 +51,7 @@ export default function DatasetPage() {
 
   const fetchDatasets = async () => {
     try {
-      const response = await fetch("/api/dataset/dataset")
+      const response = await fetch("/api/dataset")
       const data = await response.json()
       setDatasets(data)
       setLoading(false)

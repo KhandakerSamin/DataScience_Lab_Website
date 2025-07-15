@@ -1,5 +1,8 @@
 "use client"
 
+import Image from "next/image"
+import Link from "next/link"
+
 export default function DashboardLayout({ children, activePage, setActivePage }) {
   const navigationItems = [
     { id: "home", label: "Home", icon: "🏠" },
@@ -21,14 +24,13 @@ export default function DashboardLayout({ children, activePage, setActivePage })
         <div className="flex items-center justify-between max-w-7xl mx-auto">
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-2">
-              <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold">📊</span>
-              </div>
-              <div>
-                <div className="text-sm font-semibold text-blue-600">DATA</div>
-                <div className="text-sm font-semibold text-blue-600">SCIENCE</div>
-                <div className="text-xs text-green-600 font-medium">LAB</div>
-              </div>
+              <Link href="/">
+              <Image
+                src="/logo.svg"
+                width={100}
+                height={100}
+                alt="Data Science Lab Logo"
+              /></Link>
             </div>
           </div>
           <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full transition-colors flex items-center space-x-2">
@@ -50,11 +52,10 @@ export default function DashboardLayout({ children, activePage, setActivePage })
                   <button
                     key={item.id}
                     onClick={() => handleNavigation(item.id)}
-                    className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-colors ${
-                      isActive
+                    className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-colors ${isActive
                         ? "bg-blue-50 border-l-4 border-blue-600 text-blue-700 font-medium"
                         : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
-                    }`}
+                      }`}
                   >
                     <span className="text-lg">{item.icon}</span>
                     <span>{item.label}</span>
