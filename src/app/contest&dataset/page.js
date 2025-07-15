@@ -56,7 +56,7 @@ export default function ContestDatasetPage() {
       <DashboardLayout activePage={activePage} setActivePage={setActivePage}>
         {renderContent()}
       </DashboardLayout>
-      <DebugInfo activePage={activePage} setActivePage={setActivePage} />
+      {/* <DebugInfo activePage={activePage} setActivePage={setActivePage} /> */}
     </>
   )
 }

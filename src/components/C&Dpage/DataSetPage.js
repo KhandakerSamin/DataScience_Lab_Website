@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react"
 import SlidingTabs from "./SlidingTabs"
 import DatasetCard from "./DataSetCard"
+import Link from "next/link"
+import { ChevronRight } from "lucide-react"
 
 export default function DatasetPage() {
   const [datasets, setDatasets] = useState([])
@@ -160,16 +162,30 @@ export default function DatasetPage() {
   }
 
   return (
-    <div className="p-6">
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">Datasets</h1>
+    <div className="p-6 pt-12 font-outfit">
+      <div className="mb-8 flex justify-between">
+        <div> 
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">Datasets</h1>
         <p className="text-gray-600 text-lg">
           Explore, analyze, and share quality data.{" "}
-          <a href="#" className="text-blue-600 underline">
+          <a href="#" className="text-[#09509E] underline">
             Learn more
           </a>{" "}
           about data types, creating, and collaborating.
         </p>
+        </div>
+        <div>
+          <Link href="/contact">
+            <button className="hidden lg:inline-flex items-center gap-2 text-white bg-[#09509E] hover:text-[#09509E] hover:bg-white border-2 border-[#09509E] px-5 py-2 rounded-full text-lg font-normal transition-colors duration-200 group">
+              Contact Us
+              <ChevronRight
+                className="text-[#09509E] bg-white group-hover:bg-[#09509E] group-hover:text-white rounded-full p-1 transition-colors duration-200"
+                size={24}
+                strokeWidth={2}
+              />
+            </button>
+          </Link>
+        </div>
       </div>
 
       {/* Search and Sort Controls */}
@@ -181,15 +197,15 @@ export default function DatasetPage() {
             placeholder="Search datasets by title, author, category..."
             value={searchQuery}
             onChange={handleSearch}
-            className="w-full pl-10 pr-4 py-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full pl-10 pr-4 py-3 text-lg border border-gray-300 rounded-lg "
           />
         </div>
 
-        <div className="flex gap-2">
-          <div className="relative">
+        <div className="flex gap-2 ">
+          <div className="relative ">
             <button
               onClick={() => setShowSortDropdown(!showSortDropdown)}
-              className="flex items-center gap-2 px-4 py-3 border border-gray-300 rounded-lg bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="flex items-center gap-2 px-4 py-4 border border-gray-300 rounded-lg bg-white hover:bg-gray-50 "
             >
               <span>{sortOrder === "asc" ? "↑" : "↓"}</span>
               <span>Sort by {sortOptions.find((opt) => opt.value === sortBy)?.label}</span>
@@ -213,7 +229,7 @@ export default function DatasetPage() {
 
           <button
             onClick={clearFilters}
-            className="flex items-center gap-2 px-4 py-3 border border-gray-300 rounded-lg bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="flex items-center gap-2 px-4 py-3 border border-gray-300 rounded-lg bg:white hover:bg-[#09509E] bg-white hover:text-white transition-colors duration-200"
           >
             <span>🔄</span>
             <span>Clear Filters</span>
@@ -237,7 +253,7 @@ export default function DatasetPage() {
       </div>
 
       {/* Dataset Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<div className="grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredDatasets.map((dataset) => (
           <DatasetCard key={dataset.id} dataset={dataset} />
         ))}

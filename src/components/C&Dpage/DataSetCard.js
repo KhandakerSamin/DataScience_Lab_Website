@@ -34,7 +34,7 @@ export default function DatasetCard({ dataset }) {
       </div>
       <div className="p-4">
         <div className="flex items-start justify-between mb-2">
-          <h3 className="font-semibold text-lg text-gray-900 group-hover:text-blue-600 transition-colors">
+          <h3 className="font-semibold text-lg text-gray-900 group-hover:text-[#09509E] transition-colors">
             {dataset.title}
           </h3>
           <span className="ml-2 text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">{dataset.category}</span>

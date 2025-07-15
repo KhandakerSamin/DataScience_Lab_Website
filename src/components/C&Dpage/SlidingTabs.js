@@ -36,16 +36,16 @@ export default function SlidingTabs({ tabs, activeTab, onTabChange }) {
   }
 
   return (
-    <div className="relative mb-8">
-      <div className="flex items-center">
+    <div className="relative mb-8 font-outfit">
+      <div className="flex items-center ">
         {/* Left Scroll Button */}
         <button
           onClick={scrollLeft}
           disabled={!canScrollLeft}
-          className={`mr-2 p-2 rounded-lg ${
+          className={`p-1.5 px-2 mr-1 rounded-l-full ${
             !canScrollLeft
-              ? "opacity-50 cursor-not-allowed"
-              : "hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+             ? "opacity-50 cursor-not-allowed border-1 border-gray-300"
+              : "bg-[#09509E] hover:text-black hover:bg-white text-white font-bold border-1 border-gray-300 focus:outline-none  "
           }`}
         >
           <span className="text-lg">←</span>
@@ -58,15 +58,15 @@ export default function SlidingTabs({ tabs, activeTab, onTabChange }) {
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           onScroll={checkScrollability}
         >
-          <div className="flex space-x-2 pb-2">
+          <div className="flex space-x-2 pb-2 pt-2">
             {tabs.map((tab) => (
               <button
                 key={tab}
                 onClick={() => onTabChange(tab)}
-                className={`whitespace-nowrap rounded-full px-4 py-2 flex-shrink-0 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                className={`whitespace-nowrap rounded-full px-4 py-2 flex-shrink-0 transition-colors   ${
                   activeTab === tab
-                    ? "bg-gray-900 text-white hover:bg-gray-800"
-                    : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
+                    ? "bg-[#09509E] text-white "
+                    : "bg-white text-gray-700 hover:text-white border border-gray-300 hover:bg-blue-800"
                 }`}
               >
                 {tab}
@@ -79,10 +79,10 @@ export default function SlidingTabs({ tabs, activeTab, onTabChange }) {
         <button
           onClick={scrollRight}
           disabled={!canScrollRight}
-          className={`ml-2 p-2 rounded-lg ${
+          className={` p-1.5 px-2 ml-1 rounded-r-full ${
             !canScrollRight
-              ? "opacity-50 cursor-not-allowed"
-              : "hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              ? "opacity-50 cursor-not-allowed border-1 border-gray-300"
+              : "bg-[#09509E] hover:text-black hover:bg-white text-white font-bold border-1 border-gray-300 focus:outline-none  "
           }`}
         >
           <span className="text-lg">→</span>

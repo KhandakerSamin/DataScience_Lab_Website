@@ -5,5 +5,5 @@ export const metadata = {
 };
 
 export default function ContestDatasetLayout({ children }) {
-  return <main className="min-h-screen w-fit">{children}</main>;
+  return <main className="">{children}</main>;
 }
