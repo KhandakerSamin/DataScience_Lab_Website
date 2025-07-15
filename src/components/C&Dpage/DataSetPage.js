@@ -162,7 +162,7 @@ export default function DatasetPage() {
   }
 
   return (
-    <div className="p-6 pt-12 font-outfit">
+    <div className="p-6  font-outfit">
       <div className="mb-8 flex justify-between">
         <div> 
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Datasets</h1>
