@@ -4,10 +4,9 @@ import { useState } from "react"
 
 const academiaLogos = [
   { name: "Daffodil University", src: "/bannerlogo1.png", alt: "Daffodil University" },
-  { name: "ULAB", src: "/bannerlogo2.png", alt: "University of Liberal Arts Bangladesh" },
-  { name: "Daffodil University", src: "/bannerlogo1.png", alt: "Daffodil University" },
-  { name: "ULAB", src: "/bannerlogo2.png", alt: "University of Liberal Arts Bangladesh" },
-  { name: "Daffodil University", src:"/bannerlogo1.png", alt: "Daffodil University" },
+  { name: "ULAB", src: "/logo-acc.png", alt: "University of Liberal Arts Bangladesh" },
+  { name: "Daffodil University", src: "/logo-acc2.png", alt: "Daffodil University" },
+
 ]
 
 const partnerLogos = [
