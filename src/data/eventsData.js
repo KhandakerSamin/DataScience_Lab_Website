@@ -11,7 +11,7 @@ export const eventsNewsData = [
       "Join us for an intensive workshop covering the fundamentals of deep learning, including neural networks, backpropagation, and practical implementations.",
     fullDescription:
       "This comprehensive workshop will cover the theoretical foundations and practical applications of deep learning. Participants will learn about neural network architectures, optimization techniques, and hands-on implementation using popular frameworks like TensorFlow and PyTorch. The session includes interactive coding exercises and real-world case studies from our recent research projects.",
-    image: "/eventimage.jpg",
+    image: "/eventImage.jpg",
     tags: ["Workshop", "Deep Learning", "Hands-on"],
     speakers: ["Dr. Sarah Chen", "Prof. Michael Rodriguez"],
     capacity: "50 participants",
@@ -25,7 +25,7 @@ export const eventsNewsData = [
       "Our latest research on interpretable AI models has been accepted for publication in Nature Machine Intelligence.",
     fullDescription:
       "We are excited to announce that our groundbreaking research on developing interpretable artificial intelligence models has been accepted for publication in Nature Machine Intelligence. This work, led by our research team, introduces novel techniques for making complex AI models more transparent and explainable, addressing one of the most critical challenges in modern AI deployment.",
-    image: "/eventimage.jpg",
+    image: "/newsimage.png",
     tags: ["Publication", "Research", "AI Ethics"],
     authors: ["Dr. Emily Watson", "Dr. James Liu", "Prof. Anna Kowalski"],
   },
@@ -39,7 +39,7 @@ export const eventsNewsData = [
     description: "Learn advanced data visualization techniques using D3.js, Plotly, and other cutting-edge tools.",
     fullDescription:
       "This masterclass will take your data visualization skills to the next level. We'll explore advanced techniques using D3.js for custom interactive visualizations, Plotly for scientific plotting, and emerging tools in the visualization ecosystem.",
-    image: "/eventimage.jpg",
+    image: "/eventImage.jpg",
     tags: ["Masterclass", "Visualization", "D3.js"],
     speakers: ["Dr. Maria Gonzalez"],
     capacity: "100 participants",
@@ -53,7 +53,7 @@ export const eventsNewsData = [
       "We've established strategic partnerships with leading tech companies to enhance our research capabilities.",
     fullDescription:
       "We are thrilled to announce new strategic partnerships with several leading technology companies, including collaborations that will significantly enhance our research capabilities and provide unprecedented access to real-world datasets and computational resources.",
-    image: "/eventimage.jpg",
+    image: "/newsimage.png",
     tags: ["Partnership", "Industry", "Collaboration"],
     partners: ["TechCorp", "DataSystems Inc.", "AI Innovations Ltd."],
   },
@@ -67,7 +67,7 @@ export const eventsNewsData = [
     description: "A full-day symposium discussing the ethical implications of AI in modern society.",
     fullDescription:
       "Join leading experts, researchers, and industry professionals for a comprehensive discussion on AI ethics. This symposium will address critical questions about bias in AI systems, privacy concerns, algorithmic transparency, and the societal impact of artificial intelligence.",
-    image: "/eventimage.jpg",
+    image: "/eventImage.jpg",
     tags: ["Symposium", "Ethics", "AI Policy"],
     speakers: ["Dr. Robert Kim", "Prof. Lisa Thompson", "Dr. Ahmed Hassan"],
     capacity: "200 participants",
@@ -80,7 +80,7 @@ export const eventsNewsData = [
     description: "Our PhD student received the Best Paper Award at the International Conference on Machine Learning.",
     fullDescription:
       "We are proud to announce that our PhD student, Alex Chen, has received the prestigious Best Paper Award at the International Conference on Machine Learning (ICML) for groundbreaking research on federated learning algorithms.",
-    image: "/eventimage.jpg",
+    image: "/newsimage.png",
     tags: ["Award", "Student Achievement", "ICML"],
     student: "Alex Chen",
     advisor: "Prof. David Park",
@@ -96,7 +96,7 @@ export const eventsNewsData = [
       "Juha Simola, CEO, Temet Group, is speaking at the European Economic Congress in Poland discussing future economic trends and data-driven insights.",
     fullDescription:
       "Join us at the prestigious European Economic Congress where industry leaders discuss the future of economics in the digital age. This year's focus includes AI's impact on economic modeling, data-driven policy making, and sustainable economic growth strategies.",
-    image: "/eventimage.jpg",
+    image: "/eventImage.jpg",
     tags: ["Conference", "Economics", "Industry"],
     speakers: ["Juha Simola", "Dr. Anna Kowalski"],
     capacity: "500 participants",
@@ -112,7 +112,7 @@ export const eventsNewsData = [
       "Annual Data Science Conference featuring cutting-edge research presentations, networking opportunities, and workshops on the latest in machine learning and AI.",
     fullDescription:
       "The premier data science event of the year brings together researchers, practitioners, and industry leaders to share insights on the latest developments in data science, machine learning, and artificial intelligence. Features keynote presentations, technical sessions, and hands-on workshops.",
-    image: "/eventimage.jpg",
+    image: "/eventImage.jpg",
     tags: ["Conference", "Data Science", "Networking"],
     speakers: ["Dr. Sarah Chen", "Prof. Michael Rodriguez", "Dr. Lisa Thompson"],
     capacity: "1000 participants",
@@ -128,7 +128,7 @@ export const eventsNewsData = [
       "Explore the latest innovations in technology with focus on AI, blockchain, and quantum computing. Network with innovators and learn about emerging technologies.",
     fullDescription:
       "The Tech Innovation Summit showcases breakthrough technologies and their real-world applications. This year's program includes sessions on quantum computing applications, blockchain innovations, and AI integration in various industries. Perfect for technology leaders and entrepreneurs.",
-    image: "/eventimage.jpg",
+    image: "/eventImage.jpg",
     tags: ["Summit", "Innovation", "Technology"],
     speakers: ["Dr. Robert Kim", "Dr. Ahmed Hassan"],
     capacity: "300 participants",
