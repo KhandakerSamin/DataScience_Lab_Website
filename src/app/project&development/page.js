@@ -29,7 +29,7 @@ export default function ProjectDevelopmentPage() {
   const ongoingProjects = filteredProjects.filter((project) => project.status === "ongoing")
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 font-outfit">
       <Banner searchTerm={searchTerm} onSearchChange={setSearchTerm} />
 
       <FilterTabs activeFilter={activeFilter} onFilterChange={setActiveFilter} resultCount={filteredProjects.length} />
