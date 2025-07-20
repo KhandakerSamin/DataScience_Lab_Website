@@ -132,5 +132,20 @@ export const eventsNewsData = [
     tags: ["Summit", "Innovation", "Technology"],
     speakers: ["Dr. Robert Kim", "Dr. Ahmed Hassan"],
     capacity: "300 participants",
+  },  {
+    id: 9,
+    type: "news",
+    title: "Tech Innovation Summit",
+    date: "2025-07-15",
+    time: "10:00 AM - 5:00 PM",
+    location: "Innovation Center, Boston",
+    description:
+      "Explore the latest innovations in technology with focus on AI, blockchain, and quantum computing. Network with innovators and learn about emerging technologies.",
+    fullDescription:
+      "The Tech Innovation Summit showcases breakthrough technologies and their real-world applications. This year's program includes sessions on quantum computing applications, blockchain innovations, and AI integration in various industries. Perfect for technology leaders and entrepreneurs.",
+    image: "/newsImage.png",
+    tags: ["Summit", "Innovation", "Technology"],
+    speakers: ["Dr. Robert Kim", "Dr. Ahmed Hassan"],
+    capacity: "300 participants",
   },
 ]
