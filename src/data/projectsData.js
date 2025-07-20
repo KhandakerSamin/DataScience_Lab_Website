@@ -1,0 +1,59 @@
+export const projectsData = [
+  {
+    id: 1,
+    title:
+      "A Machine Learning Approach for Sentiment Analysis of Customer Satisfaction of Bangladeshi Delivery Services",
+    description:
+      "Bangladesh has a large population which is causing the delivery system growing up day by day. Therefore, some companies who provide these delivery services need to know about their customer satisfaction. In this paper, we have analyzed the sentiment based on reviews and comments which is collected from their social media pages. We selected data of customer satisfaction from the",
+    image: "/placeholder.svg?height=300&width=400",
+    status: "completed",
+    links: {
+      live: "https://example.com/sentiment-analysis",
+      frontend: "https://github.com/username/sentiment-frontend",
+      backend: "https://github.com/username/sentiment-backend",
+      paper: "https://example.com/research-paper.pdf",
+    },
+  },
+  {
+    id: 2,
+    title: "E-Commerce Platform with AI Recommendations",
+    description:
+      "A comprehensive e-commerce solution built with modern web technologies. Features include user authentication, product catalog, shopping cart, payment integration, and AI-powered product recommendations based on user behavior and preferences.",
+    image: "/placeholder.svg?height=300&width=400",
+    status: "completed",
+    links: {
+      live: "https://example.com/ecommerce-demo",
+      frontend: "https://github.com/username/ecommerce-frontend",
+      backend: "https://github.com/username/ecommerce-backend",
+      documentation: "https://example.com/ecommerce-docs",
+    },
+  },
+  {
+    id: 3,
+    title: "Real-time Chat Application with Video Calling",
+    description:
+      "A modern real-time messaging application with video calling capabilities. Built using WebRTC for peer-to-peer communication, Socket.io for real-time messaging, and includes features like file sharing, group chats, and message encryption.",
+    image: "/placeholder.svg?height=300&width=400",
+    status: "ongoing",
+    links: {
+      demo: "https://example.com/chat-demo",
+      frontend: "https://github.com/username/chat-frontend",
+      backend: "https://github.com/username/chat-backend",
+      api: "https://example.com/chat-api-docs",
+    },
+  },
+  {
+    id: 4,
+    title: "Smart Agriculture Monitoring System",
+    description:
+      "IoT-based agriculture monitoring system that tracks soil moisture, temperature, humidity, and crop health using sensors and machine learning. Provides farmers with real-time insights and automated irrigation recommendations.",
+    image: "/placeholder.svg?height=300&width=400",
+    status: "ongoing",
+    links: {
+      prototype: "https://example.com/agriculture-prototype",
+      frontend: "https://github.com/username/agriculture-frontend",
+      backend: "https://github.com/username/agriculture-backend",
+      hardware: "https://github.com/username/agriculture-hardware",
+    },
+  },
+]
