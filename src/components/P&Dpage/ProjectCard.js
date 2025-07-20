@@ -50,40 +50,79 @@ export default function ProjectCard({ project, index }) {
       {/* Expanded Links Section */}
       {isExpanded && (
         <div className="border-t border-gray-200 bg-gray-50 p-6">
-          <h4 className="text-lg font-semibold text-gray-800 mb-4">Project Links</h4>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {Object.entries(project.links).map(([key, url]) => (
-              <a
-                key={key}
-                href={url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 bg-white hover:bg-blue-50 text-blue-600 hover:text-blue-700 px-4 py-3 rounded-lg border border-blue-200 hover:border-blue-300 transition-all duration-200 text-sm font-medium"
-              >
-                <LinkIcon type={key} />
-                <span className="capitalize">
-                  {key === "live"
-                    ? "Live Demo"
-                    : key === "frontend"
-                      ? "Frontend Code"
-                      : key === "backend"
-                        ? "Backend Code"
-                        : key === "api"
-                          ? "API Documentation"
-                          : key === "paper"
-                            ? "Research Paper"
-                            : key === "demo"
-                              ? "Demo"
-                              : key === "prototype"
-                                ? "Prototype"
-                                : key === "hardware"
-                                  ? "Hardware Code"
-                                  : key === "documentation"
-                                    ? "Documentation"
-                                    : key}
+          {/* Project Information */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+            <div className="bg-white p-4 rounded-lg border border-gray-200">
+              <h5 className="font-semibold text-gray-800 mb-2">Duration</h5>
+              <p className="text-gray-600 text-sm">{project.duration}</p>
+            </div>
+            <div className="bg-white p-4 rounded-lg border border-gray-200">
+              <h5 className="font-semibold text-gray-800 mb-2">Team Size</h5>
+              <p className="text-gray-600 text-sm">{project.teamSize}</p>
+            </div>
+            <div className="bg-white p-4 rounded-lg border border-gray-200">
+              <h5 className="font-semibold text-gray-800 mb-2">Category</h5>
+              <p className="text-gray-600 text-sm">{project.category}</p>
+            </div>
+          </div>
+
+          {/* Technologies */}
+          <div className="mb-6">
+            <h5 className="font-semibold text-gray-800 mb-3">Technologies Used</h5>
+            <div className="flex flex-wrap gap-2">
+              {project.technologies?.map((tech, index) => (
+                <span key={index} className="px-3 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">
+                  {tech}
                 </span>
-              </a>
-            ))}
+              ))}
+            </div>
+          </div>
+
+          {/* Project Links */}
+          <div>
+            <h4 className="text-lg font-semibold text-gray-800 mb-4">Project Links</h4>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              {Object.entries(project.links).map(([key, url]) => (
+                <a
+                  key={key}
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 bg-white hover:bg-blue-50 text-blue-600 hover:text-blue-700 px-4 py-3 rounded-lg border border-blue-200 hover:border-blue-300 transition-all duration-200 text-sm font-medium group"
+                >
+                  <LinkIcon type={key} />
+                  <span className="capitalize">
+                    {key === "live"
+                      ? "Live Demo"
+                      : key === "frontend"
+                        ? "Frontend Code"
+                        : key === "backend"
+                          ? "Backend Code"
+                          : key === "api"
+                            ? "API Documentation"
+                            : key === "paper"
+                              ? "Research Paper"
+                              : key === "demo"
+                                ? "Demo"
+                                : key === "prototype"
+                                  ? "Prototype"
+                                  : key === "hardware"
+                                    ? "Hardware Code"
+                                    : key === "documentation"
+                                      ? "Documentation"
+                                      : key}
+                  </span>
+                  <svg
+                    className="w-3 h-3 ml-auto group-hover:translate-x-1 transition-transform duration-200"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       )}
@@ -92,7 +131,7 @@ export default function ProjectCard({ project, index }) {
 }
 
 function LinkIcon({ type }) {
-  const iconClass = "w-4 h-4"
+  const iconClass = "w-5 h-5"
 
   switch (type) {
     case "live":
@@ -104,7 +143,7 @@ function LinkIcon({ type }) {
             strokeLinecap="round"
             strokeLinejoin="round"
             strokeWidth={2}
-            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+            d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9"
           />
         </svg>
       )
@@ -117,6 +156,16 @@ function LinkIcon({ type }) {
         </svg>
       )
     case "paper":
+      return (
+        <svg className={iconClass} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+          />
+        </svg>
+      )
     case "documentation":
     case "api":
       return (

@@ -7,6 +7,10 @@ export const projectsData = [
       "Bangladesh has a large population which is causing the delivery system growing up day by day. Therefore, some companies who provide these delivery services need to know about their customer satisfaction. In this paper, we have analyzed the sentiment based on reviews and comments which is collected from their social media pages. We selected data of customer satisfaction from the",
     image: "/placeholder.svg?height=300&width=400",
     status: "completed",
+    technologies: ["Python", "Machine Learning", "NLP", "Sentiment Analysis", "Data Mining"],
+    duration: "6 months",
+    teamSize: "4 members",
+    category: "Research",
     links: {
       live: "https://example.com/sentiment-analysis",
       frontend: "https://github.com/username/sentiment-frontend",
@@ -21,6 +25,10 @@ export const projectsData = [
       "A comprehensive e-commerce solution built with modern web technologies. Features include user authentication, product catalog, shopping cart, payment integration, and AI-powered product recommendations based on user behavior and preferences.",
     image: "/placeholder.svg?height=300&width=400",
     status: "completed",
+    technologies: ["React", "Node.js", "MongoDB", "AI/ML", "Stripe API"],
+    duration: "8 months",
+    teamSize: "5 members",
+    category: "Web Development",
     links: {
       live: "https://example.com/ecommerce-demo",
       frontend: "https://github.com/username/ecommerce-frontend",
@@ -35,6 +43,10 @@ export const projectsData = [
       "A modern real-time messaging application with video calling capabilities. Built using WebRTC for peer-to-peer communication, Socket.io for real-time messaging, and includes features like file sharing, group chats, and message encryption.",
     image: "/placeholder.svg?height=300&width=400",
     status: "ongoing",
+    technologies: ["React", "WebRTC", "Socket.io", "Node.js", "MongoDB"],
+    duration: "4 months (ongoing)",
+    teamSize: "3 members",
+    category: "Web Development",
     links: {
       demo: "https://example.com/chat-demo",
       frontend: "https://github.com/username/chat-frontend",
@@ -49,6 +61,10 @@ export const projectsData = [
       "IoT-based agriculture monitoring system that tracks soil moisture, temperature, humidity, and crop health using sensors and machine learning. Provides farmers with real-time insights and automated irrigation recommendations.",
     image: "/placeholder.svg?height=300&width=400",
     status: "ongoing",
+    technologies: ["IoT", "Python", "Arduino", "Machine Learning", "React"],
+    duration: "10 months (ongoing)",
+    teamSize: "6 members",
+    category: "IoT & Hardware",
     links: {
       prototype: "https://example.com/agriculture-prototype",
       frontend: "https://github.com/username/agriculture-frontend",
