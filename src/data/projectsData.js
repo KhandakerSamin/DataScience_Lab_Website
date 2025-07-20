@@ -5,7 +5,7 @@ export const projectsData = [
       "A Machine Learning Approach for Sentiment Analysis of Customer Satisfaction of Bangladeshi Delivery Services",
     description:
       "Bangladesh has a large population which is causing the delivery system growing up day by day. Therefore, some companies who provide these delivery services need to know about their customer satisfaction. In this paper, we have analyzed the sentiment based on reviews and comments which is collected from their social media pages. We selected data of customer satisfaction from the",
-    image: "/placeholder.svg?height=300&width=400",
+    image: "/project1.jpg",
     status: "completed",
     technologies: ["Python", "Machine Learning", "NLP", "Sentiment Analysis", "Data Mining"],
     duration: "6 months",
@@ -23,7 +23,7 @@ export const projectsData = [
     title: "E-Commerce Platform with AI Recommendations",
     description:
       "A comprehensive e-commerce solution built with modern web technologies. Features include user authentication, product catalog, shopping cart, payment integration, and AI-powered product recommendations based on user behavior and preferences.",
-    image: "/placeholder.svg?height=300&width=400",
+    image: "/project1.jpg",
     status: "completed",
     technologies: ["React", "Node.js", "MongoDB", "AI/ML", "Stripe API"],
     duration: "8 months",
@@ -41,7 +41,7 @@ export const projectsData = [
     title: "Real-time Chat Application with Video Calling",
     description:
       "A modern real-time messaging application with video calling capabilities. Built using WebRTC for peer-to-peer communication, Socket.io for real-time messaging, and includes features like file sharing, group chats, and message encryption.",
-    image: "/placeholder.svg?height=300&width=400",
+    image: "/project1.jpg",
     status: "ongoing",
     technologies: ["React", "WebRTC", "Socket.io", "Node.js", "MongoDB"],
     duration: "4 months (ongoing)",
@@ -59,7 +59,7 @@ export const projectsData = [
     title: "Smart Agriculture Monitoring System",
     description:
       "IoT-based agriculture monitoring system that tracks soil moisture, temperature, humidity, and crop health using sensors and machine learning. Provides farmers with real-time insights and automated irrigation recommendations.",
-    image: "/placeholder.svg?height=300&width=400",
+    image: "/project1.jpg",
     status: "ongoing",
     technologies: ["IoT", "Python", "Arduino", "Machine Learning", "React"],
     duration: "10 months (ongoing)",

@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import Image from "next/image"
+import { CornerRightDown, CornerRightUp } from "lucide-react"
 
 export default function ProjectCard({ project, index }) {
   const [isExpanded, setIsExpanded] = useState(false)
@@ -12,8 +13,8 @@ export default function ProjectCard({ project, index }) {
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl">
-      <div className={`flex flex-col ${isEven ? "md:flex-row" : "md:flex-row-reverse"} gap-6 p-6`}>
+    <div className="bg-white rounded-lg border border-2 overflow-hidden transition-all duration-300 hover:shadow-md">
+      <div className={`flex flex-col ${isEven ? "md:flex-row" : "md:flex-row-reverse"} gap-6 p-8`}>
         {/* Image Section */}
         <div className="md:w-1/2 flex-shrink-0">
           <div className="relative h-64 md:h-80 rounded-lg overflow-hidden">
@@ -28,20 +29,25 @@ export default function ProjectCard({ project, index }) {
             <p className="text-gray-600 text-sm md:text-base leading-relaxed mb-6">{project.description}</p>
           </div>
 
-          <div className="flex justify-end">
+          <div className="flex justify-start">
             <button
               onClick={toggleExpanded}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full text-sm font-medium transition-colors duration-200 flex items-center gap-2"
+              className="inline-flex items-center gap-2 ml-0.5 text-white bg-[#09509E] hover:text-[#09509E] hover:bg-white border-2 border-blue-800 px-5 py-2 rounded-full text-lg font-normal transition-colors duration-200 group"
             >
-              {isExpanded ? "Show Less" : "Learn More"}
-              <svg
-                className={`w-4 h-4 transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}`}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
+              {isExpanded ? "Show Less" : "See More"}
+              {isExpanded ? (
+                <CornerRightUp
+                  className="text-[#09509E] bg-white group-hover:bg-[#09509E] group-hover:text-white rounded-full p-1 transition-colors duration-200"
+                  size={24}
+                  strokeWidth={2}
+                />
+              ) : (
+                <CornerRightDown
+                  className="text-[#09509E] bg-white group-hover:bg-[#09509E] group-hover:text-white rounded-full p-1 transition-colors duration-200"
+                  size={24}
+                  strokeWidth={2}
+                />
+              )}
             </button>
           </div>
         </div>
@@ -71,7 +77,7 @@ export default function ProjectCard({ project, index }) {
             <h5 className="font-semibold text-gray-800 mb-3">Technologies Used</h5>
             <div className="flex flex-wrap gap-2">
               {project.technologies?.map((tech, index) => (
-                <span key={index} className="px-3 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">
+                <span key={index} className="px-3 py-1 bg-blue-100 text-[#09509E] text-xs font-medium rounded-full">
                   {tech}
                 </span>
               ))}
@@ -88,7 +94,7 @@ export default function ProjectCard({ project, index }) {
                   href={url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 bg-white hover:bg-blue-50 text-blue-600 hover:text-blue-700 px-4 py-3 rounded-lg border border-blue-200 hover:border-blue-300 transition-all duration-200 text-sm font-medium group"
+                  className="flex items-center gap-3 bg-white hover:bg-blue-50 text-[#09509E] hover:text-blue-700 px-4 py-3 rounded-lg border border-blue-200 hover:border-blue-300 transition-all duration-200 text-sm font-medium group"
                 >
                   <LinkIcon type={key} />
                   <span className="capitalize">
