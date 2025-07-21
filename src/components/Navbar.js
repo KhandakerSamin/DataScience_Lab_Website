@@ -35,7 +35,7 @@ export default function Navbar() {
 
   const navItems = [
     { name: "Home", href: "/", icon: Home },
-    { name: "Projects & Development", href: "/project&development", icon: FolderOpen },
+    { name: "Projects & Development", href: "/projectAndDevelopment", icon: FolderOpen },
     { name: "Contest & Datasets", href: "/contest&dataset", icon: GraduationCap },
     { name: "Events & News", href: "/news-events", icon: Calendar },
     { name: "Our Team", href: "/team", icon: Users },

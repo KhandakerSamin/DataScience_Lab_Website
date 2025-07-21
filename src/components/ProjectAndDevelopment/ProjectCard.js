@@ -8,17 +8,32 @@ export default function ProjectCard({ project, index }) {
   const [isExpanded, setIsExpanded] = useState(false)
   const isEven = index % 2 === 0
 
+  console.log("ProjectCard rendering:", { projectId: project?.id, title: project?.title, index })
+
+  if (!project) {
+    return (
+      <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+        Error: Project data is missing
+      </div>
+    )
+  }
+
   const toggleExpanded = () => {
     setIsExpanded(!isExpanded)
   }
 
   return (
-    <div className="bg-white rounded-lg border border-2 overflow-hidden transition-all duration-300 hover:shadow-md">
+    <div className="bg-white rounded-lg overflow-hidden border transition-all duration-300 hover:shadow-md">
       <div className={`flex flex-col ${isEven ? "md:flex-row" : "md:flex-row-reverse"} gap-6 p-8`}>
         {/* Image Section */}
         <div className="md:w-1/2 flex-shrink-0">
           <div className="relative h-64 md:h-80 rounded-lg overflow-hidden">
-            <Image src={project.image || "/placeholder.svg"} alt={project.title} fill className="object-cover" />
+            <Image
+              src={project.image || "/placeholder.svg?height=300&width=400"}
+              alt={project.title || "Project image"}
+              fill
+              className="object-cover"
+            />
           </div>
         </div>
 
@@ -29,7 +44,7 @@ export default function ProjectCard({ project, index }) {
             <p className="text-gray-600 text-sm md:text-base leading-relaxed mb-6">{project.description}</p>
           </div>
 
-          <div className="flex justify-start">
+          <div className="flex justify-end">
             <button
               onClick={toggleExpanded}
               className="inline-flex items-center gap-2 ml-0.5 text-white bg-[#09509E] hover:text-[#09509E] hover:bg-white border-2 border-blue-800 px-5 py-2 rounded-full text-lg font-normal transition-colors duration-200 group"
@@ -73,67 +88,66 @@ export default function ProjectCard({ project, index }) {
           </div>
 
           {/* Technologies */}
-          <div className="mb-6">
-            <h5 className="font-semibold text-gray-800 mb-3">Technologies Used</h5>
-            <div className="flex flex-wrap gap-2">
-              {project.technologies?.map((tech, index) => (
-                <span key={index} className="px-3 py-1 bg-blue-100 text-[#09509E] text-xs font-medium rounded-full">
-                  {tech}
-                </span>
-              ))}
+          {project.technologies && project.technologies.length > 0 && (
+            <div className="mb-6">
+              <h5 className="font-semibold text-gray-800 mb-3">Technologies Used</h5>
+              <div className="flex flex-wrap gap-2">
+                {project.technologies.map((tech, index) => (
+                  <span key={index} className="px-3 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">
+                    {tech}
+                  </span>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Project Links */}
-          <div>
-            <h4 className="text-lg font-semibold text-gray-800 mb-4">Project Links</h4>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-              {Object.entries(project.links).map(([key, url]) => (
-                <a
-                  key={key}
-                  href={url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 bg-white hover:bg-blue-50 text-[#09509E] hover:text-blue-700 px-4 py-3 rounded-lg border border-blue-200 hover:border-blue-300 transition-all duration-200 text-sm font-medium group"
-                >
-                  <LinkIcon type={key} />
-                  <span className="capitalize">
-                    {key === "live"
-                      ? "Live Demo"
-                      : key === "frontend"
-                        ? "Frontend Code"
-                        : key === "backend"
-                          ? "Backend Code"
-                          : key === "api"
-                            ? "API Documentation"
-                            : key === "paper"
-                              ? "Research Paper"
-                              : key === "demo"
-                                ? "Demo"
-                                : key === "prototype"
-                                  ? "Prototype"
-                                  : key === "hardware"
-                                    ? "Hardware Code"
-                                    : key === "documentation"
-                                      ? "Documentation"
-                                      : key}
-                  </span>
-                  <svg
-                    className="w-3 h-3 ml-auto group-hover:translate-x-1 transition-transform duration-200"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
+          {project.links && Object.keys(project.links).length > 0 && (
+            <div>
+              <h4 className="text-lg font-semibold text-gray-800 mb-4">Project Links</h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                {Object.entries(project.links).map(([key, url]) => (
+                  <a
+                    key={key}
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 bg-white hover:bg-blue-50 text-blue-600 hover:text-blue-700 px-4 py-3 rounded-lg border border-blue-200 hover:border-blue-300 transition-all duration-200 text-sm font-medium group"
                   >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </a>
-              ))}
+                    <LinkIcon type={key} />
+                    <span className="capitalize">{getLinkLabel(key)}</span>
+                    <svg
+                      className="w-3 h-3 ml-auto group-hover:translate-x-1 transition-transform duration-200"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </a>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       )}
     </div>
   )
+}
+
+function getLinkLabel(key) {
+  const labels = {
+    live: "Live Demo",
+    frontend: "Frontend Code",
+    backend: "Backend Code",
+    api: "API Documentation",
+    paper: "Research Paper",
+    demo: "Demo",
+    prototype: "Prototype",
+    hardware: "Hardware Code",
+    documentation: "Documentation",
+  }
+  return labels[key] || key
 }
 
 function LinkIcon({ type }) {

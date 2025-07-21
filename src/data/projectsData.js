@@ -1,10 +1,10 @@
-export const projectsData = [
+const projectsData = [
   {
     id: 1,
     title:
       "A Machine Learning Approach for Sentiment Analysis of Customer Satisfaction of Bangladeshi Delivery Services",
     description:
-      "Bangladesh has a large population which is causing the delivery system growing up day by day. Therefore, some companies who provide these delivery services need to know about their customer satisfaction. In this paper, we have analyzed the sentiment based on reviews and comments which is collected from their social media pages. We selected data of customer satisfaction from the",
+      "Bangladesh has a large population which is causing the delivery system growing up day by day. Therefore, some companies who provide these delivery services need to know about their customer satisfaction. In this paper, we have analyzed the sentiment based on reviews and comments which is collected from their social media pages.",
     image: "/project1.jpg",
     status: "completed",
     technologies: ["Python", "Machine Learning", "NLP", "Sentiment Analysis", "Data Mining"],
@@ -73,3 +73,5 @@ export const projectsData = [
     },
   },
 ]
+
+export default projectsData
