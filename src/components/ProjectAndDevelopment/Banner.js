@@ -35,15 +35,15 @@ export default function Banner({ searchTerm, onSearchChange }) {
 
         <div className="flex justify-center items-center gap-8 mt-8 text-gray-500 text-sm">
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-blue-600 rounded-full" />
+            <div className="w-2 h-2 bg-[#09509E] rounded-full" />
             <span className="font-medium">15+ Projects</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-blue-600 rounded-full" />
+            <div className="w-2 h-2 bg-[#09509E] rounded-full" />
             <span className="font-medium">8+ Technologies</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-blue-600 rounded-full" />
+            <div className="w-2 h-2 bg-[#09509E] rounded-full" />
             <span className="font-medium">5+ Research Papers</span>
           </div>
         </div>

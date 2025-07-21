@@ -19,7 +19,7 @@ export default function FilterTabs({ activeFilter, onFilterChange, resultCount }
                 key={value}
                 onClick={() => onFilterChange(value)}
                 className={`flex items-center justify-center gap-2 px-6 py-2 font-medium rounded-md transition-colors duration-200 ${
-                  activeFilter === value ? "bg-blue-600 text-white" : "text-blue-600 hover:bg-blue-50"
+                  activeFilter === value ? "bg-[#09509E] text-white" : "text-[#09509E] hover:bg-blue-50"
                 }`}
               >
                 <Icon className="h-4 w-4" />
@@ -32,7 +32,7 @@ export default function FilterTabs({ activeFilter, onFilterChange, resultCount }
             <p className="text-green-600 font-bold">
               {resultCount} {resultCount === 1 ? "result" : "results"} found
             </p>
-            <div className="flex items-center gap-2 text-sm text-blue-600/70">
+            <div className="flex items-center gap-2 text-sm text-[#09509E]">
               <Filter className="h-4 w-4" />
               Latest first
             </div>
