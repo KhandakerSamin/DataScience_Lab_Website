@@ -38,13 +38,13 @@ export default function ProjectCard({ project, index }) {
         </div>
 
         {/* Content Section */}
-        <div className="md:w-1/2 flex flex-col justify-between">
+        <div className="md:w-1/2 flex flex-col justify-normal">
           <div>
             <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-4 leading-tight">{project.title}</h3>
             <p className="text-gray-600 text-sm md:text-base leading-relaxed mb-6">{project.description}</p>
           </div>
 
-          <div className="flex justify-end">
+          <div className="flex justify-start">
             <button
               onClick={toggleExpanded}
               className="inline-flex items-center gap-2 ml-0.5 text-white bg-[#09509E] hover:text-[#09509E] hover:bg-white border-2 border-blue-800 px-5 py-2 rounded-full text-lg font-normal transition-colors duration-200 group"
@@ -68,10 +68,10 @@ export default function ProjectCard({ project, index }) {
         </div>
       </div>
 
-      {/* Expanded Links Section */}
+      {/* Expanded Section */}
       {isExpanded && (
         <div className="border-t border-gray-200 bg-gray-50 p-6">
-          {/* Project Information */}
+          {/* Project Info */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
             <div className="bg-white p-4 rounded-lg border border-gray-200">
               <h5 className="font-semibold text-gray-800 mb-2">Duration</h5>
@@ -93,7 +93,7 @@ export default function ProjectCard({ project, index }) {
               <h5 className="font-semibold text-gray-800 mb-3">Technologies Used</h5>
               <div className="flex flex-wrap gap-2">
                 {project.technologies.map((tech, index) => (
-                  <span key={index} className="px-3 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">
+                  <span key={index} className="px-3 py-1 bg-blue-100 text-[#09509E] text-xs font-medium rounded-full">
                     {tech}
                   </span>
                 ))}
@@ -102,20 +102,20 @@ export default function ProjectCard({ project, index }) {
           )}
 
           {/* Project Links */}
-          {project.links && Object.keys(project.links).length > 0 && (
+          {(project.links?.live || project.links?.paper || project.links?.frontend || project.links?.backend || project.links?.hardware) && (
             <div>
               <h4 className="text-lg font-semibold text-gray-800 mb-4">Project Links</h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                {Object.entries(project.links).map(([key, url]) => (
+                                {/* Live Demo */}
+                {project.links.live && (
                   <a
-                    key={key}
-                    href={url}
+                    href={project.links.live}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-3 bg-white hover:bg-blue-50 text-blue-600 hover:text-blue-700 px-4 py-3 rounded-lg border border-blue-200 hover:border-blue-300 transition-all duration-200 text-sm font-medium group"
+                    className="flex items-center gap-3 bg-white hover:bg-blue-50 text-[#09509E] hover:text-[#09509E] px-4 py-3 rounded-lg border border-blue-200 hover:border-blue-300 transition-all duration-200 text-sm font-medium group"
                   >
-                    <LinkIcon type={key} />
-                    <span className="capitalize">{getLinkLabel(key)}</span>
+                    <LinkIcon type="live" />
+                    <span>Live Demo</span>
                     <svg
                       className="w-3 h-3 ml-auto group-hover:translate-x-1 transition-transform duration-200"
                       fill="none"
@@ -125,7 +125,49 @@ export default function ProjectCard({ project, index }) {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </a>
-                ))}
+                )}
+                
+                {/* GitHub */}
+                {(project.links.frontend || project.links.backend || project.links.hardware) && (
+                  <a
+                    href={project.links.frontend || project.links.backend || project.links.hardware}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 bg-white hover:bg-blue-50 text-[#09509E] hover:text-[#09509E] px-4 py-3 rounded-lg border border-blue-200 hover:border-blue-300 transition-all duration-200 text-sm font-medium group"
+                  >
+                    <LinkIcon type="frontend" />
+                    <span>GitHub</span>
+                    <svg
+                      className="w-3 h-3 ml-auto group-hover:translate-x-1 transition-transform duration-200"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </a>
+                )}
+
+                {/* Research Paper */}
+                {project.links.paper && (
+                  <a
+                    href={project.links.paper}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 bg-white hover:bg-blue-50 text-[#09509E] hover:text-[#09509E] px-4 py-3 rounded-lg border border-blue-200 hover:border-blue-300 transition-all duration-200 text-sm font-medium group"
+                  >
+                    <LinkIcon type="paper" />
+                    <span>Research Paper</span>
+                    <svg
+                      className="w-3 h-3 ml-auto group-hover:translate-x-1 transition-transform duration-200"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </a>
+                )}
               </div>
             </div>
           )}
@@ -135,28 +177,11 @@ export default function ProjectCard({ project, index }) {
   )
 }
 
-function getLinkLabel(key) {
-  const labels = {
-    live: "Live Demo",
-    frontend: "Frontend Code",
-    backend: "Backend Code",
-    api: "API Documentation",
-    paper: "Research Paper",
-    demo: "Demo",
-    prototype: "Prototype",
-    hardware: "Hardware Code",
-    documentation: "Documentation",
-  }
-  return labels[key] || key
-}
-
 function LinkIcon({ type }) {
   const iconClass = "w-5 h-5"
 
   switch (type) {
     case "live":
-    case "demo":
-    case "prototype":
       return (
         <svg className={iconClass} fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
@@ -165,14 +190,6 @@ function LinkIcon({ type }) {
             strokeWidth={2}
             d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9"
           />
-        </svg>
-      )
-    case "frontend":
-    case "backend":
-    case "hardware":
-      return (
-        <svg className={iconClass} fill="currentColor" viewBox="0 0 24 24">
-          <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
         </svg>
       )
     case "paper":
@@ -186,16 +203,12 @@ function LinkIcon({ type }) {
           />
         </svg>
       )
-    case "documentation":
-    case "api":
+    case "frontend":
+    case "backend":
+    case "hardware":
       return (
-        <svg className={iconClass} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-          />
+        <svg className={iconClass} fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
         </svg>
       )
     default:
