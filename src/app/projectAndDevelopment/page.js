@@ -6,6 +6,8 @@ import Banner from "../../components/ProjectAndDevelopment/Banner"
 import ProjectsSection from "../../components/ProjectAndDevelopment/ProjectsSection"
 import FilterTabs from "../../components/ProjectAndDevelopment/FilterTabs"
 
+
+
 export default function ProjectDevelopmentPage() {
   const [searchTerm, setSearchTerm] = useState("")
   const [activeFilter, setActiveFilter] = useState("all")

@@ -105,6 +105,11 @@ const executivePanel = [
   },
 ];
 
+export const metadata = {
+  title: "DIU | Data Science Club",
+  description: "Data Science Club of Daffodil International University",
+};
+
 export default function DSClubPage() {
   const getGridLayout = (members) => {
     const count = members.length;

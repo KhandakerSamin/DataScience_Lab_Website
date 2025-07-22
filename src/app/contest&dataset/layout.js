@@ -1,6 +1,6 @@
 // app/(main)/contest&dataset/layout.js
 export const metadata = {
-  title: "DIU | Data Science Lab - Contests & Datasets",
+  title: "DIU | Contests & Datasets",
   description: "Contests and Datasets for the Data Science Lab of DIU",
 };
 

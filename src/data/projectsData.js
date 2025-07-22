@@ -5,7 +5,7 @@ const projectsData = [
       "A Machine Learning Approach for Sentiment Analysis of Customer Satisfaction of Bangladeshi Delivery Services",
     description:
       "Bangladesh has a large population which is causing the delivery system growing up day by day. Therefore, some companies who provide these delivery services need to know about their customer satisfaction.",
-    image: "/project1.jpg",
+    image: "/project0.jpeg",
     status: "completed",
     technologies: ["Python", "Machine Learning", "NLP", "Sentiment Analysis"],
     duration: "6 months",
@@ -23,7 +23,7 @@ const projectsData = [
     title: "E-Commerce Platform with AI Recommendations",
     description:
       "A comprehensive e-commerce solution built with modern web technologies. Features include user authentication, product catalog, shopping cart, payment integration.",
-    image: "/project1.jpg",
+    image: "/project2.png",
     status: "completed",
     technologies: ["React", "Node.js", "MongoDB", "AI/ML"],
     duration: "8 months",
@@ -40,7 +40,7 @@ const projectsData = [
     title: "Real-time Chat Application with Video Calling",
     description:
       "A modern real-time messaging application with video calling capabilities. Built using WebRTC for peer-to-peer communication.",
-    image: "/project1.jpg",
+    image: "/project3.png",
     status: "ongoing",
     technologies: ["React", "WebRTC", "Socket.io", "Node.js"],
     duration: "4 months (ongoing)",
@@ -57,7 +57,7 @@ const projectsData = [
     title: "Smart Agriculture Monitoring System",
     description:
       "IoT-based agriculture monitoring system that tracks soil moisture, temperature, humidity, and crop health using sensors and machine learning.",
-    image: "/project1.jpg",
+    image: "/project4.png",
     status: "ongoing",
     technologies: ["IoT", "Python", "Arduino", "Machine Learning"],
     duration: "10 months (ongoing)",

@@ -40,7 +40,7 @@ export default function ProjectCard({ project, index }) {
         {/* Content Section */}
         <div className="md:w-1/2 flex flex-col justify-normal">
           <div>
-            <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-4 leading-tight">{project.title}</h3>
+            <h3 className="text-xl md:text-2xl font-bold text-green-600 mb-4 leading-tight">{project.title}</h3>
             <p className="text-gray-600 text-sm md:text-base leading-relaxed mb-6">{project.description}</p>
           </div>
 

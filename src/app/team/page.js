@@ -119,7 +119,7 @@ const teamMembers = [
     email: 'grace.taylor@example.com',
   },
   {
-    name: 'Henry Adams',
+    name: 'Meherin Khandakar Priya',
     position: 'Lab Associate',
     bio:'Lab Associates',
     photo: '/soborkhan.jpg',
@@ -128,11 +128,16 @@ const teamMembers = [
   {
     name: 'Khandaker Samin Yeasar',
     position: 'Lab Associate',
-    bio: "Lab Associate",
+    bio: "Lab Associates",
     photo: '/soborkhan.jpg',
     email: 'henry.adams@example.com',
   },
 ];
+
+export const metadata = {
+  title: "DIU | Data Science Lab Team",
+  description: "Meet the team behind the Data Science Lab of Daffodil International University",
+};
 
 export default function TeamPage() {
   const hierarchy = {

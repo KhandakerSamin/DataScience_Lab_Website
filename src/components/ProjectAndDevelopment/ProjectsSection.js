@@ -8,7 +8,7 @@ export default function ProjectsSection({ title, projects, startIndex = 0 }) {
   return (
     <section className="mb-16">
       <div className="text-center mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">{title}</h2>
+        <h2 className="text-3xl md:text-4xl font-bold text-green-600 mb-4">{title}</h2>
         <div className="w-24 h-1 bg-[#09509E] mx-auto rounded-full"></div>
       </div>
 
