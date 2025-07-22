@@ -88,7 +88,7 @@ export default function EventsClub() {
           </p>
         </div>
 
-        {/* Events List - Full Width Cards */}
+        {/* Events List */}
         <div className="space-y-8">
           {upcomingEvents.length > 0 ? (
             upcomingEvents.slice(0, visibleCount).map((event) => (
@@ -96,9 +96,10 @@ export default function EventsClub() {
                 key={event.id}
                 className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500 overflow-hidden border border-gray-100"
               >
-                <div className="flex flex-col md:flex-row">
-                  {/* Event Image - Fixed Size */}
-                  <div className="md:w-1/3 md:min-w-[300px] md:max-w-[300px] relative h-64 md:h-80 flex-shrink-0">
+                {/* Top Row: Image + Heading/Basic Info */}
+                <div className="flex flex-col md:flex-row p-6 md:p-8">
+                  {/* Event Image */}
+                  <div className="w-full md:w-80 md:flex-shrink-0 relative h-48 md:h-56 rounded-xl overflow-hidden mb-6 md:mb-0 md:mr-8">
                     <Image src={event.image || "/placeholder.svg"} alt={event.title} fill className="object-cover" />
                     <div className="absolute top-4 right-4">
                       <span className="bg-[#39B24A] text-white px-3 py-1 rounded-full text-sm font-semibold">
@@ -127,17 +128,17 @@ export default function EventsClub() {
                     </div>
                   </div>
 
-                  {/* Card Content - Expandable Area */}
-                  <div className="flex-1 p-6 md:p-8 flex flex-col">
-                    <div className="flex-1">
-                      {/* Title */}
-                      <div className="flex justify-between items-start mb-3">
-                        <h3 className="text-2xl font-bold text-gray-800">{event.title}</h3>
+                  {/* Basic Info Section */}
+                  <div className="flex-1 flex flex-col justify-between">
+                    {/* Title and Tags */}
+                    <div>
+                      <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start mb-4">
+                        <h3 className="text-2xl md:text-3xl font-bold text-gray-800 mb-3 lg:mb-0">{event.title}</h3>
                         <div className="flex flex-wrap gap-2">
                           {event.tags.map((tag, index) => (
                             <span
                               key={index}
-                              className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium"
+                              className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium"
                             >
                               {tag}
                             </span>
@@ -145,158 +146,46 @@ export default function EventsClub() {
                         </div>
                       </div>
 
-                      {/* Date and Time */}
-                      <div className="flex flex-wrap gap-6 mb-4">
+                      {/* Date, Time, Location */}
+                      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
                         <div className="flex items-center text-gray-600">
-                          <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                          <svg className="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
                             <path
                               fillRule="evenodd"
                               d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
                               clipRule="evenodd"
                             />
                           </svg>
-                          <span>{formatDate(event.date)}</span>
+                          <span className="text-sm">{formatDate(event.date)}</span>
                         </div>
                         <div className="flex items-center text-gray-600">
-                          <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                          <svg className="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
                             <path
                               fillRule="evenodd"
                               d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
                               clipRule="evenodd"
                             />
                           </svg>
-                          <span>{event.time}</span>
+                          <span className="text-sm">{event.time}</span>
                         </div>
                         <div className="flex items-center text-gray-600">
-                          <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                          <svg className="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
                             <path
                               fillRule="evenodd"
                               d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
                               clipRule="evenodd"
                             />
                           </svg>
-                          <span>{event.location}</span>
+                          <span className="text-sm">{event.location}</span>
                         </div>
                       </div>
 
-                      {/* Description */}
-                      <p className="text-gray-600 mb-6">{event.shortDescription}</p>
-
-                      {/* Expanded Content - Only in Content Area */}
-                      {expandedCard === event.id && (
-                        <div className="mt-6 pt-6 border-t border-gray-200">
-                          {/* Enhanced Expanded Section */}
-                          <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-xl p-6 space-y-6">
-                            {/* Full Description */}
-                            <div>
-                              <h4 className="text-lg font-bold text-gray-800 mb-3 flex items-center">
-                                <span className="text-2xl mr-2">📋</span>
-                                About This Event
-                              </h4>
-                              <p className="text-gray-700 leading-relaxed">{event.fullDescription}</p>
-                            </div>
-
-                            {/* Event Details Grid */}
-                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                              {/* Instructor Info */}
-                              <div className="bg-white rounded-lg p-4 shadow-sm">
-                                <h5 className="font-semibold text-gray-800 mb-2 flex items-center">
-                                  <span className="text-xl mr-2">👨‍🏫</span>
-                                  Instructor
-                                </h5>
-                                <p className="text-gray-700 font-medium">{event.instructor}</p>
-                                <p className="text-gray-600 text-sm mt-1">{event.instructorBio}</p>
-                              </div>
-
-                              {/* Event Info */}
-                              <div className="bg-white rounded-lg p-4 shadow-sm">
-                                <h5 className="font-semibold text-gray-800 mb-2 flex items-center">
-                                  <span className="text-xl mr-2">ℹ️</span>
-                                  Event Details
-                                </h5>
-                                <div className="space-y-1 text-sm">
-                                  <p>
-                                    <span className="font-medium">Duration:</span> {event.duration}
-                                  </p>
-                                  <p>
-                                    <span className="font-medium">Price:</span> {event.price}
-                                  </p>
-                                  <p>
-                                    <span className="font-medium">Prerequisites:</span> {event.prerequisites}
-                                  </p>
-                                  <p>
-                                    <span className="font-medium">Certificate:</span>{" "}
-                                    {event.certificate ? "✅ Yes" : "❌ No"}
-                                  </p>
-                                </div>
-                              </div>
-                            </div>
-
-                            {/* Learning Outcomes */}
-                            <div className="bg-white rounded-lg p-4 shadow-sm">
-                              <h5 className="font-semibold text-gray-800 mb-3 flex items-center">
-                                <span className="text-xl mr-2">🎯</span>
-                                What You'll Learn
-                              </h5>
-                              <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
-                                {event.outcomes.map((outcome, index) => (
-                                  <div key={index} className="flex items-center text-gray-700">
-                                    <span className="text-green-500 mr-2">✓</span>
-                                    <span className="text-sm">{outcome}</span>
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-
-                            {/* Materials Needed */}
-                            <div className="bg-white rounded-lg p-4 shadow-sm">
-                              <h5 className="font-semibold text-gray-800 mb-3 flex items-center">
-                                <span className="text-xl mr-2">🛠️</span>
-                                Materials & Requirements
-                              </h5>
-                              <div className="grid grid-cols-1 lg:grid-cols-2 gap-1">
-                                {event.materials.map((material, index) => (
-                                  <div key={index} className="flex items-center text-gray-700">
-                                    <span className="text-blue-500 mr-2">•</span>
-                                    <span className="text-sm">{material}</span>
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-
-                            {/* Registration Section */}
-                            <div className="bg-gradient-to-r from-green-100 to-green-50 rounded-lg p-6 text-center">
-                              <h5 className="font-bold text-gray-800 mb-3 text-lg">Ready to Join?</h5>
-                              <p className="text-gray-600 mb-4">
-                                Registration deadline:{" "}
-                                <span className="font-semibold">{formatDate(event.registrationDeadline)}</span>
-                              </p>
-
-                              {registeredEvents.has(event.id) ? (
-                                <div className="bg-gray-100 text-gray-600 py-3 px-6 rounded-lg font-semibold inline-flex items-center">
-                                  <span className="text-green-500 mr-2">✓</span>
-                                  Successfully Registered!
-                                </div>
-                              ) : isRegistrationOpen(event.registrationDeadline) ? (
-                                <button
-                                  onClick={() => handleRegistration(event.id, event.title)}
-                                  className="bg-[#39B24A] hover:bg-green-600 text-white py-3 px-8 rounded-lg font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
-                                >
-                                  🎫 Register Now - {event.price}
-                                </button>
-                              ) : (
-                                <div className="bg-red-100 text-red-600 py-3 px-6 rounded-lg font-semibold">
-                                  ❌ Registration Closed
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      )}
+                      {/* Short Description */}
+                      <p className="text-gray-600 text-base leading-relaxed mb-6">{event.shortDescription}</p>
                     </div>
 
                     {/* See More Button */}
-                    <div className="mt-6">
+                    <div>
                       <button
                         onClick={() => handleSeeMore(event.id)}
                         className="w-full bg-gray-100 hover:bg-gray-200 text-gray-800 py-3 px-6 rounded-lg font-medium transition-colors duration-300"
@@ -306,6 +195,138 @@ export default function EventsClub() {
                     </div>
                   </div>
                 </div>
+
+                {/* Full Width Expanded Content */}
+                {expandedCard === event.id && (
+                  <div className="px-6 md:px-8 pb-6 md:pb-8">
+                    <div className="pt-6 border-t border-gray-200">
+                      {/* Enhanced Expanded Section - Full Width */}
+                      <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-xl p-6 md:p-8 space-y-8">
+                        {/* Full Description */}
+                        <div>
+                          <h4 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                            <span className="text-3xl mr-3">📋</span>
+                            About This Event
+                          </h4>
+                          <p className="text-gray-700 leading-relaxed text-lg">{event.fullDescription}</p>
+                        </div>
+
+                        {/* Event Details Grid - Full Width */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+                          {/* Instructor Info */}
+                          <div className="bg-white rounded-lg p-5 shadow-sm">
+                            <h5 className="font-semibold text-gray-800 mb-3 flex items-center">
+                              <span className="text-2xl mr-2">👨‍🏫</span>
+                              Instructor
+                            </h5>
+                            <p className="text-gray-700 font-medium mb-2">{event.instructor}</p>
+                            <p className="text-gray-600 text-sm">{event.instructorBio}</p>
+                          </div>
+
+                          {/* Event Info */}
+                          <div className="bg-white rounded-lg p-5 shadow-sm">
+                            <h5 className="font-semibold text-gray-800 mb-3 flex items-center">
+                              <span className="text-2xl mr-2">ℹ️</span>
+                              Details
+                            </h5>
+                            <div className="space-y-2 text-sm">
+                              <p>
+                                <span className="font-medium">Duration:</span> {event.duration}
+                              </p>
+                              <p>
+                                <span className="font-medium">Price:</span> {event.price}
+                              </p>
+                              <p>
+                                <span className="font-medium">Certificate:</span>{" "}
+                                {event.certificate ? "✅ Yes" : "❌ No"}
+                              </p>
+                            </div>
+                          </div>
+
+                          {/* Prerequisites */}
+                          <div className="bg-white rounded-lg p-5 shadow-sm">
+                            <h5 className="font-semibold text-gray-800 mb-3 flex items-center">
+                              <span className="text-2xl mr-2">📚</span>
+                              Prerequisites
+                            </h5>
+                            <p className="text-gray-600 text-sm">{event.prerequisites}</p>
+                          </div>
+
+                          {/* Registration Info */}
+                          <div className="bg-white rounded-lg p-5 shadow-sm">
+                            <h5 className="font-semibold text-gray-800 mb-3 flex items-center">
+                              <span className="text-2xl mr-2">📅</span>
+                              Registration
+                            </h5>
+                            <p className="text-gray-600 text-sm mb-2">
+                              <span className="font-medium">Deadline:</span>
+                            </p>
+                            <p className="text-gray-700 text-sm">{formatDate(event.registrationDeadline)}</p>
+                          </div>
+                        </div>
+
+                        {/* Learning Outcomes - Full Width */}
+                        <div className="bg-white rounded-lg p-6 shadow-sm">
+                          <h5 className="font-semibold text-gray-800 mb-4 flex items-center">
+                            <span className="text-3xl mr-3">🎯</span>
+                            What You'll Learn
+                          </h5>
+                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                            {event.outcomes.map((outcome, index) => (
+                              <div key={index} className="flex items-center text-gray-700">
+                                <span className="text-green-500 mr-3 text-lg">✓</span>
+                                <span className="text-sm">{outcome}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Materials Needed - Full Width */}
+                        <div className="bg-white rounded-lg p-6 shadow-sm">
+                          <h5 className="font-semibold text-gray-800 mb-4 flex items-center">
+                            <span className="text-3xl mr-3">🛠️</span>
+                            Materials & Requirements
+                          </h5>
+                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                            {event.materials.map((material, index) => (
+                              <div key={index} className="flex items-center text-gray-700">
+                                <span className="text-blue-500 mr-3 text-lg">•</span>
+                                <span className="text-sm">{material}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Registration Section - Full Width */}
+                        <div className="bg-gradient-to-r from-green-100 to-green-50 rounded-lg p-8 text-center">
+                          <h5 className="font-bold text-gray-800 mb-4 text-2xl">Ready to Join?</h5>
+                          <p className="text-gray-600 mb-6 text-lg">
+                            Registration deadline:{" "}
+                            <span className="font-semibold">{formatDate(event.registrationDeadline)}</span>
+                          </p>
+
+                          {registeredEvents.has(event.id) ? (
+                            <div className="bg-gray-100 text-gray-600 py-4 px-8 rounded-lg font-semibold inline-flex items-center text-lg">
+                              <span className="text-green-500 mr-3 text-xl">✓</span>
+                              Successfully Registered!
+                            </div>
+                          ) : isRegistrationOpen(event.registrationDeadline) ? (
+                            <button
+                              onClick={() => handleRegistration(event.id, event.title)}
+                              className="bg-[#39B24A] hover:bg-green-600 text-white py-4 px-10 rounded-lg font-semibold transition-all duration-300 hover:scale-105 shadow-lg text-lg"
+                            >
+                              🎫 Register Now - {event.price}
+                            </button>
+                          ) : (
+                            <div className="bg-red-100 text-red-600 py-4 px-8 rounded-lg font-semibold text-lg">
+                              ❌ Registration Closed
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             ))
           ) : (
