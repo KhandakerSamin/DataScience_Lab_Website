@@ -1,67 +1,260 @@
-"use client";
-import Slider from "react-slick";
-import Image from "next/image";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+"use client"
+import Slider from "react-slick"
+import Image from "next/image"
+import "slick-carousel/slick/slick.css"
+import "slick-carousel/slick/slick-theme.css"
 
 export default function Gallery() {
   const settings = {
     centerMode: true,
-    centerPadding: "40px",
+    centerPadding: "0px",
     slidesToShow: 3,
     infinite: true,
     arrows: true,
     dots: true,
-    speed: 500,
+    speed: 800,
+    cssEase: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+    swipeToSlide: true,
+    touchThreshold: 10,
     responsive: [
       {
         breakpoint: 768,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 3,
           centerPadding: "0px",
         },
       },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          centerPadding: "60px",
+        },
+      },
     ],
-  };
+  }
 
   const images = [
-    "/gallery1.jpg",
-    "/gallery2.jpg",
-    "/gallery3.jpg",
-    "/gallery4.jpg",
-    "/gallery5.jpg",
-  ];
+    "/placeholder.svg?height=400&width=300&text=Gallery+1",
+    "/placeholder.svg?height=400&width=300&text=Gallery+2",
+    "/placeholder.svg?height=400&width=300&text=Gallery+3",
+    "/placeholder.svg?height=400&width=300&text=Gallery+4",
+    "/placeholder.svg?height=400&width=300&text=Gallery+5",
+  ]
 
   return (
-    <section className="py-16 px-4 md:px-10 text-center bg-gray-50 font-outfit">
-      {/* Heading */}
-      <h2 className="text-3xl md:text-5xl font-bold text-[#39B24A] mb-4">Gallery</h2>
+    <>
+      <style jsx>{`
+        .gallery-section {
+          background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+          min-height: 100vh;
+          animation: slideIn 1s ease-out;
+        }
 
-      {/* Description */}
-      <p className="max-w-3xl mx-auto text-gray-600 mb-12 text-sm md:text-base leading-relaxed">
-        This Club Is Supervised By The DATA SCIENCE LAB Which Is A Concern Of Department Of Software Engineering.
-        Data Science Club Founded In August 2022. Our Mission Is To Help Students Of All Skill Levels Learn About
-        Data Science And Machine Learning Through Tutorials, Presentations From Industry Professionals, And
-        Hands-On Experience.
-      </p>
+        .slider-container {
+          perspective: 1200px;
+          perspective-origin: center center;
+        }
 
-      {/* Slider */}
-      <div className="mx-auto max-w-6xl">
-        <Slider {...settings}>
-          {images.map((src, index) => (
-            <div key={index} className="px-2">
-              <div className="rounded-2xl overflow-hidden shadow-lg h-[250px] md:h-[300px] relative">
-                <Image
-                  src={src}
-                  alt={`Gallery image ${index + 1}`}
-                  fill
-                  className="object-cover"
-                />
+        .slick-list {
+          overflow: visible;
+          padding: 0 100px;
+        }
+
+        @media (max-width: 768px) {
+          .slick-list {
+            padding: 0 50px;
+          }
+        }
+
+        .slick-track {
+          display: flex;
+          align-items: center;
+        }
+
+        .slick-slide {
+          transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          transform-style: preserve-3d;
+        }
+
+        .slick-slide > div {
+          padding: 0 15px;
+        }
+
+        .slick-center .image-container {
+          transform: translateZ(0) scale(1.1);
+          z-index: 10;
+          opacity: 1;
+          filter: brightness(1) blur(0px);
+        }
+
+        .slick-slide:not(.slick-center) .image-container {
+          transform: rotateY(45deg) translateZ(-100px) scale(0.8);
+          opacity: 0.6;
+          filter: brightness(0.7) blur(1px);
+        }
+
+        .slick-center + .slick-slide .image-container,
+        .slick-slide:nth-child(1) .image-container {
+          transform: rotateY(-45deg) translateZ(-100px) scale(0.8);
+        }
+
+        .slick-center ~ .slick-slide:nth-child(3) .image-container {
+          transform: rotateY(45deg) translateZ(-100px) scale(0.8);
+        }
+
+        .image-container {
+          width: 300px;
+          height: 400px;
+          margin: 0 auto;
+          border-radius: 20px;
+          overflow: hidden;
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+          position: relative;
+          transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          transform-style: preserve-3d;
+          backface-visibility: hidden;
+        }
+
+        @media (max-width: 768px) {
+          .image-container {
+            width: 250px;
+            height: 320px;
+          }
+        }
+
+        .image-container:hover {
+          box-shadow: 0 25px 50px rgba(57, 178, 74, 0.3);
+        }
+
+        .slick-dots {
+          bottom: -60px;
+          z-index: 20;
+        }
+
+        .slick-dots li {
+          margin: 0 8px;
+        }
+
+        .slick-dots li button {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.3);
+          border: 2px solid transparent;
+          transition: all 0.3s ease;
+        }
+
+        .slick-dots li button:before {
+          display: none;
+        }
+
+        .slick-dots li.slick-active button {
+          background: #39b24a;
+          border-color: rgba(57, 178, 74, 0.5);
+          transform: scale(1.2);
+        }
+
+        .slick-prev,
+        .slick-next {
+          z-index: 20;
+          width: 50px;
+          height: 50px;
+          background: rgba(57, 178, 74, 0.8);
+          border-radius: 50%;
+          transition: all 0.3s ease;
+        }
+
+        .slick-prev {
+          left: 20px;
+        }
+
+        .slick-next {
+          right: 20px;
+        }
+
+        .slick-prev:hover,
+        .slick-next:hover {
+          background: rgba(57, 178, 74, 1);
+          transform: scale(1.1);
+        }
+
+        .slick-prev:before,
+        .slick-next:before {
+          color: white;
+          font-size: 20px;
+          opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+          .slick-prev,
+          .slick-next {
+            width: 40px;
+            height: 40px;
+          }
+
+          .slick-prev {
+            left: 10px;
+          }
+
+          .slick-next {
+            right: 10px;
+          }
+
+          .slick-prev:before,
+          .slick-next:before {
+            font-size: 16px;
+          }
+        }
+
+        * {
+          -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+        }
+
+        @keyframes slideIn {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
+
+      <section className="gallery-section py-16 px-4 md:px-10 text-center flex flex-col justify-center font-sans">
+        {/* Heading */}
+        <h2 className="text-3xl md:text-5xl font-bold text-[#39B24A] mb-4 drop-shadow-lg">Gallery</h2>
+
+        {/* Description */}
+        <p className="max-w-3xl mx-auto text-gray-200 mb-16 text-sm md:text-base leading-relaxed opacity-90">
+          This Club Is Supervised By The DATA SCIENCE LAB Which Is A Concern Of Department Of Software Engineering. Data
+          Science Club Founded In August 2022. Our Mission Is To Help Students Of All Skill Levels Learn About Data
+          Science And Machine Learning Through Tutorials, Presentations From Industry Professionals, And Hands-On
+          Experience.
+        </p>
+
+        {/* Slider */}
+        <div className="slider-container mx-auto max-w-6xl">
+          <Slider {...settings}>
+            {images.map((src, index) => (
+              <div key={index}>
+                <div className="image-container">
+                  <Image
+                    src={src || "/placeholder.svg"}
+                    alt={`Gallery image ${index + 1}`}
+                    fill
+                    className="object-cover"
+                    priority={index < 3}
+                  />
+                </div>
               </div>
-            </div>
-          ))}
-        </Slider>
-      </div>
-    </section>
-  );
+            ))}
+          </Slider>
+        </div>
+      </section>
+    </>
+  )
 }

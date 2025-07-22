@@ -2,9 +2,11 @@
 
 import About from "@/components/DSClubPage/AboutUs";
 import Banner from "@/components/DSClubPage/Banner";
+import EventsClub from "@/components/DSClubPage/EventsClub";
 import ExPanel from "@/components/DSClubPage/ExPanel";
 import Gallery from "@/components/DSClubPage/Gallery";
 import MemberCard from "@/components/DSClubPage/MemberCard";
+import Events from "@/components/HomePage/Events";
 
 const executivePanel = [
   {
@@ -127,6 +129,7 @@ export default function DSClubPage() {
       <Banner />
       <div className="container mx-auto px-4 py-12">
         <About />
+        <EventsClub />
         <ExPanel />
 
 <Gallery />
