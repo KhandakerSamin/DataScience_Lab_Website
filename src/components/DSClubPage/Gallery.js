@@ -35,18 +35,19 @@ export default function Gallery() {
   }
 
   const images = [
-    "/placeholder.svg?height=400&width=300&text=Gallery+1",
-    "/placeholder.svg?height=400&width=300&text=Gallery+2",
-    "/placeholder.svg?height=400&width=300&text=Gallery+3",
-    "/placeholder.svg?height=400&width=300&text=Gallery+4",
-    "/placeholder.svg?height=400&width=300&text=Gallery+5",
+    "/gallery1.jpg",
+    "/gallery2.jpg",
+    "/gallery3.jpg",
+    "/gallery4.jpg",
+    "/gallery5.jpg",
+    "/gallery6.jpg",
   ]
 
   return (
     <>
       <style jsx>{`
         .gallery-section {
-          background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+          background: #f9fafb; /* gray-50 equivalent */
           min-height: 100vh;
           animation: slideIn 1s ease-out;
         }
@@ -109,7 +110,7 @@ export default function Gallery() {
           margin: 0 auto;
           border-radius: 20px;
           overflow: hidden;
-          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* reduced shadow */
           position: relative;
           transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
           transform-style: preserve-3d;
@@ -124,7 +125,7 @@ export default function Gallery() {
         }
 
         .image-container:hover {
-          box-shadow: 0 25px 50px rgba(57, 178, 74, 0.3);
+          box-shadow: 0 12px 30px rgba(59, 130, 246, 0.2); /* blue hover shadow */
         }
 
         .slick-dots {
@@ -160,7 +161,7 @@ export default function Gallery() {
           z-index: 20;
           width: 50px;
           height: 50px;
-          background: rgba(57, 178, 74, 0.8);
+          background: rgba(59, 130, 246, 0.8); /* blue-500 with opacity */
           border-radius: 50%;
           transition: all 0.3s ease;
         }
@@ -175,7 +176,7 @@ export default function Gallery() {
 
         .slick-prev:hover,
         .slick-next:hover {
-          background: rgba(57, 178, 74, 1);
+          background: rgba(59, 130, 246, 1); /* solid blue-500 */
           transform: scale(1.1);
         }
 
@@ -229,7 +230,7 @@ export default function Gallery() {
         <h2 className="text-3xl md:text-5xl font-bold text-[#39B24A] mb-4 drop-shadow-lg">Gallery</h2>
 
         {/* Description */}
-        <p className="max-w-3xl mx-auto text-gray-200 mb-16 text-sm md:text-base leading-relaxed opacity-90">
+        <p className="max-w-3xl mx-auto text-gray-600 mb-16 text-sm md:text-base leading-relaxed opacity-90">
           This Club Is Supervised By The DATA SCIENCE LAB Which Is A Concern Of Department Of Software Engineering. Data
           Science Club Founded In August 2022. Our Mission Is To Help Students Of All Skill Levels Learn About Data
           Science And Machine Learning Through Tutorials, Presentations From Industry Professionals, And Hands-On

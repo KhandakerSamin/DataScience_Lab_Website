@@ -67,7 +67,7 @@ export default function EventsClub() {
 
   if (loading) {
     return (
-      <div className="py-16 px-4 md:px-10 bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen flex items-center justify-center">
+      <div className="py-16 px-4 md:px-10 bg-gradient-to-br from-gray-50 min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#39B24A]"></div>
           <p className="mt-4 text-gray-600">Loading events...</p>
@@ -77,7 +77,7 @@ export default function EventsClub() {
   }
 
   return (
-    <section className="py-16 px-4 md:px-10 bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+    <section className="py-16 px-4 md:px-10 bg-gradient-to-br bg-gray-50 min-h-screen">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
@@ -269,7 +269,7 @@ export default function EventsClub() {
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="font-semibold text-gray-800 mb-4 flex items-center">
                             <span className="text-3xl mr-3">🎯</span>
-                            What You'll Learn
+                            What You will Learn
                           </h5>
                           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                             {event.outcomes.map((outcome, index) => (
