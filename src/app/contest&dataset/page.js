@@ -1,9 +1,9 @@
 "use client"
 
-import CompetitionPage from "@/components/C&Dpage/CompetitionPage"
-import DashboardLayout from "@/components/C&Dpage/DashboardLayout"
-import DatasetPage from "@/components/C&Dpage/DataSetPage"
-import DebugInfo from "@/components/C&Dpage/DebugInfo"
+
+import CompetitionPage from "@/components/ContestAndDatasetPage/CompetitionPage"
+import DashboardLayout from "@/components/ContestAndDatasetPage/DashboardLayout"
+import DatasetPage from "@/components/ContestAndDatasetPage/DataSetPage"
 import { useState } from "react"
 
 

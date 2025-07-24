@@ -1,6 +1,7 @@
 import "./globals.css"
 import { Poppins, Outfit } from "next/font/google"
 import LayoutWrapper from "@/components/LayoutWrapper"
+import ClientLayout from "@/components/ClientLayout"
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -28,7 +29,9 @@ export default function MainLayout({ children }) {
         <link rel="icon" href="/favicon.png" />
       </head>
       <body className={`${poppins.variable} ${outfit.variable} font-poppins antialiased`}>
-        <LayoutWrapper>{children}</LayoutWrapper>
+        <ClientLayout>
+          <LayoutWrapper>{children}</LayoutWrapper>
+        </ClientLayout>
       </body>
     </html>
   )
