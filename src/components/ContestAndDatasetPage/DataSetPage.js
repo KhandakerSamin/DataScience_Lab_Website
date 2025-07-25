@@ -1,37 +1,39 @@
 "use client"
-
 import { useState, useEffect } from "react"
 import SlidingTabs from "./SlidingTabs"
 import DatasetCard from "./DataSetCard"
 import Link from "next/link"
-import { ChevronRight } from "lucide-react"
+import { ChevronRight, ExternalLink, RefreshCw } from "lucide-react"
 
 export default function DatasetPage() {
   const [datasets, setDatasets] = useState([])
   const [filteredDatasets, setFilteredDatasets] = useState([])
   const [searchQuery, setSearchQuery] = useState("")
   const [activeTab, setActiveTab] = useState("All Datasets")
-  const [sortBy, setSortBy] = useState("title")
-  const [sortOrder, setSortOrder] = useState("asc")
+  const [sortBy, setSortBy] = useState("downloads")
+  const [sortOrder, setSortOrder] = useState("desc")
   const [loading, setLoading] = useState(true)
   const [showSortDropdown, setShowSortDropdown] = useState(false)
+  const [error, setError] = useState(null)
+  const [totalDatasets, setTotalDatasets] = useState(0)
 
   const tabs = [
     "All Datasets",
-    "Computer Science",
-    "Education",
-    "Classification",
-    "Computer Vision",
-    "NLP",
-    "Data Visualization",
-    "Pre-Trained Models",
     "Machine Learning",
     "Deep Learning",
-    "Statistics",
-    "Finance",
+    "Computer Vision",
+    "NLP",
+    "Classification",
+    "Data Visualization",
+    "Computer Science",
     "Healthcare",
+    "Finance",
     "Transportation",
+    "Education",
+    "Statistics",
     "Entertainment",
+    "Environment",
+    "Government",
   ]
 
   const sortOptions = [
@@ -52,37 +54,62 @@ export default function DatasetPage() {
   }, [datasets, searchQuery, activeTab, sortBy, sortOrder])
 
   const fetchDatasets = async () => {
+    setLoading(true)
+    setError(null)
     try {
-      const response = await fetch("/api/dataset")
+      console.log("Fetching Kaggle datasets...")
+      const response = await fetch("/api/kaggle-datasets")
+
+      if (!response.ok) {
+        const errorHeader = response.headers.get("X-Error")
+        throw new Error(errorHeader || `HTTP error! status: ${response.status}`)
+      }
+
       const data = await response.json()
+      console.log(`Received ${data.length} datasets from Kaggle`)
+
+      if (!Array.isArray(data)) {
+        throw new Error("Invalid data format received from API")
+      }
+
       setDatasets(data)
+      setTotalDatasets(data.length)
       setLoading(false)
     } catch (error) {
       console.error("Error fetching datasets:", error)
+      setError(error.message)
       setLoading(false)
+      setDatasets([])
     }
   }
 
   const filterAndSortDatasets = () => {
+    if (!Array.isArray(datasets)) {
+      setFilteredDatasets([])
+      return
+    }
+
     let filtered = [...datasets]
 
-    // Filter by search query
     if (searchQuery) {
       filtered = filtered.filter(
         (dataset) =>
-          dataset.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          dataset.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          dataset.author.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          dataset.category.toLowerCase().includes(searchQuery.toLowerCase()),
+          dataset.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          dataset.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          dataset.author?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          dataset.category?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          dataset.topics?.some(
+            (topic) =>
+              typeof topic === "string" &&
+              topic.toLowerCase().includes(searchQuery.toLowerCase())
+          )
       )
     }
 
-    // Filter by category tab
     if (activeTab !== "All Datasets") {
       filtered = filtered.filter((dataset) => dataset.category === activeTab)
     }
 
-    // Sort datasets
     filtered.sort((a, b) => {
       let aValue = a[sortBy]
       let bValue = b[sortBy]
@@ -109,7 +136,8 @@ export default function DatasetPage() {
   }
 
   const convertSizeToBytes = (size) => {
-    const units = { B: 1, KB: 1024, MB: 1024 * 1024, GB: 1024 * 1024 * 1024 }
+    if (!size || typeof size !== "string") return 0
+    const units = { B: 1, KB: 1024, MB: 1024 * 1024, GB: 1024 * 1024 * 1024, TB: 1024 * 1024 * 1024 * 1024 }
     const match = size.match(/^([\d.]+)\s*([A-Z]+)$/i)
     if (match) {
       const value = Number.parseFloat(match[1])
@@ -132,7 +160,7 @@ export default function DatasetPage() {
       setSortOrder(sortOrder === "asc" ? "desc" : "asc")
     } else {
       setSortBy(field)
-      setSortOrder("asc")
+      setSortOrder("desc")
     }
     setShowSortDropdown(false)
   }
@@ -140,39 +168,26 @@ export default function DatasetPage() {
   const clearFilters = () => {
     setSearchQuery("")
     setActiveTab("All Datasets")
-    setSortBy("title")
-    setSortOrder("asc")
-  }
-
-  if (loading) {
-    return (
-      <div className="p-6">
-        <div className="animate-pulse">
-          <div className="h-8 bg-gray-200 rounded w-1/4 mb-4"></div>
-          <div className="h-4 bg-gray-200 rounded w-1/2 mb-8"></div>
-          <div className="h-12 bg-gray-200 rounded mb-6"></div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[...Array(6)].map((_, i) => (
-              <div key={i} className="h-80 bg-gray-200 rounded-lg"></div>
-            ))}
-          </div>
-        </div>
-      </div>
-    )
+    setSortBy("downloads")
+    setSortOrder("desc")
   }
 
   return (
-    <div className="p-6  font-outfit">
+    <div className="p-6 font-outfit">
+      {/* Header */}
       <div className="mb-8 flex justify-between">
-        <div> 
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Datasets</h1>
-        <p className="text-gray-600 text-lg">
-          Explore, analyze, and share quality data.{" "}
-          <a href="#" className="text-[#09509E] underline">
-            Learn more
-          </a>{" "}
-          about data types, creating, and collaborating.
-        </p>
+        <div>
+          <div className="flex items-center gap-4 mb-4">
+            <h1 className="text-4xl font-bold text-gray-900">Kaggle Datasets</h1>
+            <div className="flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-sm font-medium">
+              <ExternalLink size={16} />
+              <span>Live from Kaggle API</span>
+            </div>
+          </div>
+          <p className="text-gray-600 text-lg">
+            Explore {totalDatasets.toLocaleString()}+ datasets from the worlds largest data science community.{" "}
+            <span className="text-blue-600 font-medium">Click any dataset to view on Kaggle.</span>
+          </p>
         </div>
         <div>
           <Link href="/contact">
@@ -188,24 +203,50 @@ export default function DatasetPage() {
         </div>
       </div>
 
+      {/* Stats Bar */}
+      <div className="mb-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-6">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-blue-600">{totalDatasets.toLocaleString()}</div>
+              <div className="text-sm text-gray-600">Total Datasets</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-green-600">{filteredDatasets.length.toLocaleString()}</div>
+              <div className="text-sm text-gray-600">Showing</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-purple-600">{tabs.length - 1}</div>
+              <div className="text-sm text-gray-600">Categories</div>
+            </div>
+          </div>
+          <button
+            onClick={fetchDatasets}
+            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            <RefreshCw size={16} />
+            <span>Refresh</span>
+          </button>
+        </div>
+      </div>
+
       {/* Search and Sort Controls */}
       <div className="flex flex-col sm:flex-row gap-4 mb-6">
         <div className="relative flex-1">
           <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">🔍</span>
           <input
             type="text"
-            placeholder="Search datasets by title, author, category..."
+            placeholder="Search Kaggle datasets by title, author, category, or topics..."
             value={searchQuery}
             onChange={handleSearch}
-            className="w-full pl-10 pr-4 py-3 text-lg border border-gray-300 rounded-lg "
+            className="w-full pl-10 pr-4 py-3 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
-
-        <div className="flex gap-2 ">
-          <div className="relative ">
+        <div className="flex gap-2">
+          <div className="relative">
             <button
               onClick={() => setShowSortDropdown(!showSortDropdown)}
-              className="flex items-center gap-2 px-4 py-4 border border-gray-300 rounded-lg bg-white hover:bg-gray-50 "
+              className="flex items-center gap-2 px-4 py-3 border border-gray-300 rounded-lg bg-white hover:bg-gray-50 transition-colors"
             >
               <span>{sortOrder === "asc" ? "↑" : "↓"}</span>
               <span>Sort by {sortOptions.find((opt) => opt.value === sortBy)?.label}</span>
@@ -217,7 +258,7 @@ export default function DatasetPage() {
                   <button
                     key={option.value}
                     onClick={() => handleSort(option.value)}
-                    className="w-full text-left px-4 py-2 hover:bg-gray-50 flex items-center justify-between"
+                    className="w-full text-left px-4 py-2 hover:bg-gray-50 flex items-center justify-between transition-colors"
                   >
                     <span>{option.label}</span>
                     {sortBy === option.value && <span>{sortOrder === "asc" ? "↑" : "↓"}</span>}
@@ -226,13 +267,12 @@ export default function DatasetPage() {
               </div>
             )}
           </div>
-
           <button
             onClick={clearFilters}
-            className="flex items-center gap-2 px-4 py-3 border border-gray-300 rounded-lg bg:white hover:bg-[#09509E] bg-white hover:text-white transition-colors duration-200"
+            className="flex items-center gap-2 px-4 py-3 border border-gray-300 rounded-lg bg-white hover:bg-blue-600 hover:text-white transition-colors duration-200"
           >
             <span>🔄</span>
-            <span>Clear Filters</span>
+            <span>Clear</span>
           </button>
         </div>
       </div>
@@ -243,9 +283,20 @@ export default function DatasetPage() {
       {/* Results Info */}
       <div className="mb-6 flex items-center justify-between">
         <p className="text-gray-600">
-          Showing {filteredDatasets.length} dataset{filteredDatasets.length !== 1 ? "s" : ""}
-          {activeTab !== "All Datasets" && ` in ${activeTab}`}
-          {searchQuery && ` matching "${searchQuery}"`}
+          Showing <span className="font-semibold text-blue-600">{filteredDatasets.length}</span> dataset
+          {filteredDatasets.length !== 1 ? "s" : ""}
+          {activeTab !== "All Datasets" && (
+            <span>
+              {" "}
+              in <span className="font-medium text-gray-800">{activeTab}</span>
+            </span>
+          )}
+          {searchQuery && (
+            <span>
+              {" "}
+              matching &quot;<span className="font-medium text-gray-800">{searchQuery}</span>&quot;
+            </span>
+          )}
         </p>
         <p className="text-sm text-gray-500">
           Sorted by {sortOptions.find((opt) => opt.value === sortBy)?.label} ({sortOrder === "asc" ? "A-Z" : "Z-A"})
@@ -253,22 +304,32 @@ export default function DatasetPage() {
       </div>
 
       {/* Dataset Grid */}
-<div className="grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredDatasets.map((dataset) => (
-          <DatasetCard key={dataset.id} dataset={dataset} />
-        ))}
+      <div className="grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+        {filteredDatasets.map((dataset) => {
+          if (!dataset || typeof dataset !== "object") {
+            return null
+          }
+          return <DatasetCard key={dataset.id} dataset={dataset} />
+        })}
       </div>
 
-      {filteredDatasets.length === 0 && (
+      {/* No Results */}
+      {filteredDatasets.length === 0 && !loading && !error && (
         <div className="text-center py-12">
           <div className="text-gray-400 mb-4">
             <span className="text-6xl">🔍</span>
           </div>
           <h3 className="text-lg font-medium text-gray-900 mb-2">No datasets found</h3>
-          <p className="text-gray-600 mb-4">Try adjusting your search terms or selected category.</p>
+          <p className="text-gray-600 mb-4">
+            Try adjusting your search terms or selected category, or{" "}
+            <button onClick={fetchDatasets} className="text-blue-600 hover:underline">
+              refresh the data
+            </button>
+            .
+          </p>
           <button
             onClick={clearFilters}
-            className="px-4 py-2 border border-gray-300 rounded-lg bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="px-4 py-2 border border-gray-300 rounded-lg bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
           >
             Clear all filters
           </button>
