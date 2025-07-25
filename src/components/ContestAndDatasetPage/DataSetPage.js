@@ -1,7 +1,6 @@
 "use client"
 import { useState, useEffect } from "react"
-import SlidingTabs from "./SlidingTabs"
-import DatasetCard from "./DataSetCard"
+import DatasetCard from "./DatasetCard"
 import Link from "next/link"
 import { ChevronRight, ExternalLink, RefreshCw } from "lucide-react"
 
@@ -10,8 +9,8 @@ export default function DatasetPage() {
   const [filteredDatasets, setFilteredDatasets] = useState([])
   const [searchQuery, setSearchQuery] = useState("")
   const [activeTab, setActiveTab] = useState("All Datasets")
-  const [sortBy, setSortBy] = useState("downloads")
-  const [sortOrder, setSortOrder] = useState("desc")
+  const [sortBy, setSortBy] = useState("updatedDays")
+  const [sortOrder, setSortOrder] = useState("asc")
   const [loading, setLoading] = useState(true)
   const [showSortDropdown, setShowSortDropdown] = useState(false)
   const [error, setError] = useState(null)
@@ -19,21 +18,13 @@ export default function DatasetPage() {
 
   const tabs = [
     "All Datasets",
-    "Machine Learning",
-    "Deep Learning",
+    "Computer Science",
+    "Education",
+    "Classification",
     "Computer Vision",
     "NLP",
-    "Classification",
     "Data Visualization",
-    "Computer Science",
-    "Healthcare",
-    "Finance",
-    "Transportation",
-    "Education",
-    "Statistics",
-    "Entertainment",
-    "Environment",
-    "Government",
+    "Pre-Trained Model",
   ]
 
   const sortOptions = [
@@ -42,7 +33,7 @@ export default function DatasetPage() {
     { value: "size", label: "Size" },
     { value: "downloads", label: "Downloads" },
     { value: "likes", label: "Likes" },
-    { value: "updatedDays", label: "Last Updated" },
+    { value: "updatedDays", label: "Recent Update" },
   ]
 
   useEffect(() => {
@@ -160,7 +151,7 @@ export default function DatasetPage() {
       setSortOrder(sortOrder === "asc" ? "desc" : "asc")
     } else {
       setSortBy(field)
-      setSortOrder("desc")
+      setSortOrder(field === "updatedDays" ? "asc" : "desc")
     }
     setShowSortDropdown(false)
   }
@@ -168,8 +159,8 @@ export default function DatasetPage() {
   const clearFilters = () => {
     setSearchQuery("")
     setActiveTab("All Datasets")
-    setSortBy("downloads")
-    setSortOrder("desc")
+    setSortBy("updatedDays")
+    setSortOrder("asc")
   }
 
   return (
@@ -277,8 +268,22 @@ export default function DatasetPage() {
         </div>
       </div>
 
-      {/* Sliding Tabs */}
-      <SlidingTabs tabs={tabs} activeTab={activeTab} onTabChange={handleTabChange} />
+      {/* Tab Buttons */}
+      <div className="flex flex-wrap gap-2 mb-6">
+        {tabs.map((tab) => (
+          <button
+            key={tab}
+            onClick={() => handleTabChange(tab)}
+            className={`px-4 py-2 rounded-lg transition-colors ${
+              activeTab === tab
+                ? "bg-blue-600 text-white"
+                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+            }`}
+          >
+            {tab}
+          </button>
+        ))}
+      </div>
 
       {/* Results Info */}
       <div className="mb-6 flex items-center justify-between">
@@ -294,7 +299,7 @@ export default function DatasetPage() {
           {searchQuery && (
             <span>
               {" "}
-              matching &quot;<span className="font-medium text-gray-800">{searchQuery}</span>&quot;
+              matching "<span className="font-medium text-gray-800">{searchQuery}</span>"
             </span>
           )}
         </p>
