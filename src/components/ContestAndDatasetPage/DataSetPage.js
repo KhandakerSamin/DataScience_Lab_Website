@@ -45,32 +45,30 @@ export default function DatasetPage() {
   }, [datasets, searchQuery, activeTab, sortBy, sortOrder])
 
   const fetchDatasets = async () => {
+    // Only show loader for the dataset grid/cards, not the full page
     setLoading(true)
     setError(null)
     try {
       console.log("Fetching Kaggle datasets...")
       const response = await fetch("/api/kaggle-datasets")
-
       if (!response.ok) {
         const errorHeader = response.headers.get("X-Error")
         throw new Error(errorHeader || `HTTP error! status: ${response.status}`)
       }
-
       const data = await response.json()
       console.log(`Received ${data.length} datasets from Kaggle`)
-
       if (!Array.isArray(data)) {
         throw new Error("Invalid data format received from API")
       }
-
       setDatasets(data)
       setTotalDatasets(data.length)
-      setLoading(false)
     } catch (error) {
       console.error("Error fetching datasets:", error)
       setError(error.message)
-      setLoading(false)
       setDatasets([])
+    } finally {
+      // Always stop the loading state for the grid after fetch attempt
+      setLoading(false)
     }
   }
 
@@ -79,9 +77,7 @@ export default function DatasetPage() {
       setFilteredDatasets([])
       return
     }
-
     let filtered = [...datasets]
-
     if (searchQuery) {
       filtered = filtered.filter(
         (dataset) =>
@@ -96,15 +92,12 @@ export default function DatasetPage() {
           )
       )
     }
-
     if (activeTab !== "All Datasets") {
       filtered = filtered.filter((dataset) => dataset.category === activeTab)
     }
-
     filtered.sort((a, b) => {
       let aValue = a[sortBy]
       let bValue = b[sortBy]
-
       if (sortBy === "size") {
         aValue = convertSizeToBytes(a.size)
         bValue = convertSizeToBytes(b.size)
@@ -115,14 +108,12 @@ export default function DatasetPage() {
         aValue = aValue.toLowerCase()
         bValue = bValue.toLowerCase()
       }
-
       if (sortOrder === "asc") {
         return aValue > bValue ? 1 : -1
       } else {
         return aValue < bValue ? 1 : -1
       }
     })
-
     setFilteredDatasets(filtered)
   }
 
@@ -164,7 +155,7 @@ export default function DatasetPage() {
   }
 
   return (
-    <div className="p-6 font-outfit">
+    <div className="p-6 font-outfit relative">
       {/* Header */}
       <div className="mb-8 flex justify-between">
         <div>
@@ -199,12 +190,20 @@ export default function DatasetPage() {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-6">
             <div className="text-center">
-              <div className="text-2xl font-bold text-[#09509E]">{totalDatasets.toLocaleString()}</div>
-              <div className="text-sm text-gray-600">Total Datasets</div>
+              <div className="text-2xl font-bold text-[#09509E]">
+                {loading ? "..." : totalDatasets.toLocaleString()}
+              </div>
+              <div className="text-sm text-gray-600">
+                {loading ? "Datasets Loading" : "Total Datasets"}
+              </div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-green-600">{filteredDatasets.length.toLocaleString()}</div>
-              <div className="text-sm text-gray-600">Showing</div>
+              <div className="text-2xl font-bold text-green-600">
+                {loading ? "..." : filteredDatasets.length.toLocaleString()}
+              </div>
+              <div className="text-sm text-gray-600">
+                {loading ? "Please wait" : "Showing"}
+              </div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-purple-600">{tabs.length - 1}</div>
@@ -214,9 +213,10 @@ export default function DatasetPage() {
           <button
             onClick={fetchDatasets}
             className="flex items-center gap-2 px-4 py-2 bg-[#09509E] text-white rounded-lg hover:bg-blue-700 transition-colors"
+            disabled={loading}
           >
-            <RefreshCw size={16} />
-            <span>Refresh</span>
+            <RefreshCw size={16} className={loading ? "animate-spin" : ""} />
+            <span>{loading ? "Loading..." : "Refresh"}</span>
           </button>
         </div>
       </div>
@@ -310,12 +310,28 @@ export default function DatasetPage() {
 
       {/* Dataset Grid */}
       <div className="grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-        {filteredDatasets.map((dataset) => {
-          if (!dataset || typeof dataset !== "object") {
-            return null
-          }
-          return <DatasetCard key={dataset.id} dataset={dataset} />
-        })}
+        {loading
+          ? Array(8).fill().map((_, index) => (
+              <div
+                key={`skeleton-${index}`}
+                className="border border-gray-200 rounded-lg p-4 shadow-sm animate-pulse bg-white"
+              >
+                <div className="h-40 bg-gray-200 rounded mb-4"></div>
+                <div className="h-5 bg-gray-200 rounded w-3/4 mb-2"></div>
+                <div className="h-4 bg-gray-200 rounded w-2/3 mb-1"></div>
+                <div className="h-4 bg-gray-200 rounded w-1/2 mb-4"></div>
+                <div className="flex justify-between mt-auto">
+                  <div className="h-4 w-1/3 bg-gray-200 rounded"></div>
+                  <div className="h-4 w-1/4 bg-gray-200 rounded"></div>
+                </div>
+              </div>
+            ))
+          : filteredDatasets.map((dataset) => {
+              if (!dataset || typeof dataset !== "object") {
+                return null
+              }
+              return <DatasetCard key={dataset.id} dataset={dataset} />
+            })}
       </div>
 
       {/* No Results */}
