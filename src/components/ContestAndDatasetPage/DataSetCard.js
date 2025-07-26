@@ -67,7 +67,7 @@ export default function DatasetCard({ dataset }) {
         <div className="flex-grow">
           {/* Title & Category */}
           <div className="flex items-start justify-between mb-2">
-            <h3 className="font-bold text-base text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2 flex-1">
+            <h3 className="font-bold text-base text-gray-900 group-hover:text-[#09509E] transition-colors line-clamp-2 flex-1">
               {dataset.title}
             </h3>
             <span className="ml-2 text-xs bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded-full font-medium whitespace-nowrap">
@@ -81,7 +81,7 @@ export default function DatasetCard({ dataset }) {
           {/* Author and Size */}
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center space-x-1.5">
-              <div className="w-6 h-6 bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-full flex items-center justify-center text-xs font-bold">
+              <div className="w-6 h-6 bg-gradient-to-br from-blue-500 to-[#09509E] text-white rounded-full flex items-center justify-center text-xs font-bold">
                 {getInitials(dataset.author)}
               </div>
               <span className="text-xs text-gray-700 font-medium">{dataset.author}</span>
@@ -123,7 +123,7 @@ export default function DatasetCard({ dataset }) {
 
         {/* Footer CTA */}
         <div className="mt-auto border-t border-gray-100 pt-2">
-          <div className="flex items-center justify-center text-blue-600 text-xs font-medium hover:text-blue-700 transition-colors">
+          <div className="flex items-center justify-center text-[#09509E] text-xs font-medium hover:text-blue-700 transition-colors">
             <ExternalLink size={12} className="mr-1" />
             View on Kaggle
           </div>

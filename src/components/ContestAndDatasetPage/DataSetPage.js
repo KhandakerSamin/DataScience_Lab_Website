@@ -1,8 +1,8 @@
 "use client"
 import { useState, useEffect } from "react"
-import DatasetCard from "./DatasetCard"
 import Link from "next/link"
 import { ChevronRight, ExternalLink, RefreshCw } from "lucide-react"
+import DatasetCard from "./DataSetCard"
 
 export default function DatasetPage() {
   const [datasets, setDatasets] = useState([])
@@ -177,7 +177,7 @@ export default function DatasetPage() {
           </div>
           <p className="text-gray-600 text-lg">
             Explore {totalDatasets.toLocaleString()}+ datasets from the worlds largest data science community.{" "}
-            <span className="text-blue-600 font-medium">Click any dataset to view on Kaggle.</span>
+            <span className="text-[#09509E] font-medium">Click any dataset to view on Kaggle.</span>
           </p>
         </div>
         <div>
@@ -199,7 +199,7 @@ export default function DatasetPage() {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-6">
             <div className="text-center">
-              <div className="text-2xl font-bold text-blue-600">{totalDatasets.toLocaleString()}</div>
+              <div className="text-2xl font-bold text-[#09509E]">{totalDatasets.toLocaleString()}</div>
               <div className="text-sm text-gray-600">Total Datasets</div>
             </div>
             <div className="text-center">
@@ -213,7 +213,7 @@ export default function DatasetPage() {
           </div>
           <button
             onClick={fetchDatasets}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-[#09509E] text-white rounded-lg hover:bg-blue-700 transition-colors"
           >
             <RefreshCw size={16} />
             <span>Refresh</span>
@@ -260,7 +260,7 @@ export default function DatasetPage() {
           </div>
           <button
             onClick={clearFilters}
-            className="flex items-center gap-2 px-4 py-3 border border-gray-300 rounded-lg bg-white hover:bg-blue-600 hover:text-white transition-colors duration-200"
+            className="flex items-center gap-2 px-4 py-3 border border-gray-300 rounded-lg bg-white hover:bg-[#09509E] hover:text-white transition-colors duration-200"
           >
             <span>🔄</span>
             <span>Clear</span>
@@ -276,7 +276,7 @@ export default function DatasetPage() {
             onClick={() => handleTabChange(tab)}
             className={`px-4 py-2 rounded-lg transition-colors ${
               activeTab === tab
-                ? "bg-blue-600 text-white"
+                ? "bg-[#09509E] text-white"
                 : "bg-gray-100 text-gray-600 hover:bg-gray-200"
             }`}
           >
@@ -288,7 +288,7 @@ export default function DatasetPage() {
       {/* Results Info */}
       <div className="mb-6 flex items-center justify-between">
         <p className="text-gray-600">
-          Showing <span className="font-semibold text-blue-600">{filteredDatasets.length}</span> dataset
+          Showing <span className="font-semibold text-[#09509E]">{filteredDatasets.length}</span> dataset
           {filteredDatasets.length !== 1 ? "s" : ""}
           {activeTab !== "All Datasets" && (
             <span>
@@ -299,7 +299,7 @@ export default function DatasetPage() {
           {searchQuery && (
             <span>
               {" "}
-              matching "<span className="font-medium text-gray-800">{searchQuery}</span>"
+              matching &quot;<span className="font-medium text-gray-800">{searchQuery}</span>&quot;
             </span>
           )}
         </p>
@@ -327,7 +327,7 @@ export default function DatasetPage() {
           <h3 className="text-lg font-medium text-gray-900 mb-2">No datasets found</h3>
           <p className="text-gray-600 mb-4">
             Try adjusting your search terms or selected category, or{" "}
-            <button onClick={fetchDatasets} className="text-blue-600 hover:underline">
+            <button onClick={fetchDatasets} className="text-[#09509E] hover:underline">
               refresh the data
             </button>
             .

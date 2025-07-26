@@ -107,7 +107,7 @@ export default function DashboardLayout({ children, activePage, setActivePage })
                     }}
                     className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-colors ${
                       isActive
-                        ? "bg-blue-50 border-l-4 border-blue-600 text-[#09509E] font-medium"
+                        ? "bg-blue-50 border-l-4 border-[#09509E] text-[#09509E] font-medium"
                         : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
                     }`}
                   >
