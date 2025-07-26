@@ -186,7 +186,8 @@ export default function DatasetPage() {
       </div>
 
       {/* Stats Bar */}
-      <div className="mb-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4">
+
+       <div className="mb-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-3 lg-p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-6">
             <div className="text-center">
@@ -210,9 +211,18 @@ export default function DatasetPage() {
               <div className="text-sm text-gray-600">Categories</div>
             </div>
           </div>
+          {/* Mobile Refresh Button (Icon Only) */}
           <button
             onClick={fetchDatasets}
-            className="flex items-center gap-2 px-4 py-2 bg-[#09509E] text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="flex lg:hidden items-center justify-center w-10 h-10 bg-[#09509E] text-white rounded-lg hover:bg-blue-700 transition-colors"
+            disabled={loading}
+          >
+            <RefreshCw size={16} className={loading ? "animate-spin" : ""} />
+          </button>
+          {/* Desktop Refresh Button (Full Button) */}
+          <button
+            onClick={fetchDatasets}
+            className="hidden lg:flex items-center gap-2 px-4 py-2 bg-[#09509E] text-white rounded-lg hover:bg-blue-700 transition-colors"
             disabled={loading}
           >
             <RefreshCw size={16} className={loading ? "animate-spin" : ""} />
