@@ -10,11 +10,9 @@ const academiaLogos = [
 ]
 
 const partnerLogos = [
-  { name: "Umlong", src: "/bannerlogo2.png", alt: "Umlong" },
-  { name: "Ghurni", src: "/bannerlogo1.png", alt: "Ghurni" },
-  { name: "CEGIS", src: "/bannerlogo2.png", alt: "CEGIS" },
-  { name: "Umlong", src: "/bannerlogo1.png", alt: "Umlong" },
-  { name: "Ghurni", src: "/bannerlogo2.png", alt: "Ghurni" },
+  { name: "Umlong", src: "/logo-ind.jpg", alt: "Umlong" },
+  { name: "Ghurni", src: "/logo-ind2.png", alt: "Ghurni" },
+  { name: "Ghurni", src: "/logo-ind3.png", alt: "Ghurni" }
 ]
 
 function LogoRow({ logos, title, direction = "left" }) {
@@ -32,8 +30,8 @@ function LogoRow({ logos, title, direction = "left" }) {
           animation: isPaused
             ? "none"
             : direction === "left"
-              ? "scrollLeft 30s linear infinite"
-              : "scrollRight 30s linear infinite",
+              ? "scrollLeft 35s linear infinite"
+              : "scrollRight 35s linear infinite",
         }}
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
