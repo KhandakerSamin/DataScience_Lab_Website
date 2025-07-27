@@ -240,7 +240,7 @@ export default function DatasetPage() {
             placeholder="Search Kaggle datasets by title, author, category, or topics..."
             value={searchQuery}
             onChange={handleSearch}
-            className="w-full pl-10 pr-4 py-3 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full pl-10 pr-4 py-3 text-lg border border-gray-300 rounded-lg focus:border focus:border-[#09509E]"
           />
         </div>
         <div className="flex gap-2">
@@ -287,7 +287,7 @@ export default function DatasetPage() {
             className={`px-4 py-2 rounded-lg transition-colors ${
               activeTab === tab
                 ? "bg-[#09509E] text-white"
-                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                : "bg-gray-50 border border-[#09509E] text-black hover:bg-[#09509E] hover:text-white"
             }`}
           >
             {tab}
