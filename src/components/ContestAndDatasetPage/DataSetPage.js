@@ -222,7 +222,7 @@ export default function DatasetPage() {
           {/* Desktop Refresh Button (Full Button) */}
           <button
             onClick={fetchDatasets}
-            className="hidden lg:flex items-center gap-2 px-4 py-2 bg-[#09509E] text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="hidden lg:flex items-center gap-2 px-4 py-2 bg-[#09509E] text-white rounded-lg hover:bg-white hover:text-[#09509E] hover:border-2 hover:border-[#09509E] transition-colors"
             disabled={loading}
           >
             <RefreshCw size={16} className={loading ? "animate-spin" : ""} />
