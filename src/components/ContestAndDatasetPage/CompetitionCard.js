@@ -48,9 +48,19 @@ export default function CompetitionCard({ competition }) {
     }
   }
 
-  const handleCardClick = () => {
+  // FIXED: Card click handler
+  const handleCardClick = (e) => {
+    e.preventDefault()
+    console.log(`🔗 Opening competition: ${title}`)
+    console.log(`🔗 URL: ${url}`)
+
     if (url) {
       window.open(url, "_blank", "noopener,noreferrer")
+    } else {
+      // Fallback URL construction
+      const fallbackUrl = `https://www.kaggle.com/c/${id}`
+      console.log(`🔗 Fallback URL: ${fallbackUrl}`)
+      window.open(fallbackUrl, "_blank", "noopener,noreferrer")
     }
   }
 
@@ -58,6 +68,13 @@ export default function CompetitionCard({ competition }) {
     <div
       onClick={handleCardClick}
       className="border border-gray-200 rounded-lg p-4 shadow-sm bg-white hover:shadow-md transition-all duration-200 cursor-pointer group"
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          handleCardClick(e)
+        }
+      }}
     >
       {/* Competition Header */}
       <div className="h-40 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg mb-4 relative overflow-hidden">

@@ -187,7 +187,7 @@ export default function DatasetPage() {
 
       {/* Stats Bar */}
 
-       <div className="mb-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-3 lg-p-4">
+       <div className="mb-6 bg-white rounded-lg p-3 lg-p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-6">
             <div className="text-center">
