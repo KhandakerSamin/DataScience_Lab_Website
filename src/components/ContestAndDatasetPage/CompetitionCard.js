@@ -4,7 +4,8 @@ import { ExternalLink, Users, Trophy, Clock, Building } from "lucide-react"
 export default function CompetitionCard({ competition }) {
   if (!competition) return null
 
-  const { id, title, description, organizationName, category, reward, totalTeams, deadline, url } = competition
+  const { id, title, description, organizationName, category, reward, totalTeams, deadline, url, imageUrl } =
+    competition
 
   const formatDeadline = (deadline) => {
     if (!deadline) return "Active"
@@ -48,21 +49,38 @@ export default function CompetitionCard({ competition }) {
     }
   }
 
-  // FIXED: Card click handler
+  // FIXED: Better URL handling and debugging
   const handleCardClick = (e) => {
     e.preventDefault()
-    console.log(`🔗 Opening competition: ${title}`)
-    console.log(`🔗 URL: ${url}`)
+    console.log(`🔗 Competition Details:`)
+    console.log(`   Title: ${title}`)
+    console.log(`   ID: ${id}`)
+    console.log(`   URL: ${url}`)
 
-    if (url) {
-      window.open(url, "_blank", "noopener,noreferrer")
-    } else {
-      // Fallback URL construction
-      const fallbackUrl = `https://www.kaggle.com/c/${id}`
-      console.log(`🔗 Fallback URL: ${fallbackUrl}`)
-      window.open(fallbackUrl, "_blank", "noopener,noreferrer")
+    // Try multiple URL formats
+    const urlsToTry = [
+      url, // Original URL from API
+      `https://www.kaggle.com/competitions/${id}`, // Standard format
+      `https://www.kaggle.com/c/${id}`, // Alternative format
+      `https://www.kaggle.com/competitions`, // Fallback to competitions page
+    ]
+
+    // Use the first valid URL
+    for (const testUrl of urlsToTry) {
+      if (testUrl && testUrl.includes("kaggle.com")) {
+        console.log(`🚀 Opening: ${testUrl}`)
+        window.open(testUrl, "_blank", "noopener,noreferrer")
+        return
+      }
     }
+
+    // Final fallback
+    console.log("🚀 Opening Kaggle competitions page as fallback")
+    window.open("https://www.kaggle.com/competitions", "_blank", "noopener,noreferrer")
   }
+
+  // Generate a nice placeholder image
+  const placeholderImage = imageUrl || `/placeholder.svg?height=160&width=300&text=${encodeURIComponent(title)}`
 
   return (
     <div
@@ -76,19 +94,39 @@ export default function CompetitionCard({ competition }) {
         }
       }}
     >
-      {/* Competition Header */}
+      {/* Competition Header with Image */}
       <div className="h-40 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg mb-4 relative overflow-hidden">
+        {/* Background Image */}
+        <img
+          src={placeholderImage || "/placeholder.svg"}
+          alt={title}
+          className="absolute inset-0 w-full h-full object-cover opacity-20"
+          onError={(e) => {
+            // Fallback if image fails to load
+            e.target.style.display = "none"
+          }}
+        />
+
+        {/* Trophy Icon Overlay */}
         <div className="absolute inset-0 flex items-center justify-center">
-          <Trophy className="text-white opacity-30" size={48} />
+          <Trophy className="text-white opacity-40" size={48} />
         </div>
+
+        {/* Category Badge */}
         <div className="absolute top-2 left-2">
           <span className="bg-white bg-opacity-90 text-gray-800 px-2 py-1 rounded text-xs font-medium">
             {category || "Competition"}
           </span>
         </div>
+
+        {/* External Link Icon */}
         <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-          <ExternalLink className="text-white" size={16} />
+          <div className="bg-white bg-opacity-90 rounded-full p-1">
+            <ExternalLink className="text-gray-800" size={14} />
+          </div>
         </div>
+
+        {/* Organization Badge */}
         {organizationName && organizationName !== "Kaggle" && (
           <div className="absolute bottom-2 left-2">
             <div className="flex items-center gap-1 bg-white bg-opacity-90 text-gray-800 px-2 py-1 rounded text-xs">
