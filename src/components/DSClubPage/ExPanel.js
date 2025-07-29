@@ -60,7 +60,7 @@ export default function ExPanel() {
       </div>
 
       {/* Student Panel Section */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 ml-11.5 sm:ml-0 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-6">
         {studentPanel.map((member, index) => (
           <MemberCard key={index} member={member} />
         ))}
