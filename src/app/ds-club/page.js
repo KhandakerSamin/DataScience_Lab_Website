@@ -2,11 +2,9 @@
 
 import About from "@/components/DSClubPage/AboutUs";
 import Banner from "@/components/DSClubPage/Banner";
+import ClubGallery from "@/components/DSClubPage/ClubGallery";
 import EventsClub from "@/components/DSClubPage/EventsClub";
 import ExPanel from "@/components/DSClubPage/ExPanel";
-import Gallery from "@/components/DSClubPage/Gallery";
-import MemberCard from "@/components/DSClubPage/MemberCard";
-import Events from "@/components/HomePage/Events";
 
 const executivePanel = [
   {
@@ -131,12 +129,9 @@ export default function DSClubPage() {
         <About />
         <EventsClub />
         <ExPanel />
-
-<Gallery />
-
-        </div>
-
+        <ClubGallery />
       </div>
+    </div>
 
   );
 }
