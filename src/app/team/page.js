@@ -16,7 +16,7 @@ const teamMembers = [
     name: 'Dr.Imran Mahamud',
     position: 'Advisor',
     photo: '/p1.png',
-    bio: 'Associate Professor & Head Department of Software Engineering',
+    bio: 'Professor & Head Department of Software Engineering',
     linkedin: 'https://linkedin.com',
     email: 'jane.smith@example.com',
   },
