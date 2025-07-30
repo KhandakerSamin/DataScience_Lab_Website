@@ -25,14 +25,14 @@ const FacebookIcon = () => (
 export default function TeamMemberCard({ member }) {
   return (
     <motion.div
-      className="group flex flex-col items-center text-center max-w-[300px] p-6 bg-white dark:bg-gray-900 rounded-2xl shadow-sm hover:shadow-xl dark:shadow-gray-900/20 dark:hover:shadow-gray-900/40 transition-all duration-300 border border-gray-100 dark:border-gray-800 hover:border-gray-200 dark:hover:border-gray-700 hover:-translate-y-1"
+      className="group flex flex-col items-center text-center max-w-[300px] p-6 bg-white dark:bg-gray-900 rounded-2xl shadow-sm hover:shadow-xl dark:shadow-gray-900/20 dark:hover:shadow-gray-900/40 transition-all duration-300 border border-gray-100 dark:border-gray-800 hover:border-[#09509E] dark:hover:border-gray-700 hover:-translate-y-1"
       initial={{ scale: 1 }}
       whileHover={{ scale: 1.02 }}
     >
       <div className="relative w-32 h-32 md:w-40 md:h-40 mb-4">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500 rounded-full opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
         <img
-          className="relative w-full h-full rounded-full object-cover ring-4 ring-white dark:ring-gray-800 group-hover:ring-gray-100 dark:group-hover:ring-gray-700 transition-all duration-300"
+          className="relative w-full h-full rounded-full object-cover ring-2 ring-white dark:ring-gray-800 group-hover:ring-[#09509E] dark:group-hover:ring-gray-700 transition-all duration-300"
           src={member.imageUrl || member.photo || 'https://placehold.co/200x200/E2E8F0/4A5568?text=' + (member.name ? member.name.split(' ').map(n => n[0]).join('') : 'TM')}
           alt={`Portrait of ${member.name || 'Team Member'}`}
           onError={(e) => { e.target.src = `https://placehold.co/200x200/E2E8F0/4A5568?text=${member.name ? member.name.split(' ').map(n => n[0]).join('') : 'TM'}`; }}
