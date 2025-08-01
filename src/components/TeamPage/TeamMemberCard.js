@@ -3,6 +3,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Globe, Mail, Linkedin } from 'lucide-react';
+import Image from 'next/image';
 
 const XIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -25,23 +26,25 @@ const FacebookIcon = () => (
 export default function TeamMemberCard({ member }) {
   return (
     <motion.div
-      className="group flex flex-col items-center text-center max-w-[300px] p-6 bg-white dark:bg-gray-900 rounded-2xl shadow-sm hover:shadow-xl dark:shadow-gray-900/20 dark:hover:shadow-gray-900/40 transition-all duration-300 border border-gray-100 dark:border-gray-800 hover:border-[#09509E] dark:hover:border-gray-700 hover:-translate-y-1"
+      className="group flex flex-col items-center text-center max-w-[300px] min-h-[370px] min-w-[300px] p-6 bg-white dark:bg-gray-900 rounded-2xl shadow-sm hover:shadow-xl dark:shadow-gray-900/20 dark:hover:shadow-gray-900/40 transition-all duration-300 border border-gray-100 dark:border-gray-800 hover:border-[#09509E] dark:hover:border-gray-700 hover:-translate-y-1"
       initial={{ scale: 1 }}
       whileHover={{ scale: 1.02 }}
     >
       <div className="relative w-32 h-32 md:w-40 md:h-40 mb-4">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500 rounded-full opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
-        <img
+        <Image
           className="relative w-full h-full rounded-full object-cover ring-2 ring-white dark:ring-gray-800 group-hover:ring-[#09509E] dark:group-hover:ring-gray-700 transition-all duration-300"
-          src={member.imageUrl || member.photo || 'https://placehold.co/200x200/E2E8F0/4A5568?text=' + (member.name ? member.name.split(' ').map(n => n[0]).join('') : 'TM')}
+          src={member.imageUrl || member.photo || `https://placehold.co/200x200/E2E8F0/4A5568?text=${member.name ? member.name.split(' ').map(n => n[0]).join('') : 'TM'}`}
           alt={`Portrait of ${member.name || 'Team Member'}`}
-          onError={(e) => { e.target.src = `https://placehold.co/200x200/E2E8F0/4A5568?text=${member.name ? member.name.split(' ').map(n => n[0]).join('') : 'TM'}`; }}
+          width={160}
+          height={160}
+          onError={e => { e.target.src = `https://placehold.co/200x200/E2E8F0/4A5568?text=${member.name ? member.name.split(' ').map(n => n[0]).join('') : 'TM'}`; }}
+          unoptimized={true}
         />
       </div>
-      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1 group-hover:text-[#09509E] dark:group-hover:text-blue-400 transition-colors duration-300">
+      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-[#09509E] dark:group-hover:text-blue-400 transition-colors duration-300">
         {member.name || 'Unnamed Member'}
       </h3>
-      <p className="text-sm font-medium text-gray-800 dark:text-gray-300 mb-4 px-3 py-1 bg-green-100 dark:bg-gray-800 rounded-full">
+      <p className="text-sm font-medium text-gray-800 dark:text-gray-300 mb-6 px-3 py-1 bg-green-100 dark:bg-gray-800 rounded-full">
         {member.role || member.bio || 'Position'}
       </p>
       <div className="flex space-x-3">

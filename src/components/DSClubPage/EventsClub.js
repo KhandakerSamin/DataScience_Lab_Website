@@ -94,7 +94,7 @@ export default function EventsClub() {
             upcomingEvents.slice(0, visibleCount).map((event) => (
               <div
                 key={event.id}
-                className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500 overflow-hidden border border-gray-100"
+                className="bg-white rounded-2xl hover:shadow-md transition-all duration-500 overflow-hidden border border-gray-100"
               >
                 {/* Top Row: Image + Heading/Basic Info */}
                 <div className="flex flex-col md:flex-row p-6 md:p-8">

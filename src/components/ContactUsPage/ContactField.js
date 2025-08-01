@@ -256,7 +256,7 @@ export default function ContactField() {
             </div>
 
             {/* Contact Form Section */}
-            <div className="bg-white rounded-2xl border-2 border-gray-200 shadow-lg p-6">
+            <div className="bg-white rounded-2xl border-2 border-gray-200 shadow-md p-6">
               <form onSubmit={handleSubmit} className="space-y-4">
                 {/* Name Fields */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

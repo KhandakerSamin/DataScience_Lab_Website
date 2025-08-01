@@ -24,7 +24,7 @@ const teamMembers = [
     name: 'Prof. Dr.Touhid Bhuiyan',
     position: 'Advisor',
     photo: '/t3.jpg',
-    bio: 'Professor & Head Department of Computer Science and Engineering',
+    bio: 'Professor & Head Department of CSE',
     linkedin: 'https://linkedin.com',
     email: 'alice.johnson@example.com',
   },
