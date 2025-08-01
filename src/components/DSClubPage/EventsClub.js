@@ -102,19 +102,19 @@ export default function EventsClub() {
                   <div className="w-full md:w-80 md:flex-shrink-0 relative h-48 md:h-56 rounded-xl overflow-hidden mb-6 md:mb-0 md:mr-8">
                     <Image src={event.image || "/placeholder.svg"} alt={event.title} fill className="object-cover" />
                     <div className="absolute top-4 right-4">
-                      <span className="bg-[#39B24A] text-white px-3 py-1 rounded-full text-sm font-semibold">
+                      <span className="bg-[#09509E] text-white px-3 py-1 rounded-full text-sm font-semibold">
                         {event.registeredCount}/{event.maxParticipants}
                       </span>
                     </div>
                     {/* Registration Status Badge */}
                     <div className="absolute top-4 left-4">
                       {isRegistrationOpen(event.registrationDeadline) ? (
-                        <span className="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-semibold">
-                          ✅ Open
+                        <span className="bg-[#09509E] text-white px-3 py-1.5 rounded-full  font-semibold">
+                          Open
                         </span>
                       ) : (
                         <span className="bg-red-500 text-white px-2 py-1 rounded-full text-xs font-semibold">
-                          ❌ Closed
+                          Closed
                         </span>
                       )}
                     </div>
@@ -138,7 +138,7 @@ export default function EventsClub() {
                           {event.tags.map((tag, index) => (
                             <span
                               key={index}
-                              className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium"
+                              className="bg-blue-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium"
                             >
                               {tag}
                             </span>
@@ -343,7 +343,7 @@ export default function EventsClub() {
           {hasMoreEvents && (
             <button
               onClick={handleShowMore}
-              className="bg-[#39B24A] hover:bg-green-600 text-white py-3 px-8 rounded-lg font-semibold transition-all duration-300 hover:scale-105 inline-flex items-center"
+              className="bg-[#09509E]  text-white py-3 px-8 rounded-2xl font-semibold transition-all duration-300 hover:scale-105 inline-flex items-center"
             >
               <span>Show More Events ({upcomingEvents.length - visibleCount} remaining)</span>
               <svg
