@@ -2,6 +2,7 @@
 
 import Image from "next/image"
 import { Facebook, Instagram, Linkedin, Youtube, Twitter } from "lucide-react"
+import Link from "next/link"
 
 export default function Footer() {
   return (
@@ -9,7 +10,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Logo and Description */}
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-1 mr-8">
             <div className="flex items-start ">
               <div className="w-35 h-35 relative">
                 <Image
@@ -29,8 +30,8 @@ export default function Footer() {
           </div>
 
           {/* Services */}
-          <div>
-            <h4 className="text-lg font-semibold text-gray-900 mb-6">Services</h4>
+          <div className="ml-5">
+            <h4 className="text-lg font-semibold text-gray-900 mb-6 mt-10">Services</h4>
             <ul className="space-y-3">
               <li>
                 <a href="#" className="text-gray-700 hover:text-[#09509E] transition-colors duration-200">
@@ -57,7 +58,7 @@ export default function Footer() {
 
           {/* Community */}
           <div>
-            <h4 className="text-lg font-semibold text-gray-900 mb-6">Community</h4>
+            <h4 className="text-lg font-semibold text-gray-900 mb-6 mt-10">Community</h4>
             <ul className="space-y-3">
               <li>
                 <a href="#" className="text-gray-700 hover:text-[#09509E] transition-colors duration-200">
@@ -79,7 +80,7 @@ export default function Footer() {
 
           {/* Contact Us */}
           <div>
-            <h4 className="text-lg font-semibold text-gray-900 mb-6">Contact Us</h4>
+            <h4 className="text-lg font-semibold text-gray-900 mb-6 mt-10">Contact Us</h4>
             <div className="space-y-4">
               <div>
                 <p className="text-gray-700 text-sm">Daffodil Smart City, Ashulia, Dhaka</p>
@@ -156,6 +157,7 @@ export default function Footer() {
               Daffodil International University
             </a>
           </p>
+          <p className="text-xs text-gray-600 mt-2 hover:text-blue-500 "><Link href="/https://www.linkedin.com/in/khandakersaminyeasar">@ Samin.Dev</Link></p>
         </div>
       </div>
     </footer>
