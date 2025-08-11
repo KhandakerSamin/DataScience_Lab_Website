@@ -122,22 +122,9 @@ export default function ProjectForm({
           />
         </div>
 
-        {/* Project Links */}
         <div className="space-y-4">
           <h4 className="text-lg font-medium text-gray-900">Project Links</h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Demo Link</label>
-              <input
-                type="url"
-                name="demoLink"
-                value={formData.demoLink || ""}
-                onChange={handleInputChange}
-                placeholder="https://demo.example.com"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Live Link</label>
               <input
@@ -162,31 +149,7 @@ export default function ProjectForm({
               />
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Frontend Link</label>
-              <input
-                type="url"
-                name="frontendLink"
-                value={formData.frontendLink || ""}
-                onChange={handleInputChange}
-                placeholder="https://github.com/username/frontend"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Backend Link</label>
-              <input
-                type="url"
-                name="backendLink"
-                value={formData.backendLink || ""}
-                onChange={handleInputChange}
-                placeholder="https://github.com/username/backend"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-
-            <div>
+            <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-2">Research Paper Link</label>
               <input
                 type="url"
