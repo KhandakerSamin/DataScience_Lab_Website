@@ -1,5 +1,4 @@
 import NewsEventPage from "@/components/NewsEventPage"
-import Banner from "@/components/NewsEventPage/Banner"
 
 export const metadata = {
   title: "DIU | Events & News",
@@ -9,6 +8,4 @@ export const metadata = {
 
 export default function Page() {
   return <NewsEventPage />
-
-  
 }
