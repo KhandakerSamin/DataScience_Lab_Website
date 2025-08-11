@@ -5,9 +5,10 @@ import EventForm from "../../components/AdminDashboard/EventForm"
 import ProjectForm from "../../components/AdminDashboard/ProjectForm"
 import ClubEventForm from "../../components/AdminDashboard/ClubEventForm"
 import Sidebar from "@/components/AdminDashboard/SideBar"
+import Toast from "@/components/AdminDashboard/Toast"
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001"
-const ADMIN_PASSWORD = "dsadmin"
+const ADMIN_PASSWORD = "dslab2025admin"
 
 export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -26,8 +27,16 @@ export default function AdminPage() {
   const [editingItem, setEditingItem] = useState(null)
   const [formData, setFormData] = useState({})
   const [uploadingImage, setUploadingImage] = useState(false)
+  const [toast, setToast] = useState({ show: false, message: "", type: "success" })
 
-  // Check authentication on mount
+  const showToast = (message, type = "success") => {
+    setToast({ show: true, message, type })
+  }
+
+  const closeToast = () => {
+    setToast({ show: false, message: "", type: "success" })
+  }
+
   useEffect(() => {
     const authStatus = localStorage.getItem("adminAuthenticated")
     if (authStatus === "true") {
@@ -35,7 +44,6 @@ export default function AdminPage() {
     }
   }, [])
 
-  // Fetch data when authenticated or tab changes
   useEffect(() => {
     if (isAuthenticated) {
       fetchData(activeTab)
@@ -87,41 +95,90 @@ export default function AdminPage() {
         body: formDataUpload,
       })
 
-      if (!response.ok) throw new Error("Failed to upload image")
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.error || "Failed to upload image")
+      }
 
       const result = await response.json()
-      setFormData((prev) => ({ ...prev, image: result.imageUrl }))
+      if (result.success && result.data && result.data.url) {
+        setFormData((prev) => ({ ...prev, image: result.data.url }))
+        showToast("Image uploaded successfully!", "success")
+      } else {
+        throw new Error("Invalid response format from server")
+      }
     } catch (err) {
+      console.error("Image upload error:", err)
+      showToast("Failed to upload image: " + err.message, "error")
       setError("Failed to upload image: " + err.message)
     } finally {
       setUploadingImage(false)
     }
   }
 
+  const validateFormData = () => {
+    if (activeTab === "events") {
+      if (!formData.title || !formData.description) {
+        showToast("Please fill in all required fields (title and description)", "error")
+        return false
+      }
+    } else if (activeTab === "clubEvents") {
+      if (!formData.title || !formData.date || !formData.shortDescription) {
+        showToast("Please fill in all required fields (title, date, and short description)", "error")
+        return false
+      }
+    } else if (activeTab === "projects") {
+      if (!formData.title || !formData.description) {
+        showToast("Please fill in all required fields (title and description)", "error")
+        return false
+      }
+    }
+    return true
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
 
     try {
+      if (!validateFormData()) {
+        return
+      }
+
+      const { _id, createdAt, updatedAt, ...cleanFormData } = formData
+
       const url = editingItem
         ? `${API_BASE_URL}/api/${activeTab}/${editingItem._id}`
         : `${API_BASE_URL}/api/${activeTab}`
 
       const method = editingItem ? "PUT" : "POST"
 
+      console.log("Submitting to:", url, "Method:", method, "Data:", cleanFormData)
+
       const response = await fetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(cleanFormData),
       })
 
-      if (!response.ok) throw new Error(`Failed to ${editingItem ? "update" : "create"} item`)
+      if (!response.ok) {
+        const errorData = await response.json()
+        console.error("Server error response:", errorData)
+        throw new Error(errorData.error || `Failed to ${editingItem ? "update" : "create"} item`)
+      }
+
+      const result = await response.json()
+      console.log("Success response:", result)
 
       await fetchData(activeTab)
       setShowForm(false)
       setEditingItem(null)
       setFormData({})
       setError(null)
+
+      showToast(`${editingItem ? "Updated" : "Created"} successfully!`, "success")
     } catch (err) {
+      console.error("Submit error:", err)
+      showToast("Error: " + err.message, "error")
       setError(err.message)
     }
   }
@@ -136,15 +193,26 @@ export default function AdminPage() {
     if (!confirm("Are you sure you want to delete this item?")) return
 
     try {
+      console.log("Deleting item with ID:", id)
+
       const response = await fetch(`${API_BASE_URL}/api/${activeTab}/${id}`, {
         method: "DELETE",
       })
 
-      if (!response.ok) throw new Error("Failed to delete item")
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.error || "Failed to delete item")
+      }
+
+      const result = await response.json()
+      console.log("Delete success:", result)
 
       await fetchData(activeTab)
       setError(null)
+      showToast("Deleted successfully!", "success")
     } catch (err) {
+      console.error("Delete error:", err)
+      showToast("Error deleting item: " + err.message, "error")
       setError(err.message)
     }
   }
@@ -278,6 +346,7 @@ export default function AdminPage() {
           )}
         </div>
       </div>
+      <Toast message={toast.message} type={toast.type} show={toast.show} onClose={closeToast} />
     </div>
   )
 }
