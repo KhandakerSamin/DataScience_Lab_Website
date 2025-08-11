@@ -1,20 +1,57 @@
 "use client"
 import { useState, useEffect } from "react"
 import Image from "next/image"
-import { eventsData } from "../../data/dsClubData"
+
+// API base URL - adjust this to match your backend URL
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001"
 
 export default function EventsClub() {
   const [expandedCard, setExpandedCard] = useState(null)
   const [registeredEvents, setRegisteredEvents] = useState(new Set())
   const [events, setEvents] = useState([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
   const [visibleCount, setVisibleCount] = useState(3)
 
+  // Fetch club events data from backend
   useEffect(() => {
-    setTimeout(() => {
-      setEvents(eventsData)
-      setLoading(false)
-    }, 800)
+    const fetchClubEvents = async () => {
+      try {
+        setLoading(true)
+        const response = await fetch(`${API_BASE_URL}/api/club`)
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+
+        const result = await response.json()
+
+        if (result.success) {
+          // Extract events from club data or use events endpoint
+          // If club data has events, use that, otherwise fetch from events endpoint
+          const clubData = result.data[0] // Assuming first club record
+          if (clubData && clubData.events) {
+            setEvents(clubData.events)
+          } else {
+            // Fallback to events endpoint with club filter
+            const eventsResponse = await fetch(`${API_BASE_URL}/api/events?type=event`)
+            const eventsResult = await eventsResponse.json()
+            if (eventsResult.success) {
+              setEvents(eventsResult.data)
+            }
+          }
+        } else {
+          throw new Error(result.error || "Failed to fetch club events")
+        }
+      } catch (err) {
+        console.error("Error fetching club events:", err)
+        setError(err.message)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchClubEvents()
   }, [])
 
   const handleSeeMore = (eventId) => {
@@ -61,10 +98,7 @@ export default function EventsClub() {
     }
   }
 
-  const upcomingEvents = events.filter((event) => event.isUpcoming)
-  const hasMoreEvents = upcomingEvents.length > visibleCount
-  const showingMoreThanInitial = visibleCount > 3
-
+  // Show loading state
   if (loading) {
     return (
       <div className="py-16 px-4 md:px-10 bg-gradient-to-br from-gray-50 min-h-screen flex items-center justify-center">
@@ -75,6 +109,28 @@ export default function EventsClub() {
       </div>
     )
   }
+
+  // Show error state
+  if (error) {
+    return (
+      <div className="py-16 px-4 md:px-10 bg-gradient-to-br from-gray-50 min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-red-500 text-xl mb-4">⚠️</div>
+          <p className="text-red-600 mb-4">Error loading events: {error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="px-4 py-2 bg-[#39B24A] text-white rounded hover:bg-green-600"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  const upcomingEvents = events.filter((event) => event.isUpcoming !== false)
+  const hasMoreEvents = upcomingEvents.length > visibleCount
+  const showingMoreThanInitial = visibleCount > 3
 
   return (
     <section className="py-16 px-4 md:px-10 bg-gradient-to-br bg-gray-50 min-h-screen">
@@ -93,25 +149,28 @@ export default function EventsClub() {
           {upcomingEvents.length > 0 ? (
             upcomingEvents.slice(0, visibleCount).map((event) => (
               <div
-                key={event.id}
+                key={event.id || event._id}
                 className="bg-white rounded-2xl hover:shadow-md transition-all duration-500 overflow-hidden border border-gray-100"
               >
                 {/* Top Row: Image + Heading/Basic Info */}
                 <div className="flex flex-col md:flex-row p-6 md:p-8">
                   {/* Event Image */}
                   <div className="w-full md:w-80 md:flex-shrink-0 relative h-48 md:h-56 rounded-xl overflow-hidden mb-6 md:mb-0 md:mr-8">
-                    <Image src={event.image || "/placeholder.svg"} alt={event.title} fill className="object-cover" />
+                    <Image
+                      src={event.image || "/placeholder.svg?height=300&width=400&query=event"}
+                      alt={event.title}
+                      fill
+                      className="object-cover"
+                    />
                     <div className="absolute top-4 right-4">
                       <span className="bg-[#09509E] text-white px-3 py-1 rounded-full text-sm font-semibold">
-                        {event.registeredCount}/{event.maxParticipants}
+                        {event.registeredCount || 0}/{event.maxParticipants || event.capacity || "50"}
                       </span>
                     </div>
                     {/* Registration Status Badge */}
                     <div className="absolute top-4 left-4">
-                      {isRegistrationOpen(event.registrationDeadline) ? (
-                        <span className="bg-[#09509E] text-white px-3 py-1.5 rounded-full  font-semibold">
-                          Open
-                        </span>
+                      {isRegistrationOpen(event.registrationDeadline || event.date) ? (
+                        <span className="bg-[#09509E] text-white px-3 py-1.5 rounded-full font-semibold">Open</span>
                       ) : (
                         <span className="bg-red-500 text-white px-2 py-1 rounded-full text-xs font-semibold">
                           Closed
@@ -119,13 +178,15 @@ export default function EventsClub() {
                       )}
                     </div>
                     {/* Difficulty Badge */}
-                    <div className="absolute bottom-4 left-4">
-                      <span
-                        className={`px-2 py-1 rounded-full text-xs font-semibold ${getDifficultyColor(event.difficulty)}`}
-                      >
-                        {event.difficulty}
-                      </span>
-                    </div>
+                    {event.difficulty && (
+                      <div className="absolute bottom-4 left-4">
+                        <span
+                          className={`px-2 py-1 rounded-full text-xs font-semibold ${getDifficultyColor(event.difficulty)}`}
+                        >
+                          {event.difficulty}
+                        </span>
+                      </div>
+                    )}
                   </div>
 
                   {/* Basic Info Section */}
@@ -135,7 +196,7 @@ export default function EventsClub() {
                       <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start mb-4">
                         <h3 className="text-2xl md:text-3xl font-bold text-gray-800 mb-3 lg:mb-0">{event.title}</h3>
                         <div className="flex flex-wrap gap-2">
-                          {event.tags.map((tag, index) => (
+                          {(event.tags || []).map((tag, index) => (
                             <span
                               key={index}
                               className="bg-blue-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium"
@@ -181,23 +242,25 @@ export default function EventsClub() {
                       </div>
 
                       {/* Short Description */}
-                      <p className="text-gray-600 text-base leading-relaxed mb-6">{event.shortDescription}</p>
+                      <p className="text-gray-600 text-base leading-relaxed mb-6">
+                        {event.shortDescription || event.description}
+                      </p>
                     </div>
 
                     {/* See More Button */}
                     <div>
                       <button
-                        onClick={() => handleSeeMore(event.id)}
+                        onClick={() => handleSeeMore(event.id || event._id)}
                         className="w-full bg-gray-100 hover:bg-gray-200 text-gray-800 py-3 px-6 rounded-lg font-medium transition-colors duration-300"
                       >
-                        {expandedCard === event.id ? "See Less ▲" : "See More Details ▼"}
+                        {expandedCard === (event.id || event._id) ? "See Less ▲" : "See More Details ▼"}
                       </button>
                     </div>
                   </div>
                 </div>
 
                 {/* Full Width Expanded Content */}
-                {expandedCard === event.id && (
+                {expandedCard === (event.id || event._id) && (
                   <div className="px-6 md:px-8 pb-6 md:pb-8">
                     <div className="pt-6 border-t border-gray-200">
                       {/* Enhanced Expanded Section - Full Width */}
@@ -208,93 +271,9 @@ export default function EventsClub() {
                             <span className="text-3xl mr-3">📋</span>
                             About This Event
                           </h4>
-                          <p className="text-gray-700 leading-relaxed text-lg">{event.fullDescription}</p>
-                        </div>
-
-                        {/* Event Details Grid - Full Width */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
-                          {/* Instructor Info */}
-                          <div className="bg-white rounded-lg p-5 shadow-sm">
-                            <h5 className="font-semibold text-gray-800 mb-3 flex items-center">
-                              <span className="text-2xl mr-2">👨‍🏫</span>
-                              Instructor
-                            </h5>
-                            <p className="text-gray-700 font-medium mb-2">{event.instructor}</p>
-                            <p className="text-gray-600 text-sm">{event.instructorBio}</p>
-                          </div>
-
-                          {/* Event Info */}
-                          <div className="bg-white rounded-lg p-5 shadow-sm">
-                            <h5 className="font-semibold text-gray-800 mb-3 flex items-center">
-                              <span className="text-2xl mr-2">ℹ️</span>
-                              Details
-                            </h5>
-                            <div className="space-y-2 text-sm">
-                              <p>
-                                <span className="font-medium">Duration:</span> {event.duration}
-                              </p>
-                              <p>
-                                <span className="font-medium">Price:</span> {event.price}
-                              </p>
-                              <p>
-                                <span className="font-medium">Certificate:</span>{" "}
-                                {event.certificate ? "✅ Yes" : "❌ No"}
-                              </p>
-                            </div>
-                          </div>
-
-                          {/* Prerequisites */}
-                          <div className="bg-white rounded-lg p-5 shadow-sm">
-                            <h5 className="font-semibold text-gray-800 mb-3 flex items-center">
-                              <span className="text-2xl mr-2">📚</span>
-                              Prerequisites
-                            </h5>
-                            <p className="text-gray-600 text-sm">{event.prerequisites}</p>
-                          </div>
-
-                          {/* Registration Info */}
-                          <div className="bg-white rounded-lg p-5 shadow-sm">
-                            <h5 className="font-semibold text-gray-800 mb-3 flex items-center">
-                              <span className="text-2xl mr-2">📅</span>
-                              Registration
-                            </h5>
-                            <p className="text-gray-600 text-sm mb-2">
-                              <span className="font-medium">Deadline:</span>
-                            </p>
-                            <p className="text-gray-700 text-sm">{formatDate(event.registrationDeadline)}</p>
-                          </div>
-                        </div>
-
-                        {/* Learning Outcomes - Full Width */}
-                        <div className="bg-white rounded-lg p-6 shadow-sm">
-                          <h5 className="font-semibold text-gray-800 mb-4 flex items-center">
-                            <span className="text-3xl mr-3">🎯</span>
-                            What You will Learn
-                          </h5>
-                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                            {event.outcomes.map((outcome, index) => (
-                              <div key={index} className="flex items-center text-gray-700">
-                                <span className="text-green-500 mr-3 text-lg">✓</span>
-                                <span className="text-sm">{outcome}</span>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-
-                        {/* Materials Needed - Full Width */}
-                        <div className="bg-white rounded-lg p-6 shadow-sm">
-                          <h5 className="font-semibold text-gray-800 mb-4 flex items-center">
-                            <span className="text-3xl mr-3">🛠️</span>
-                            Materials & Requirements
-                          </h5>
-                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                            {event.materials.map((material, index) => (
-                              <div key={index} className="flex items-center text-gray-700">
-                                <span className="text-blue-500 mr-3 text-lg">•</span>
-                                <span className="text-sm">{material}</span>
-                              </div>
-                            ))}
-                          </div>
+                          <p className="text-gray-700 leading-relaxed text-lg">
+                            {event.fullDescription || event.description}
+                          </p>
                         </div>
 
                         {/* Registration Section - Full Width */}
@@ -302,20 +281,21 @@ export default function EventsClub() {
                           <h5 className="font-bold text-gray-800 mb-4 text-2xl">Ready to Join?</h5>
                           <p className="text-gray-600 mb-6 text-lg">
                             Registration deadline:{" "}
-                            <span className="font-semibold">{formatDate(event.registrationDeadline)}</span>
+                            <span className="font-semibold">
+                              {formatDate(event.registrationDeadline || event.date)}
+                            </span>
                           </p>
-
-                          {registeredEvents.has(event.id) ? (
+                          {registeredEvents.has(event.id || event._id) ? (
                             <div className="bg-gray-100 text-gray-600 py-4 px-8 rounded-lg font-semibold inline-flex items-center text-lg">
                               <span className="text-green-500 mr-3 text-xl">✓</span>
                               Successfully Registered!
                             </div>
-                          ) : isRegistrationOpen(event.registrationDeadline) ? (
+                          ) : isRegistrationOpen(event.registrationDeadline || event.date) ? (
                             <button
-                              onClick={() => handleRegistration(event.id, event.title)}
+                              onClick={() => handleRegistration(event.id || event._id, event.title)}
                               className="bg-[#39B24A] hover:bg-green-600 text-white py-4 px-10 rounded-lg font-semibold transition-all duration-300 hover:scale-105 shadow-lg text-lg"
                             >
-                              🎫 Register Now - {event.price}
+                              🎫 Register Now - {event.price || "Free"}
                             </button>
                           ) : (
                             <div className="bg-red-100 text-red-600 py-4 px-8 rounded-lg font-semibold text-lg">
@@ -343,7 +323,7 @@ export default function EventsClub() {
           {hasMoreEvents && (
             <button
               onClick={handleShowMore}
-              className="bg-[#09509E]  text-white py-3 px-8 rounded-2xl font-semibold transition-all duration-300 hover:scale-105 inline-flex items-center"
+              className="bg-[#09509E] text-white py-3 px-8 rounded-2xl font-semibold transition-all duration-300 hover:scale-105 inline-flex items-center"
             >
               <span>Show More Events ({upcomingEvents.length - visibleCount} remaining)</span>
               <svg
@@ -357,7 +337,6 @@ export default function EventsClub() {
               </svg>
             </button>
           )}
-
           {showingMoreThanInitial && (
             <button
               onClick={handleShowLess}
