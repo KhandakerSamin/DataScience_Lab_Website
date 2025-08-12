@@ -23,7 +23,7 @@ export default function ConfirmDialog({ isOpen, onClose, onConfirm, title, messa
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center font-outfit justify-center z-50">
       <div
         className={`bg-white rounded-lg shadow-xl max-w-md w-full mx-4 transform transition-all duration-150 ${
           isVisible ? "scale-100 opacity-100" : "scale-95 opacity-0"

@@ -25,7 +25,7 @@ export default function ClubEventForm({
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6">
+    <div className="bg-white rounded-lg shadow-lg p-6 font-outfit">
       <div className="flex justify-between items-center mb-6">
         <h3 className="text-xl font-semibold text-gray-900">{editingItem ? "Edit" : "Add New"} Club Event</h3>
         <button onClick={onCancel} className="text-gray-400 hover:text-gray-600">

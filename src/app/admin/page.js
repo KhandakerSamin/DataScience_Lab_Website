@@ -271,7 +271,7 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="flex h-screen overflow-hidden">
+    <div className="flex h-screen overflow-hidden font-outfit">
       <Sidebar
         activeTab={activeTab}
         setActiveTab={setActiveTab}
