@@ -7,14 +7,17 @@ import ClubEventForm from "../../components/AdminDashboard/ClubEventForm"
 import Toast from "../../components/AdminDashboard/Toast"
 import ConfirmDialog from "../../components/AdminDashboard/ConfirmDialog"
 import Sidebar from "@/components/AdminDashboard/SideBar"
+import LoginPage from "@/components/AdminDashboard/LogininPage"
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001"
-const ADMIN_PASSWORD = "dslabadmin"
+const ADMIN_PASSWORD = "dslab2025admin"
 
 export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [password, setPassword] = useState("")
   const [loginError, setLoginError] = useState("")
+  const [loginAttempts, setLoginAttempts] = useState(0)
+  const [isLocked, setIsLocked] = useState(false)
 
   const [activeTab, setActiveTab] = useState("events")
   const [data, setData] = useState({
@@ -43,8 +46,18 @@ export default function AdminPage() {
 
   useEffect(() => {
     const authStatus = localStorage.getItem("adminAuthenticated")
-    if (authStatus === "true") {
-      setIsAuthenticated(true)
+    const authExpiry = localStorage.getItem("adminAuthExpiry")
+
+    if (authStatus === "true" && authExpiry) {
+      const now = new Date().getTime()
+      const expiry = Number.parseInt(authExpiry)
+
+      if (now < expiry) {
+        setIsAuthenticated(true)
+      } else {
+        localStorage.removeItem("adminAuthenticated")
+        localStorage.removeItem("adminAuthExpiry")
+      }
     }
   }, [])
 
@@ -54,21 +67,28 @@ export default function AdminPage() {
     }
   }, [isAuthenticated, activeTab])
 
-  const handleLogin = (e) => {
-    e.preventDefault()
+  const handleLogin = (password) => {
     if (password === ADMIN_PASSWORD) {
       setIsAuthenticated(true)
+      const expiry = new Date().getTime() + 8 * 60 * 60 * 1000
       localStorage.setItem("adminAuthenticated", "true")
+      localStorage.setItem("adminAuthExpiry", expiry.toString())
       setLoginError("")
+      setLoginAttempts(0)
+      return true
     } else {
       setLoginError("Invalid password")
+      return false
     }
   }
 
   const handleLogout = () => {
     setIsAuthenticated(false)
     localStorage.removeItem("adminAuthenticated")
+    localStorage.removeItem("adminAuthExpiry")
     setPassword("")
+    setLoginAttempts(0)
+    showToast("Logged out successfully", "success")
   }
 
   const fetchData = async (type) => {
@@ -247,40 +267,7 @@ export default function AdminPage() {
   }
 
   if (!isAuthenticated) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="max-w-md w-full space-y-8">
-          <div className="text-center">
-            <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-              <span className="text-white font-bold text-2xl">DS</span>
-            </div>
-            <h2 className="text-3xl font-bold text-gray-900">Admin Login</h2>
-            <p className="mt-2 text-gray-600">Enter password to access dashboard</p>
-          </div>
-          <form className="space-y-6" onSubmit={handleLogin}>
-            <div>
-              <input
-                type="password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Admin Password"
-              />
-            </div>
-            {loginError && (
-              <div className="text-red-600 text-sm text-center bg-red-50 p-3 rounded-lg">{loginError}</div>
-            )}
-            <button
-              type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg font-medium transition-colors"
-            >
-              Sign In
-            </button>
-          </form>
-        </div>
-      </div>
-    )
+    return <LoginPage onLogin={handleLogin} loginError={loginError} />
   }
 
   return (
