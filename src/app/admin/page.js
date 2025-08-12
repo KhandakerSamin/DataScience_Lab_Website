@@ -6,8 +6,8 @@ import ProjectForm from "../../components/AdminDashboard/ProjectForm"
 import ClubEventForm from "../../components/AdminDashboard/ClubEventForm"
 import Toast from "../../components/AdminDashboard/Toast"
 import ConfirmDialog from "../../components/AdminDashboard/ConfirmDialog"
-import Sidebar from "@/components/AdminDashboard/SideBar"
 import LoginPage from "@/components/AdminDashboard/LogininPage"
+import Sidebar from "@/components/AdminDashboard/SideBar"
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001"
 const ADMIN_PASSWORD = "dslab2025admin"
@@ -70,7 +70,7 @@ export default function AdminPage() {
   const handleLogin = (password) => {
     if (password === ADMIN_PASSWORD) {
       setIsAuthenticated(true)
-      const expiry = new Date().getTime() + 8 * 60 * 60 * 1000
+      const expiry = new Date().getTime() + 30 * 60 * 1000 // 30 minutes instead of 8 hours
       localStorage.setItem("adminAuthenticated", "true")
       localStorage.setItem("adminAuthExpiry", expiry.toString())
       setLoginError("")

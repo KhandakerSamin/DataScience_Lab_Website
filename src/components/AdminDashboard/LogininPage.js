@@ -1,4 +1,5 @@
 "use client"
+import Link from "next/link"
 import { useState } from "react"
 
 export default function LoginPage({ onLogin, loginError }) {
@@ -50,10 +51,10 @@ export default function LoginPage({ onLogin, loginError }) {
       <div className="max-w-md w-full">
         <div className="bg-white/80 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/20 p-8">
           {/* Header */}
-          <div className="text-center mb-8">
-            <div className="w-20 h-20 bg-gradient-to-r from-blue-600 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
-              <span className="text-white font-bold text-3xl">DS</span>
-            </div>
+          <div className="mx-auto text-center mb-6">
+            <Link href="/" className="flex items-center justify-center py-5 space-x-3 z-50">
+            <img src="/logo.svg" alt="Lab Logo" className="h-12 w-auto" />
+          </Link>
             <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent mb-2">
               Admin Dashboard
             </h1>
