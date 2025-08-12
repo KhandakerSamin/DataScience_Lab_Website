@@ -114,6 +114,8 @@ export default function AdminPage() {
     formDataUpload.append("image", file)
 
     try {
+      console.log("Uploading file:", file.name, "Size:", file.size)
+
       const response = await fetch(`${API_BASE_URL}/api/upload`, {
         method: "POST",
         body: formDataUpload,
@@ -125,8 +127,27 @@ export default function AdminPage() {
       }
 
       const result = await response.json()
+      console.log("Upload response:", result)
+
       if (result.success && result.data && result.data.url) {
-        setFormData((prev) => ({ ...prev, image: result.data.url }))
+        const imageUrl = result.data.url
+        const filename = result.data.filename
+
+        // Test if the image URL is accessible
+        try {
+          const testResponse = await fetch(`${API_BASE_URL}/api/verify-image/${filename}`)
+          const verifyResult = await testResponse.json()
+
+          if (!verifyResult.exists) {
+            console.warn("Uploaded image file does not exist on server:", filename)
+            showToast("Warning: Image uploaded but may not be accessible", "warning")
+          }
+        } catch (verifyError) {
+          console.warn("Could not verify image existence:", verifyError)
+        }
+
+        setFormData((prev) => ({ ...prev, image: imageUrl }))
+        console.log("Image URL set in form data:", imageUrl)
         showToast("Image uploaded successfully!", "success")
       } else {
         throw new Error("Invalid response format from server")
@@ -170,6 +191,10 @@ export default function AdminPage() {
 
       const { _id, createdAt, updatedAt, ...cleanFormData } = formData
 
+      if (cleanFormData.image) {
+        console.log("Submitting with image URL:", cleanFormData.image)
+      }
+
       const url = editingItem
         ? `${API_BASE_URL}/api/${activeTab}/${editingItem._id}`
         : `${API_BASE_URL}/api/${activeTab}`
@@ -192,6 +217,14 @@ export default function AdminPage() {
 
       const result = await response.json()
       console.log("Success response:", result)
+
+      if (result.data && cleanFormData.image) {
+        console.log("Saved item image verification:", {
+          submitted: cleanFormData.image,
+          saved: result.data.image,
+          match: cleanFormData.image === result.data.image,
+        })
+      }
 
       await fetchData(activeTab)
       setShowForm(false)
@@ -271,7 +304,7 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="flex h-screen overflow-hidden font-outfit">
+    <div className="flex h-screen overflow-hidden">
       <Sidebar
         activeTab={activeTab}
         setActiveTab={setActiveTab}

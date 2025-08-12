@@ -67,7 +67,7 @@ export default function ProjectForm({
             <input
               type="text"
               name="category"
-              value={formData.category || ""}
+              value={formData.category || "Ongoing"}
               onChange={handleInputChange}
               placeholder="e.g., Web Development, Research"
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
