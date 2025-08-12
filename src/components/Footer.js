@@ -147,17 +147,12 @@ export default function Footer() {
         {/* Copyright */}
         <div className="border-t border-gray-300 mt-12 pt-8 text-center">
           <p className="text-gray-600 text-sm">
-            © 2024 All Rights Reserved By{" "}
-            <a
-              href="https://daffodilvarsity.edu.bd"
-              className="text-[#09509E] hover:underline font-medium"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Daffodil International University
-            </a>
+            © 2025 All Rights Reserved By{" "}
+            <Link className="hover:text-blue-800 " href="/admin">Daffodil International University</Link>
+              
+            
           </p>
-          <p className="text-xs text-gray-600 mt-2 hover:text-blue-500 "><Link href="/https://www.linkedin.com/in/khandakersaminyeasar">@ Samin.Dev</Link></p>
+          <p className="text-xs text-gray-600 mt-2 hover:text-blue-800 "><Link href="/https://www.linkedin.com/in/khandakersaminyeasar">@ Samin.Dev</Link></p>
         </div>
       </div>
     </footer>

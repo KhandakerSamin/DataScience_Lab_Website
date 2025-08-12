@@ -4,11 +4,12 @@ import DataTable from "../../components/AdminDashboard/DataTable"
 import EventForm from "../../components/AdminDashboard/EventForm"
 import ProjectForm from "../../components/AdminDashboard/ProjectForm"
 import ClubEventForm from "../../components/AdminDashboard/ClubEventForm"
+import Toast from "../../components/AdminDashboard/Toast"
+import ConfirmDialog from "../../components/AdminDashboard/ConfirmDialog"
 import Sidebar from "@/components/AdminDashboard/SideBar"
-import Toast from "@/components/AdminDashboard/Toast"
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001"
-const ADMIN_PASSWORD = "dslab2025admin"
+const ADMIN_PASSWORD = "dslabadmin"
 
 export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -28,6 +29,9 @@ export default function AdminPage() {
   const [formData, setFormData] = useState({})
   const [uploadingImage, setUploadingImage] = useState(false)
   const [toast, setToast] = useState({ show: false, message: "", type: "success" })
+  const [isMobileOpen, setIsMobileOpen] = useState(false)
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false)
+  const [itemToDelete, setItemToDelete] = useState(null)
 
   const showToast = (message, type = "success") => {
     setToast({ show: true, message, type })
@@ -217,6 +221,19 @@ export default function AdminPage() {
     }
   }
 
+  const handleDeleteClick = (item) => {
+    setItemToDelete(item)
+    setShowDeleteDialog(true)
+  }
+
+  const confirmDelete = async () => {
+    if (itemToDelete) {
+      await handleDelete(itemToDelete._id)
+      setShowDeleteDialog(false)
+      setItemToDelete(null)
+    }
+  }
+
   const handleAddNew = () => {
     setEditingItem(null)
     setFormData({})
@@ -267,85 +284,123 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="flex h-full">
-      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} onLogout={handleLogout} />
+    <div className="flex h-screen overflow-hidden">
+      <Sidebar
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        onLogout={handleLogout}
+        isMobileOpen={isMobileOpen}
+        setIsMobileOpen={setIsMobileOpen}
+      />
 
-      <div className="flex-1 ml-64 h-full overflow-x-hidden">
-        <div className="px-6 py-0 max-w-full">
-          {/* Header */}
-          <div className="mb-4 flex justify-between items-center pt-4">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">
-                {activeTab === "events" ? "Events & News" : activeTab === "clubEvents" ? "Club Events" : "Projects"}
-              </h1>
-              <p className="text-gray-600">Manage your {activeTab === "clubEvents" ? "club events" : activeTab}</p>
+      <div className="flex-1 lg:ml-64 h-full overflow-hidden">
+        <div className="lg:hidden bg-white border-b px-4 py-3 flex items-center justify-between">
+          <button onClick={() => setIsMobileOpen(true)} className="p-2 rounded-lg hover:bg-gray-100">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+          <h1 className="text-lg font-semibold">Admin Dashboard</h1>
+          <div className="w-10" />
+        </div>
+
+        <div className="h-full overflow-y-auto">
+          <div className="px-4 lg:px-6 py-4 max-w-full">
+            {/* Header */}
+            <div className="mb-4 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+              <div>
+                <h1 className="text-xl lg:text-2xl font-bold text-gray-900">
+                  {activeTab === "events" ? "Events & News" : activeTab === "clubEvents" ? "Club Events" : "Projects"}
+                </h1>
+                <p className="text-gray-600 text-sm lg:text-base">
+                  Manage your {activeTab === "clubEvents" ? "club events" : activeTab}
+                </p>
+              </div>
+              <button
+                onClick={handleAddNew}
+                className="bg-green-600 hover:bg-green-700 text-white px-4 lg:px-6 py-2 rounded-lg font-medium transition-colors flex-shrink-0 w-full sm:w-auto"
+              >
+                Add New
+              </button>
             </div>
-            <button
-              onClick={handleAddNew}
-              className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-medium transition-colors flex-shrink-0"
-            >
-              Add New
-            </button>
+
+            {/* Error Message */}
+            {error && (
+              <div className="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+                Error: {error}
+              </div>
+            )}
+
+            {/* Form */}
+            {showForm && (
+              <div className="mb-6">
+                {activeTab === "events" && (
+                  <EventForm
+                    formData={formData}
+                    setFormData={setFormData}
+                    onSubmit={handleSubmit}
+                    onCancel={handleCancelForm}
+                    editingItem={editingItem}
+                    uploadingImage={uploadingImage}
+                    onFileChange={handleFileChange}
+                  />
+                )}
+                {activeTab === "projects" && (
+                  <ProjectForm
+                    formData={formData}
+                    setFormData={setFormData}
+                    onSubmit={handleSubmit}
+                    onCancel={handleCancelForm}
+                    editingItem={editingItem}
+                    uploadingImage={uploadingImage}
+                    onFileChange={handleFileChange}
+                  />
+                )}
+                {activeTab === "clubEvents" && (
+                  <ClubEventForm
+                    formData={formData}
+                    setFormData={setFormData}
+                    onSubmit={handleSubmit}
+                    onCancel={handleCancelForm}
+                    editingItem={editingItem}
+                    uploadingImage={uploadingImage}
+                    onFileChange={handleFileChange}
+                  />
+                )}
+              </div>
+            )}
+
+            {/* Loading */}
+            {loading && (
+              <div className="text-center py-8">
+                <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-green-600"></div>
+                <p className="mt-2 text-gray-600">Loading...</p>
+              </div>
+            )}
+
+            {/* Data Table */}
+            {!loading && (
+              <div className="overflow-x-auto">
+                <DataTable
+                  data={data[activeTab] || []}
+                  activeTab={activeTab}
+                  onEdit={handleEdit}
+                  onDelete={handleDeleteClick}
+                />
+              </div>
+            )}
           </div>
-
-          {/* Error Message */}
-          {error && (
-            <div className="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">Error: {error}</div>
-          )}
-
-          {/* Form */}
-          {showForm && (
-            <div className="mb-6">
-              {activeTab === "events" && (
-                <EventForm
-                  formData={formData}
-                  setFormData={setFormData}
-                  onSubmit={handleSubmit}
-                  onCancel={handleCancelForm}
-                  editingItem={editingItem}
-                  uploadingImage={uploadingImage}
-                  onFileChange={handleFileChange}
-                />
-              )}
-              {activeTab === "projects" && (
-                <ProjectForm
-                  formData={formData}
-                  setFormData={setFormData}
-                  onSubmit={handleSubmit}
-                  onCancel={handleCancelForm}
-                  editingItem={editingItem}
-                  uploadingImage={uploadingImage}
-                  onFileChange={handleFileChange}
-                />
-              )}
-              {activeTab === "clubEvents" && (
-                <ClubEventForm
-                  formData={formData}
-                  setFormData={setFormData}
-                  onSubmit={handleSubmit}
-                  onCancel={handleCancelForm}
-                  editingItem={editingItem}
-                  uploadingImage={uploadingImage}
-                  onFileChange={handleFileChange}
-                />
-              )}
-            </div>
-          )}
-
-          {/* Loading */}
-          {loading && (
-            <div className="text-center py-8">
-              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-green-600"></div>
-              <p className="mt-2 text-gray-600">Loading...</p>
-            </div>
-          )}
-
-          {/* Data Table */}
-          {!loading && (
-            <DataTable data={data[activeTab] || []} activeTab={activeTab} onEdit={handleEdit} onDelete={handleDelete} />
-          )}
         </div>
       </div>
+
+      <ConfirmDialog
+        isOpen={showDeleteDialog}
+        onClose={() => setShowDeleteDialog(false)}
+        onConfirm={confirmDelete}
+        title="Delete Item"
+        message="Are you sure you want to delete this item? This action cannot be undone."
+      />
+
       <Toast message={toast.message} type={toast.type} show={toast.show} onClose={closeToast} />
     </div>
   )
