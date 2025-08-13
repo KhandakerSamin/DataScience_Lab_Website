@@ -6,10 +6,10 @@ import ProjectForm from "../../components/AdminDashboard/ProjectForm"
 import ClubEventForm from "../../components/AdminDashboard/ClubEventForm"
 import Toast from "../../components/AdminDashboard/Toast"
 import ConfirmDialog from "../../components/AdminDashboard/ConfirmDialog"
-import LoginPage from "@/components/AdminDashboard/LogininPage"
+import LoginPage from "../../components/AdminDashboard/LoginPage"
 import Sidebar from "@/components/AdminDashboard/SideBar"
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001"
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"
 const ADMIN_PASSWORD = "dslab2025admin"
 
 export default function AdminPage() {
