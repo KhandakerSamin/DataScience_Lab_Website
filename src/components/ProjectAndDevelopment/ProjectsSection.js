@@ -1,3 +1,5 @@
+"use client"
+
 import ProjectCard from "./ProjectCard"
 
 export default function ProjectsSection({ title, projects, startIndex = 0 }) {
@@ -11,10 +13,13 @@ export default function ProjectsSection({ title, projects, startIndex = 0 }) {
         <h2 className="text-3xl md:text-4xl font-bold text-green-600 mb-4">{title}</h2>
         <div className="w-24 h-1 bg-[#09509E] mx-auto rounded-full"></div>
       </div>
-
       <div className="space-y-12">
         {projects.map((project, index) => (
-          <ProjectCard key={project.id} project={project} index={startIndex + index} />
+          <ProjectCard
+            key={project.id || `project-${startIndex + index}`}
+            project={project}
+            index={startIndex + index}
+          />
         ))}
       </div>
     </section>
