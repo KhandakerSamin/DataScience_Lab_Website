@@ -75,6 +75,11 @@ export default function Footer() {
                   What We Do?
                 </a>
               </li>
+              <li>
+                <a href="/admin" className="text-gray-700 hover:text-[#09509E] transition-colors duration-200">
+                  Admin 
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -148,7 +153,7 @@ export default function Footer() {
         <div className="border-t border-gray-300 mt-12 pt-8 text-center">
           <p className="text-gray-600 text-sm">
             © 2025 All Rights Reserved By{" "}
-            <Link className="hover:text-blue-800 " href="/admin">Daffodil International University</Link>
+            <Link className="hover:text-blue-800 " href="https://daffodilvarsity.edu.bd">Daffodil International University</Link>
               
             
           </p>
