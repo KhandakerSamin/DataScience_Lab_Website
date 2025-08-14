@@ -241,7 +241,7 @@ export default function EventsPage() {
                 onClick={handleAddNew}
                 className="bg-green-600 hover:bg-green-700 text-white px-4 lg:px-6 py-2 rounded-lg font-medium transition-colors flex-shrink-0 w-full sm:w-auto"
               >
-                Add New Event
+                Add New Event / News
               </button>
             </div>
 

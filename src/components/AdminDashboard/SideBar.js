@@ -1,30 +1,46 @@
 "use client"
-import { useRouter } from "next/navigation"
+import { useRouter, usePathname } from "next/navigation"
+import {
+  Home,
+  Calendar,
+  GraduationCap,
+  Laptop,
+  Users,
+  Trophy,
+  ImageIcon,
+  ArrowLeft,
+  X,
+} from "lucide-react"
+import Link from "next/link"
 
 export default function Sidebar({ onLogout, isMobileOpen, setIsMobileOpen }) {
   const router = useRouter()
+  const pathname = usePathname() // Get current URL path
 
   const navigationItems = [
-    { key: "home", label: "Home", icon: "🏠", href: "/" },
-    { key: "dashboard", label: "Dashboard", icon: "🏠", href: "/admin" },
-    { key: "events", label: "Events & News", icon: "📅", href: "/admin/events" },
-    { key: "clubEvents", label: "Club Events", icon: "🎓", href: "/admin/club-events" },
-    { key: "projects", label: "Projects", icon: "💻", href: "/admin/projects" },
-    { key: "team", label: "Team Members", icon: "👥", href: "/admin/team" },
-    { key: "clubMembers", label: "Club Members", icon: "🏆", href: "/admin/club-members" },
-    { key: "gallery", label: "Gallery", icon: "🖼️", href: "/admin/gallery" },
+    { key: "dashboard", label: "Dashboard", icon: Home, href: "/admin" },
+    { key: "events", label: "Events & News", icon: Calendar, href: "/admin/events" },
+    { key: "clubEvents", label: "Club Events", icon: GraduationCap, href: "/admin/club-events" },
+    { key: "projects", label: "Projects", icon: Laptop, href: "/admin/projects" },
+    { key: "team", label: "Team Members", icon: Users, href: "/admin/team" },
+    { key: "clubMembers", label: "Club Members", icon: Trophy, href: "/admin/club-members" },
+    { key: "gallery", label: "Gallery", icon: ImageIcon, href: "/admin/gallery" },
+    { key: "home", label: "Back To Home", icon: ArrowLeft, href: "/" },
   ]
 
   const handleNavigation = (href) => {
     router.push(href)
-    setIsMobileOpen(false) // Close mobile menu when navigating
+    setIsMobileOpen(false)
   }
 
   return (
     <>
       {/* Mobile overlay */}
       {isMobileOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden" onClick={() => setIsMobileOpen(false)} />
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+          onClick={() => setIsMobileOpen(false)}
+        />
       )}
 
       {/* Sidebar */}
@@ -35,39 +51,49 @@ export default function Sidebar({ onLogout, isMobileOpen, setIsMobileOpen }) {
       >
         {/* Close button for mobile */}
         <div className="lg:hidden absolute top-4 right-4">
-          <button onClick={() => setIsMobileOpen(false)} className="p-2 rounded-lg hover:bg-gray-100">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
+          <button
+            onClick={() => setIsMobileOpen(false)}
+            className="p-2 rounded-lg hover:bg-gray-100"
+          >
+            <X className="w-6 h-6" />
           </button>
         </div>
 
         {/* Logo and Header */}
         <div className="p-6 border-b border-gray-200">
           <div className="flex items-center space-x-3 mb-4">
-            <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-xl">DS</span>
-            </div>
-            <div>
-              <h1 className="text-lg font-bold text-gray-900">DS Lab</h1>
-              <p className="text-sm text-gray-500">Data Science Club</p>
-            </div>
+            <Link href="/" className="flex items-center space-x-3 z-50">
+            <img src="/logo.svg" alt="Lab Logo" className="h-12 w-auto" />
+          </Link>
           </div>
-          <h2 className="text-xl font-semibold text-gray-800">Admin Dashboard</h2>
+          <h2 className="text-md font-normal text-gray-800">Admin Dashboard</h2>
         </div>
 
         {/* Navigation */}
         <nav className="mt-6 pb-20 overflow-y-auto">
-          {navigationItems.map((item) => (
-            <button
-              key={item.key}
-              onClick={() => handleNavigation(item.href)}
-              className="w-full flex items-center space-x-3 px-6 py-3 text-left hover:bg-gray-50 transition-colors text-gray-700 hover:text-blue-600"
-            >
-              <span className="text-xl">{item.icon}</span>
-              <span className="font-medium">{item.label}</span>
-            </button>
-          ))}
+          {navigationItems.map((item) => {
+            const IconComponent = item.icon
+            const isActive = pathname === item.href // Auto check from URL
+
+            return (
+              <button
+                key={item.key}
+                onClick={() => handleNavigation(item.href)}
+                className={`w-full flex items-center space-x-3 px-6 py-3 text-left transition-colors relative border-l-4 ${
+                  isActive
+                    ? "bg-blue-50 text-blue-600 border-blue-600 font-semibold"
+                    : "text-gray-700 hover:bg-gray-50 hover:text-blue-600 border-transparent"
+                }`}
+              >
+                <IconComponent
+                  className={`w-5 h-5 ${
+                    isActive ? "text-[#09509E]" : "text-gray-500 group-hover:text-[#09509E]"
+                  }`}
+                />
+                <span>{item.label}</span>
+              </button>
+            )
+          })}
         </nav>
 
         {/* Logout Button */}

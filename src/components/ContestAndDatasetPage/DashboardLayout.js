@@ -5,12 +5,6 @@ import { useState, useEffect, useRef } from "react"
 export default function DashboardLayout({ children, activePage, setActivePage }) {
   const navigationItems = [
     {
-      id: "home",
-      label: "Home",
-      icon: "🏠",
-      description: "Dashboard Overview",
-    },
-    {
       id: "datasets",
       label: "Datasets",
       icon: "📊",
@@ -22,36 +16,8 @@ export default function DashboardLayout({ children, activePage, setActivePage })
       icon: "🏆",
       description: "ML Contests",
     },
-    {
-      id: "analytics",
-      label: "Analytics",
-      icon: "📈",
-      description: "Data Insights",
-    },
-    {
-      id: "community",
-      label: "Community",
-      icon: "👥",
-      description: "Connect & Share",
-    },
-    {
-      id: "projects",
-      label: "Projects",
-      icon: "💼",
-      description: "Research Work",
-    },
-    {
-      id: "events",
-      label: "Events",
-      icon: "📅",
-      description: "Workshops & News",
-    },
-    {
-      id: "settings",
-      label: "Settings",
-      icon: "⚙️",
-      description: "Preferences",
-    },
+
+
   ]
 
   const handleNavigation = (pageId) => {
@@ -191,7 +157,7 @@ export default function DashboardLayout({ children, activePage, setActivePage })
 
             <div className="mt-8 p-4 bg-gradient-to-r from-blue-50 to-green-50 rounded-xl">
               <div className="text-center">
-                <div className="text-2xl font-bold text-blue-600">150+</div>
+                <div className="text-2xl font-bold text-blue-600">50+</div>
                 <div className="text-xs text-gray-600">Active Projects</div>
               </div>
             </div>

@@ -25,7 +25,7 @@ export default function WelcomePage() {
         fetch(`${API_BASE_URL}/api/${endpoint}`)
           .then((res) => res.json())
           .then((data) => ({ [endpoint]: data.data?.length || 0 }))
-          .catch(() => ({ [endpoint]: 0 })),
+          .catch(() => ({ [endpoint]: 0 }))
       )
 
       const results = await Promise.all(promises)
@@ -67,7 +67,11 @@ export default function WelcomePage() {
                 <div>
                   <p className="text-sm font-medium text-gray-600 mb-1">{stat.title}</p>
                   <p className="text-2xl font-bold text-gray-900">
-                    {loading ? <div className="animate-pulse bg-gray-200 h-8 w-12 rounded"></div> : stat.count}
+                    {loading ? (
+                      <span className="inline-block animate-pulse bg-gray-200 h-8 w-12 rounded"></span>
+                    ) : (
+                      stat.count
+                    )}
                   </p>
                 </div>
                 <div className={`${stat.color} text-white p-3 rounded-lg text-2xl`}>{stat.icon}</div>
