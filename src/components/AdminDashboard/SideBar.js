@@ -1,12 +1,24 @@
 "use client"
+import { useRouter } from "next/navigation"
 
-export default function Sidebar({ activeTab, setActiveTab, onLogout, isMobileOpen, setIsMobileOpen }) {
-  const tabs = [
-    { key: "events", label: "Events & News", icon: "📅" },
-    { key: "clubEvents", label: "Club Events", icon: "🎓" },
-    { key: "projects", label: "Projects", icon: "💻" },
-    { key: "team", label: "Team Members", icon: "👥" }, // Added team management option
+export default function Sidebar({ onLogout, isMobileOpen, setIsMobileOpen }) {
+  const router = useRouter()
+
+  const navigationItems = [
+    { key: "home", label: "Home", icon: "🏠", href: "/" },
+    { key: "dashboard", label: "Dashboard", icon: "🏠", href: "/admin" },
+    { key: "events", label: "Events & News", icon: "📅", href: "/admin/events" },
+    { key: "clubEvents", label: "Club Events", icon: "🎓", href: "/admin/club-events" },
+    { key: "projects", label: "Projects", icon: "💻", href: "/admin/projects" },
+    { key: "team", label: "Team Members", icon: "👥", href: "/admin/team" },
+    { key: "clubMembers", label: "Club Members", icon: "🏆", href: "/admin/club-members" },
+    { key: "gallery", label: "Gallery", icon: "🖼️", href: "/admin/gallery" },
   ]
+
+  const handleNavigation = (href) => {
+    router.push(href)
+    setIsMobileOpen(false) // Close mobile menu when navigating
+  }
 
   return (
     <>
@@ -45,20 +57,15 @@ export default function Sidebar({ activeTab, setActiveTab, onLogout, isMobileOpe
         </div>
 
         {/* Navigation */}
-        <nav className="mt-6 pb-20">
-          {tabs.map((tab) => (
+        <nav className="mt-6 pb-20 overflow-y-auto">
+          {navigationItems.map((item) => (
             <button
-              key={tab.key}
-              onClick={() => {
-                setActiveTab(tab.key)
-                setIsMobileOpen(false) // Close mobile menu when tab is selected
-              }}
-              className={`w-full flex items-center space-x-3 px-6 py-3 text-left hover:bg-gray-50 transition-colors ${
-                activeTab === tab.key ? "bg-blue-50 border-r-4 border-blue-600 text-blue-700" : "text-gray-700"
-              }`}
+              key={item.key}
+              onClick={() => handleNavigation(item.href)}
+              className="w-full flex items-center space-x-3 px-6 py-3 text-left hover:bg-gray-50 transition-colors text-gray-700 hover:text-blue-600"
             >
-              <span className="text-xl">{tab.icon}</span>
-              <span className="font-medium">{tab.label}</span>
+              <span className="text-xl">{item.icon}</span>
+              <span className="font-medium">{item.label}</span>
             </button>
           ))}
         </nav>

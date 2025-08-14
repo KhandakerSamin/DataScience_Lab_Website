@@ -1,6 +1,6 @@
 "use client"
 import { useState } from "react"
-import ModernFileUpload from "./ModernFileUpload"
+import ModernFileUpload from "./MordernFileUpload"
 
 export default function GalleryForm({ formData, setFormData, onSubmit, editingItem, uploading }) {
   const [imageUploading, setImageUploading] = useState(false)
