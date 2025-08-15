@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import DataTable from "../../../components/AdminDashboard/DataTable"
-import EventForm from "../../../components/AdminDashboard/EventForm"
+import ClubEventForm from "../../../components/AdminDashboard/ClubEventForm"
 import Toast from "../../../components/AdminDashboard/Toast"
 import ConfirmDialog from "../../../components/AdminDashboard/ConfirmDialog"
 import Sidebar from "@/components/AdminDashboard/SideBar"
@@ -118,8 +118,8 @@ export default function ClubEventsPage() {
   }
 
   const validateFormData = () => {
-    if (!formData.title || !formData.description) {
-      showToast("Please fill in all required fields (title and description)", "error")
+    if (!formData.title || !formData.date || !formData.shortDescription) {
+      showToast("Please fill in all required fields (title, date, and short description)", "error")
       return false
     }
     return true
@@ -184,14 +184,14 @@ export default function ClubEventsPage() {
     }
   }
 
-  const handleDeleteClick = (item) => {
-    setItemToDelete(item)
+  const handleDeleteClick = (id) => {
+    setItemToDelete(id)
     setShowDeleteDialog(true)
   }
 
   const confirmDelete = async () => {
     if (itemToDelete) {
-      await handleDelete(itemToDelete._id)
+      await handleDelete(itemToDelete)
       setShowDeleteDialog(false)
       setItemToDelete(null)
     }
@@ -235,7 +235,7 @@ export default function ClubEventsPage() {
             <div className="mb-4 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
               <div>
                 <h1 className="text-xl lg:text-2xl font-bold text-gray-900">Club Events</h1>
-                <p className="text-gray-600 text-sm lg:text-base">Manage your club events and activities</p>
+                <p className="text-gray-600 text-sm lg:text-base">Manage your club events</p>
               </div>
               <button
                 onClick={handleAddNew}
@@ -255,7 +255,7 @@ export default function ClubEventsPage() {
             {/* Form */}
             {showForm && (
               <div className="mb-6">
-                <EventForm
+                <ClubEventForm
                   formData={formData}
                   setFormData={setFormData}
                   onSubmit={handleSubmit}

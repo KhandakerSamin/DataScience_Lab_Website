@@ -5,7 +5,7 @@ import WelcomePage from "@/components/AdminDashboard/WelcoomePage"
 import { useState, useEffect } from "react"
 
 
-const ADMIN_PASSWORD = "dslab2025admin"
+const ADMIN_PASSWORD = "123"
 
 export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)

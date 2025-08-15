@@ -173,14 +173,14 @@ export default function GalleryPage() {
     }
   }
 
-  const handleDeleteClick = (item) => {
-    setItemToDelete(item)
+  const handleDeleteClick = (id) => {
+    setItemToDelete(id)
     setShowDeleteDialog(true)
   }
 
   const confirmDelete = async () => {
     if (itemToDelete) {
-      await handleDelete(itemToDelete._id)
+      await handleDelete(itemToDelete)
       setShowDeleteDialog(false)
       setItemToDelete(null)
     }
@@ -236,7 +236,7 @@ export default function GalleryPage() {
                 onClick={handleAddNew}
                 className="bg-green-600 hover:bg-green-700 text-white px-4 lg:px-6 py-2 rounded-lg font-medium transition-colors flex-shrink-0 w-full sm:w-auto"
               >
-                Add New Image 
+                Add New Image
               </button>
             </div>
 
@@ -256,8 +256,7 @@ export default function GalleryPage() {
                   onSubmit={handleSubmit}
                   onCancel={handleCancelForm}
                   editingItem={editingItem}
-                  uploadingImage={uploadingImage}
-                  onFileChange={handleFileChange}
+                  uploading={uploadingImage}
                 />
               </div>
             )}
@@ -297,7 +296,7 @@ export default function GalleryPage() {
                             Edit
                           </button>
                           <button
-                            onClick={() => handleDeleteClick(item)}
+                            onClick={() => handleDeleteClick(item._id)}
                             className="text-red-600 hover:text-red-800 text-sm"
                           >
                             Delete

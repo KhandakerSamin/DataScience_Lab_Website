@@ -184,14 +184,14 @@ export default function EventsPage() {
     }
   }
 
-  const handleDeleteClick = (item) => {
-    setItemToDelete(item)
+  const handleDeleteClick = (id) => {
+    setItemToDelete(id)
     setShowDeleteDialog(true)
   }
 
   const confirmDelete = async () => {
     if (itemToDelete) {
-      await handleDelete(itemToDelete._id)
+      await handleDelete(itemToDelete)
       setShowDeleteDialog(false)
       setItemToDelete(null)
     }
@@ -241,7 +241,7 @@ export default function EventsPage() {
                 onClick={handleAddNew}
                 className="bg-green-600 hover:bg-green-700 text-white px-4 lg:px-6 py-2 rounded-lg font-medium transition-colors flex-shrink-0 w-full sm:w-auto"
               >
-                Add New Event / News
+                Add New Event
               </button>
             </div>
 

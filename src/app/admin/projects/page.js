@@ -184,14 +184,14 @@ export default function ProjectsPage() {
     }
   }
 
-  const handleDeleteClick = (item) => {
-    setItemToDelete(item)
+  const handleDeleteClick = (id) => {
+    setItemToDelete(id)
     setShowDeleteDialog(true)
   }
 
   const confirmDelete = async () => {
     if (itemToDelete) {
-      await handleDelete(itemToDelete._id)
+      await handleDelete(itemToDelete)
       setShowDeleteDialog(false)
       setItemToDelete(null)
     }

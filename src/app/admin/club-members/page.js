@@ -1,10 +1,10 @@
 "use client"
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
+import Toast from "../../../components/AdminDashboard/Toast"
+import ConfirmDialog from "../../../components/AdminDashboard/ConfirmDialog"
 import Sidebar from "@/components/AdminDashboard/SideBar"
 import ClubMemberForm from "@/components/AdminDashboard/ClubMembersForm"
-import ConfirmDialog from "@/components/AdminDashboard/ConfirmDialog"
-import Toast from "@/components/AdminDashboard/Toast"
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001"
 
@@ -114,8 +114,8 @@ export default function ClubMembersPage() {
     e.preventDefault()
 
     try {
-      if (!formData.name || !formData.role) {
-        showToast("Please fill in all required fields (name and role)", "error")
+      if (!formData.name || !formData.position) {
+        showToast("Please fill in all required fields (name and position)", "error")
         return
       }
 
@@ -173,14 +173,14 @@ export default function ClubMembersPage() {
     }
   }
 
-  const handleDeleteClick = (item) => {
-    setItemToDelete(item)
+  const handleDeleteClick = (id) => {
+    setItemToDelete(id)
     setShowDeleteDialog(true)
   }
 
   const confirmDelete = async () => {
     if (itemToDelete) {
-      await handleDelete(itemToDelete._id)
+      await handleDelete(itemToDelete)
       setShowDeleteDialog(false)
       setItemToDelete(null)
     }
@@ -236,7 +236,7 @@ export default function ClubMembersPage() {
                 onClick={handleAddNew}
                 className="bg-green-600 hover:bg-green-700 text-white px-4 lg:px-6 py-2 rounded-lg font-medium transition-colors flex-shrink-0 w-full sm:w-auto"
               >
-                Add New Club Member
+                Add New Member
               </button>
             </div>
 
@@ -256,7 +256,7 @@ export default function ClubMembersPage() {
                   onSubmit={handleSubmit}
                   onCancel={handleCancelForm}
                   editingItem={editingItem}
-                  uploadingImage={uploadingImage}
+                  uploading={uploadingImage}
                   onFileChange={handleFileChange}
                 />
               </div>
@@ -284,7 +284,7 @@ export default function ClubMembersPage() {
                     </div>
                     <div className="p-4">
                       <h3 className="font-semibold text-gray-900 mb-1">{member.name}</h3>
-                      <p className="text-sm text-gray-600 mb-2">{member.role}</p>
+                      <p className="text-sm text-gray-600 mb-2">{member.position}</p>
                       {member.department && <p className="text-xs text-gray-500 mb-2">{member.department}</p>}
                       <div className="flex justify-between items-center">
                         <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
@@ -298,7 +298,7 @@ export default function ClubMembersPage() {
                             Edit
                           </button>
                           <button
-                            onClick={() => handleDeleteClick(member)}
+                            onClick={() => handleDeleteClick(member._id)}
                             className="text-red-600 hover:text-red-800 text-sm"
                           >
                             Delete
@@ -316,7 +316,7 @@ export default function ClubMembersPage() {
                           strokeLinecap="round"
                           strokeLinejoin="round"
                           strokeWidth={1}
-                          d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                          d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
                         />
                       </svg>
                     </div>
