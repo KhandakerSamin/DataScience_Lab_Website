@@ -85,17 +85,38 @@ export default function ClubMembersPage() {
     formDataUpload.append("image", file)
 
     try {
+      console.log("[v0] Starting image upload to:", `${API_BASE_URL}/api/upload`)
+      console.log("[v0] File details:", { name: file.name, size: file.size, type: file.type })
+
       const response = await fetch(`${API_BASE_URL}/api/upload`, {
         method: "POST",
         body: formDataUpload,
       })
 
+      console.log("[v0] Upload response status:", response.status)
+      console.log("[v0] Upload response headers:", Object.fromEntries(response.headers.entries()))
+
+      const contentType = response.headers.get("content-type")
+      if (contentType && contentType.includes("text/html")) {
+        const htmlText = await response.text()
+        console.error("[v0] Server returned HTML instead of JSON:", htmlText.substring(0, 200))
+        throw new Error("Server returned HTML page instead of JSON. Check if server is running on correct port.")
+      }
+
       if (!response.ok) {
-        const errorData = await response.json()
+        const errorText = await response.text()
+        console.error("[v0] Upload failed with response:", errorText)
+        let errorData
+        try {
+          errorData = JSON.parse(errorText)
+        } catch {
+          throw new Error(`Server error (${response.status}): ${errorText.substring(0, 100)}`)
+        }
         throw new Error(errorData.error || "Failed to upload image")
       }
 
       const result = await response.json()
+      console.log("[v0] Upload successful:", result)
 
       if (result.success && result.data && result.data.url) {
         setFormData((prev) => ({ ...prev, image: result.data.url }))
@@ -104,6 +125,7 @@ export default function ClubMembersPage() {
         throw new Error("Invalid response format from server")
       }
     } catch (err) {
+      console.error("[v0] Upload error:", err)
       showToast("Failed to upload image: " + err.message, "error")
     } finally {
       setUploadingImage(false)

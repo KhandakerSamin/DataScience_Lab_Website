@@ -2,7 +2,7 @@
 import { useState } from "react"
 import ModernFileUpload from "./MordernFileUpload"
 
-export default function ClubMemberForm({ formData, setFormData, onSubmit, editingItem, uploading }) {
+export default function ClubMemberForm({ formData, setFormData, onSubmit, onCancel, editingItem, uploading }) {
   const [imageUploading, setImageUploading] = useState(false)
 
   const handleChange = (e) => {
@@ -19,7 +19,7 @@ export default function ClubMemberForm({ formData, setFormData, onSubmit, editin
       const formDataObj = new FormData()
       formDataObj.append("image", file)
 
-      const response = await fetch("/api/upload", {
+      const response = await fetch("http://localhost:5001/api/upload", {
         method: "POST",
         body: formDataObj,
       })
@@ -44,7 +44,7 @@ export default function ClubMemberForm({ formData, setFormData, onSubmit, editin
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    onSubmit()
+    onSubmit(e)
   }
 
   return (
@@ -79,13 +79,12 @@ export default function ClubMemberForm({ formData, setFormData, onSubmit, editin
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Category *</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
           <select
             name="category"
             value={formData.category || ""}
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
           >
             <option value="">Select Category</option>
             <option value="faculty">Faculty</option>
@@ -201,7 +200,19 @@ export default function ClubMemberForm({ formData, setFormData, onSubmit, editin
         </div>
       </div>
 
-      <div className="flex justify-end">
+      <div className="flex justify-end space-x-3">
+        <button
+          type="button"
+          onClick={() => {
+            setFormData({})
+            if (onCancel) {
+              onCancel()
+            }
+          }}
+          className="px-6 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          Cancel
+        </button>
         <button
           type="submit"
           disabled={uploading || imageUploading}

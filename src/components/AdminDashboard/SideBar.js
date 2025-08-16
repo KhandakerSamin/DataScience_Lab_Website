@@ -24,7 +24,6 @@ export default function Sidebar({ onLogout, isMobileOpen, setIsMobileOpen }) {
     { key: "projects", label: "Projects", icon: Laptop, href: "/admin/projects" },
     { key: "team", label: "Team Members", icon: Users, href: "/admin/team" },
     { key: "clubMembers", label: "Club Members", icon: Trophy, href: "/admin/club-members" },
-    { key: "gallery", label: "Gallery", icon: ImageIcon, href: "/admin/gallery" },
     { key: "home", label: "Back To Home", icon: ArrowLeft, href: "/" },
   ]
 
